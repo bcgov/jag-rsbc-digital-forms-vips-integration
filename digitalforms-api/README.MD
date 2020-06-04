@@ -6,7 +6,7 @@ This is the API level of this of this project.
 
 * Most easily imported to and run using Eclipse or STS4 
 
-* Import as a Maven project from the root level (this level). Dependent API should 
+* Import as a Maven project from the root level. Dependent API should 
 load automatically. 
 
 * Set environmental variables 
