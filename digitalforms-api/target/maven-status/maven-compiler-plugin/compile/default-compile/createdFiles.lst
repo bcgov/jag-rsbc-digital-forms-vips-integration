@@ -1,6 +1,0 @@
-ca\bc\gov\open\pssg\rsbc\digitalforms\swagger2\SwaggerConfig.class
-ca\bc\gov\open\pssg\rsbc\digitalforms\DigitalFormsApplication.class
-ca\bc\gov\open\pssg\rsbc\digitalforms\config\ConfigProperties.class
-ca\bc\gov\open\pssg\rsbc\digitalforms\controller\UtilityController.class
-ca\bc\gov\open\pssg\rsbc\digitalforms\model\PingResponse.class
-ca\bc\gov\open\pssg\rsbc\digitalforms\security\ApiSecurityConfig.class
