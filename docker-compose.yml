@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+
+  #############################################################################################
+  ###                               Digital forms API                                       ###
+  #############################################################################################
+  digitalforms-api:
+    build:
+      context: ./digitalforms-api
+    environment:
+      - DIGITALFORMS_BASICAUTH_PASSWORD=${DIGITALFORMS_BASICAUTH_PASSWORD}
+      - DIGITALFORMS_BASICAUTH_USER=${DIGITALFORMS_BASICAUTH_USER}
+      - DIGITALFORMS_SWAGGER_ENABLED=${DIGITALFORMS_SWAGGER_ENABLED}
+      - DIGITALFORMS_VIPSORDS_BASEPATH=${DIGITALFORMS_VIPSORDS_BASEPATH}
+      - DIGITALFORMS_VIPSORDS_USER=${DIGITALFORMS_VIPSORDS_USER}
+      - DIGITALFORMS_VIPSORDS_PASSWORD=${DIGITALFORMS_VIPSORDS_PASSWORD}
+    ports:
+      - "8082:8082"
+    volumes:
+      - maven-repository:/root/.m2/repository
+    networks:
+      - rsbc-df-vips
+
+volumes:
+  maven-repository:
+
+networks:
+  rsbc-df-vips:
+    driver: "bridge"
