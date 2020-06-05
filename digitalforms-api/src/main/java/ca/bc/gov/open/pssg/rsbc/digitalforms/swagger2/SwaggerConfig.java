@@ -28,7 +28,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@ConditionalOnProperty(name = "digitlaforms.service-swagger-enabled")
+@ConditionalOnProperty(name = "digitalforms.service-swagger-enabled")
 @EnableConfigurationProperties(ConfigProperties.class)
 public class SwaggerConfig implements WebMvcConfigurer {
 	
