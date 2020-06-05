@@ -5,7 +5,7 @@ This is the root level of this project.
 ### Built With
 
 *   [Maven](https://maven.apache.org/) - Dependency Management
-*   [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) - Java™ Platform, Standard Edition Development Kit 
+*   [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) - Javaï¿½ Platform, Standard Edition Development Kit 
 *   [Spring Boot](https://spring.io/projects/spring-boot) - Framework to ease the bootstrapping and development of new Spring Applications
 *   [git](https://git-scm.com/) - Free and Open-Source distributed version control system 
 *   [Swagger](https://swagger.io/) - Open-Source software framework backed by a large ecosystem of tools that helps developers design, build, document, and consume RESTful Web services.
@@ -24,6 +24,10 @@ load automatically.
 * Set environmental variables  
 
 run:   
+```shell script
+docker-compose up --build
+```
+Or
 ```
 mvn clean install  
 mvn package -P all  
