@@ -12,6 +12,10 @@ load automatically.
 * Set environmental variables 
 
 run:   
+```shell script
+docker-compose up --build
+```
+Or
 ```
 mvn clean install  
 mvn spring-boot:run  
