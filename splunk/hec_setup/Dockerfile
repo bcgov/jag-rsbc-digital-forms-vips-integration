@@ -1,12 +1,9 @@
 #############################################################################################
-###              Stage where Docker is building spring boot app using maven               ###
+###              Stage where Docker is building curl container to setup Splunk HEC        ###
 #############################################################################################
-FROM maven:3.6.3-jdk-8 as build
+FROM curlimages/curl:7.70.0 as build
 
 COPY . .
 
-RUN mvn clean install
-
-CMD ["mvn", "spring-boot:run"]
+CMD ["/bin/sh", "hec_setup.sh"]
 #############################################################################################
-
