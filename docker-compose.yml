@@ -3,8 +3,8 @@ services:
   #############################################################################################
   ###                                 SPLUNK DEV BOX                                        ###
   #############################################################################################
-  digitalforms-api-splunk:
-    image: splunk/splunk:7.3.2
+  splunk:
+    image: splunk/splunk:8.0.2.1
     environment:
       - SPLUNK_PASSWORD=${SPLUNK_PASSWORD}
       - SPLUNK_START_ARGS=--accept-license
@@ -12,6 +12,19 @@ services:
       - "8000:8000"
     networks:
       - rsbc-df-vips
+
+  #############################################################################################
+  ###                                 SPLUNK INIT                                           ###
+  #############################################################################################
+  splunk-init:
+    build:
+      context: ./splunk/hec_setup
+    environment:
+      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD}
+      - SPLUNK_TOKEN=${SPLUNK_TOKEN}
+    networks:
+      - rsbc-df-vips
+
   #############################################################################################
   ###                               Digital forms API                                       ###
   #############################################################################################
