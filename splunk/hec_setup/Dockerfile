@@ -1,9 +1,11 @@
 #############################################################################################
 ###              Stage where Docker is building curl container to setup Splunk HEC        ###
 #############################################################################################
-FROM curlimages/curl:7.70.0 as build
+FROM alpine:3.12.0 as build
+
+RUN apk add --no-cache curl bash
 
 COPY . .
 
-CMD ["/bin/sh", "hec_setup.sh"]
+ENTRYPOINT ["/bin/bash", "hec_setup.sh"]
 #############################################################################################
