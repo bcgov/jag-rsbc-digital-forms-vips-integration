@@ -57,6 +57,10 @@ locally the API locally (As run configuration in STS4 or Eclipse)
 | DIGITALFORMS_VIPSORDS_BASEPATH | my base path |
 | DIGITALFORMS_VIPSORDS_USER | myUser |
 | DIGITALFORMS_VIPSORDS_PASSWORD  | myPassword |
+| SPLUNK_PASSWORD  | Splunk password |
+| SPLUNK_TOKEN  | Splunk HEC Token |
+| SPLUNK_URL  | Splunk URL | 
+| spring_profiles_active | splunk |
 
 
 ### Files and Directories
