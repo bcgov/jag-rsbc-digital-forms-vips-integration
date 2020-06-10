@@ -18,7 +18,7 @@ services:
   #############################################################################################
   splunk-init:
     build:
-      context: ./splunk/hec_setup
+      context: ./splunk
     environment:
       - SPLUNK_PASSWORD=${SPLUNK_PASSWORD}
       - SPLUNK_TOKEN=${SPLUNK_TOKEN}
@@ -38,7 +38,7 @@ services:
       - DIGITALFORMS_VIPSORDS_BASEPATH=${DIGITALFORMS_VIPSORDS_BASEPATH}
       - DIGITALFORMS_VIPSORDS_USER=${DIGITALFORMS_VIPSORDS_USER}
       - DIGITALFORMS_VIPSORDS_PASSWORD=${DIGITALFORMS_VIPSORDS_PASSWORD}
-      - SPRING_PROFILES_ACTIVE=${spring_profiles_active}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
       - SPLUNK_TOKEN=${SPLUNK_TOKEN}
       - SPLUNK_URL=${SPLUNK_URL}
     ports:
