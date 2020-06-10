@@ -26,6 +26,11 @@
 			<id>dps-group</id>
 			<url>http://nexus-pjztlm-tools.pathfinder.gov.bc.ca/repository/dps-group/</url>
 		</repository>
+		<repository>
+			<id>splunk-artifactory</id>
+			<name>Splunk Releases</name>
+			<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -40,7 +45,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			 <!--<scope>provided</scope>-->
+			<!--<scope>provided</scope>-->
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -87,6 +92,11 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.splunk.logging</groupId>
+			<artifactId>splunk-library-javalogging</artifactId>
+			<version>1.7.1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
@@ -126,6 +136,30 @@
 		</dependency>
 
 	</dependencies>
+
+	<profiles>
+		<profile>
+
+			<id>openshift</id>
+
+			<repositories>
+				<repository>
+					<id>splunk-artifactory</id>
+					<name>Splunk Releases</name>
+					<url>http://splunk.jfrog.io/splunk/ext-releases-local</url>
+				</repository>
+			</repositories>
+
+			<dependencies>
+				<dependency>
+					<groupId>com.splunk.logging</groupId>
+					<artifactId>splunk-library-javalogging</artifactId>
+					<version>1.7.1</version>
+				</dependency>
+			</dependencies>
+
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
