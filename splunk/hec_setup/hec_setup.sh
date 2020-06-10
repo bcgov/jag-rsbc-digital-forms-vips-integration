@@ -1,11 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 # Wait for splunk to startup
-while [ "${HEALTH_CHECK}" != "{\"text\":\"HEC is healthy\",\"code\":17}" ]; do
+while [ "${HEALTH_CHECK}" != "{\"text\":\"HEC is healthy\",\"code\":17}" ]
+do
   echo "Waiting for splunk ..."
   HEALTH_CHECK=$(curl -ksS https://splunk:8088/services/collector/health)
   sleep 3
-done;
+done
 
 # Create HEC token
 sleep 5
