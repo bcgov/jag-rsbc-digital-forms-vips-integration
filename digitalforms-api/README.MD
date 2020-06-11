@@ -60,7 +60,7 @@ locally the API locally (As run configuration in STS4 or Eclipse)
 | SPLUNK_PASSWORD  | Splunk password |
 | SPLUNK_TOKEN  | Splunk HEC Token |
 | SPLUNK_URL  | Splunk URL | 
-| spring_profiles_active | splunk |
+| SPRING_PROFILES_ACTIVE | splunk |
 
 
 ### Files and Directories
