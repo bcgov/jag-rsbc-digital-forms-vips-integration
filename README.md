@@ -67,10 +67,25 @@ Apache license 2.0
 
 ## Splunk
 http://localhost:8000
-Username: admin
-Password: <in .env>
+
+|Key   |Value |
+|---|---|
+|`Username`| admin|
+|`Password`| <in .env>|
 
 ## Sonarqube
+
+Linux/Unix Settings
+```
+sysctl -w vm.max_map_count=262144
+sysctl -w fs.file-max=65536
+ulimit -n 65536
+ulimit -u 4096
+```
+
 http://localhost:9000
-Username: admin
-Password: <in .env>
+
+|Key   |Value |
+|---|---|
+|`Username`| admin|
+|`Password`| <in .env>|
