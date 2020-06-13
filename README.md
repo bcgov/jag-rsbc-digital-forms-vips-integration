@@ -64,3 +64,13 @@ TBD
 ### License
 
 Apache license 2.0
+
+## Splunk
+http://localhost:8000
+Username: admin
+Password: <in .env>
+
+## Sonarqube
+http://localhost:9000
+Username: admin
+Password: <in .env>

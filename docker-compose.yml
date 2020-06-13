@@ -70,10 +70,13 @@ services:
       - PGPASSWORD=${POSTGRESQL_PASSWORD}
       - SONAR_TOKEN=${SONAR_TOKEN}
       - SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}
+      - SONAR_PASSWORD=${SONAR_PASSWORD}
+      - SONAR_URL=${SONAR_URL}
     networks:
       - rsbc-df-vips
     volumes:
       - sonar-plugins:/opt/plugins
+      - sonar-logs:/opt/logs
 
   #############################################################################################
   ###                               Digital forms API                                       ###
@@ -92,8 +95,8 @@ services:
       - SPLUNK_TOKEN=${SPLUNK_TOKEN}
       - SPLUNK_URL=${SPLUNK_URL}
       - SONAR_TOKEN=${SONAR_TOKEN}
-      - SONAR_URL=http://sonarqube:9000
       - SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}
+      - SONAR_URL=${SONAR_URL}
     ports:
       - "8082:8082"
     volumes:

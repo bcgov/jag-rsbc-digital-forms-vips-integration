@@ -1,40 +1,62 @@
 #!/bin/bash
 
 # Wait for sonarqube to startup
-while ! curl -kss --user admin:admin http://sonarqube:9000/api/system/health | jq ".health" | grep -q "GREEN"
+while ! curl -sSI "${SONAR_URL}" | grep -qr "HTTP/[.0-9]* 200"
 do
   echo "Waiting for sonarqube ..."
   sleep 3
 done
 
-sleep 5
+echo "Waiting for all sonarqube services to be up ..."
+tail -f /opt/logs/sonar.log | grep -q "SonarQube is up"
+
+# Set admin password
+# Check if admin password is set
+echo "Checking admin password ..."
+if curl -ksS --user admin:"${SONAR_PASSWORD}" "${SONAR_URL}"/api/authentication/validate | jq '.valid' | grep -q "true"
+then
+  echo "Admin password exists"
+else
+  echo "Setting admin password ..."
+  if curl -ksS --user admin:admin "${SONAR_URL}"/api/authentication/validate | jq '.valid' | grep -q "true"
+  then
+    echo "Setting admin password using API ..."
+    curl -X POST -ksS --user admin:admin "${SONAR_URL}"/api/users/change_password --data-urlencode "login=admin" --data-urlencode "password=${SONAR_PASSWORD}" --data-urlencode "previousPassword=admin"
+  else
+    echo "Setting admin password using DB/API ..."
+    # Reset password to admin:admin
+    psql -h postgresql -U sonar -w -d sonar -c "update users set crypted_password = '\$2a\$12\$uCkkXmhW5ThVK8mpBvnXOOJRLd64LJeHTeCkSuB3lfaR2N0AYBaSi', salt=null, hash_method='BCRYPT' where login = 'admin'"
+    # Set password to one from .env
+    curl -X POST -ksS --user admin:admin "${SONAR_URL}"/api/users/change_password --data-urlencode "login=admin" --data-urlencode "password=${SONAR_PASSWORD}" --data-urlencode "previousPassword=admin"
+  fi
+fi
 
 # Create project
 # Check if project already exists
 echo "Checking project exists ..."
-if curl -ksS --user admin:admin http://sonarqube:9000/api/projects/search | jq '.components[]?.key' | grep -q "${SONAR_PROJECT_KEY}"
+if curl -ksS --user admin:"${SONAR_PASSWORD}" "${SONAR_URL}"/api/projects/search | jq '.components[]?.key' | grep -q "${SONAR_PROJECT_KEY}"
 then
   echo "Project exists"
 else
   echo "Creating Project ..."
-  curl -X POST -ksS --user admin:admin http://sonarqube:9000/api/projects/create --data-urlencode "name=Digital Forms API" --data-urlencode "project=${SONAR_PROJECT_KEY}"
+  curl -X POST -ksS --user admin:"${SONAR_PASSWORD}" "${SONAR_URL}"/api/projects/create --data-urlencode "name=Digital Forms API" --data-urlencode "project=${SONAR_PROJECT_KEY}"
 fi
 
 # Create user token
 # Check if user token exists
 echo "Checking token exists ..."
-if curl -ksS --user admin:admin http://sonarqube:9000/api/user_tokens/search | jq '.userTokens[]?.name' | grep -q "digitalforms_api_token"
+if curl -ksS --user admin:"${SONAR_PASSWORD}" "${SONAR_URL}"/api/user_tokens/search | jq '.userTokens[]?.name' | grep -q "digitalforms_api_token"
 then
   echo "Token exists"
 else
   echo "Creating token ..."
-  curl -X POST -ksS --user admin:admin http://sonarqube:9000/api/user_tokens/generate --data-urlencode "name=digitalforms_api_token"
+  curl -X POST -ksS --user admin:"${SONAR_PASSWORD}" "${SONAR_URL}"/api/user_tokens/generate --data-urlencode "name=digitalforms_api_token"
 fi
 
 # Update database with predefined user token
 # Test new token
 echo "Testing token validity ..."
-if curl -ksS --user "${SONAR_TOKEN}": http://sonarqube:9000/api/authentication/validate | jq '.valid' | grep -q "true"
+if curl -ksS --user "${SONAR_TOKEN}": "${SONAR_URL}"/api/authentication/validate | jq '.valid' | grep -q "true"
 then
   echo "Token is valid"
 else
@@ -55,5 +77,5 @@ else
 
   # Restart Sonarqube after adding plugin
   echo "Restarting sonarqube ..."
-  curl -X POST -ksS --user admin:admin http://sonarqube:9000/api/system/restart
+  curl -X POST -ksS --user admin:"${SONAR_PASSWORD}" "${SONAR_URL}"/api/system/restart
 fi
