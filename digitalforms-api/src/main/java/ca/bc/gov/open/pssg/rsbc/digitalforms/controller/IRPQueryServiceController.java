@@ -27,7 +27,7 @@ public class IRPQueryServiceController {
 	@RequestMapping(value ="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> irpGet(@PathVariable (value="id",required=true) Long id)  {
 	    String resp = irpService.getIRP(id); 		
-	    return new ResponseEntity<String>(resp, HttpStatus.OK);
+	    return new ResponseEntity<String>(resp, HttpStatus.CREATED);
 	}
 
 }
