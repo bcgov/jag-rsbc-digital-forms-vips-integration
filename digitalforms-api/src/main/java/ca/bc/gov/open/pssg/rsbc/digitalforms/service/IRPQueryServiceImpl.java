@@ -12,8 +12,9 @@ public class IRPQueryServiceImpl implements IRPQueryService {
 
 	@Override
 	public String getIRP(Long id) {
-		// TODO Auto-generated method stub
-		return "An IRP result"; 
+		
+		// TODO Service to be built out here
+		return "IRP result"; 
 	}
 
 }

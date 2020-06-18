@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryService;
 
+/**
+ * 
+ * IRP Query Controller. 
+ * 
+ * @author shaunmillargov
+ *
+ */
 @RestController
 @RequestMapping("/IRP/")
 public class IRPQueryServiceController {
