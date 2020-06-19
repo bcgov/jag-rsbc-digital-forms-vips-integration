@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
+
 /**
  * 
  * JSON Enveloped Response Type (Variable object payload) 
@@ -20,7 +22,7 @@ public class JSONResponse<T> {
 	private T data; 
 
 	@JsonProperty("resp")
-	private String resp = "Success"; 
+	private String resp = DigitalFormsConstants.JSON_RESPONSE_SUCCESS; 
 	
 	@JsonProperty("error")
 	private JSONError error;
@@ -54,7 +56,7 @@ public class JSONResponse<T> {
 
 	@JsonProperty("error")
 	public void setError(JSONError error) {
-		this.resp = "Fail"; 
+		this.resp = DigitalFormsConstants.JSON_RESPONSE_FAIL; 
 		this.error = error;
 	}
 
