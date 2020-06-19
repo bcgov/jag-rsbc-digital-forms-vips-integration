@@ -33,7 +33,7 @@ public class IRPReviewController {
 	public ResponseEntity<JSONResponse<String>> irpReviewGet(
 			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
 			@RequestBody IRPReviewFormRequest formData) {
-		String data = irpService.getIRPReview(irpNoticeNumber, formData);
+		String data = irpService.getIRPReviewForm(irpNoticeNumber, formData);
 		JSONResponse<String> resp = new JSONResponse<>(data);
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
@@ -42,7 +42,7 @@ public class IRPReviewController {
 	public ResponseEntity<JSONResponse<String>> irpReviewPost(
 			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
 			@RequestBody IRPReviewFormRequest formData) {
-		String data = irpService.postIRPReview(irpNoticeNumber, formData);
+		String data = irpService.postIRPReviewForm(irpNoticeNumber, formData);
 		JSONResponse<String> resp = new JSONResponse<>(data);
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
@@ -51,9 +51,9 @@ public class IRPReviewController {
 	public ResponseEntity<JSONResponse<String>> irpReviewPatch(
 			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
 			@PathVariable(value = "id", required = true) Long id, @RequestBody IRPReviewFormRequest formData) {
-		String data = irpService.patchIRPReview(irpNoticeNumber, id, formData);
+		String data = irpService.patchIRPReviewForm(irpNoticeNumber, id, formData);
 		JSONResponse<String> resp = new JSONResponse<>(data);
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		return new ResponseEntity<>(resp, HttpStatus.NO_CONTENT);
 	}
 
 }

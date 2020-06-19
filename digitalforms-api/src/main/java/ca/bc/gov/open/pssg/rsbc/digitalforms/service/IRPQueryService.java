@@ -13,11 +13,11 @@ public interface IRPQueryService {
 
 	public String getIRP(Long id);
 	
-	public String getIRPReview(Long irpNoticeNumber, IRPReviewFormRequest formData);
+	public String getIRPReviewForm(Long irpNoticeNumber, IRPReviewFormRequest formData);
 	
-	public String postIRPReview(Long irpNoticeNumber, IRPReviewFormRequest formData);
+	public String postIRPReviewForm(Long irpNoticeNumber, IRPReviewFormRequest formData);
 	
-	public String patchIRPReview(Long irpNoticeNumber, Long id, IRPReviewFormRequest formData);
+	public String patchIRPReviewForm(Long irpNoticeNumber, Long id, IRPReviewFormRequest formData);
 
 }
 

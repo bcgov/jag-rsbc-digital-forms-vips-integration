@@ -20,19 +20,19 @@ public class IRPQueryServiceImpl implements IRPQueryService {
 	}
 
 	@Override
-	public String getIRPReview(Long irpNoticeNumber, IRPReviewFormRequest formData) {
+	public String getIRPReviewForm(Long irpNoticeNumber, IRPReviewFormRequest formData) {
 		// TODO Service to be built out here
 		return "IRP review get";
 	}
 
 	@Override
-	public String postIRPReview(Long irpNoticeNumber, IRPReviewFormRequest formData) {
+	public String postIRPReviewForm(Long irpNoticeNumber, IRPReviewFormRequest formData) {
 		// TODO Service to be built out here
 		return "IRP review post";
 	}
 
 	@Override
-	public String patchIRPReview(Long irpNoticeNumber, Long id, IRPReviewFormRequest formData) {
+	public String patchIRPReviewForm(Long irpNoticeNumber, Long id, IRPReviewFormRequest formData) {
 		// TODO Service to be built out here
 		return "IRP review patch";
 	}
