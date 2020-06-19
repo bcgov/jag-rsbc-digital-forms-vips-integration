@@ -25,7 +25,7 @@ public class IRPQueryServiceController {
 	@Autowired 
 	IRPQueryService irpService; 
 	
-	@RequestMapping(value ="/{id}", method = RequestMethod.GET)
+	@RequestMapping(value ="/{id}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<JSONResponse<String>> irpGet(@PathVariable (value="id",required=true) Long id)  {
 	    String data = irpService.getIRP(id);
 	    JSONResponse<String> resp = new JSONResponse<String>(data);
