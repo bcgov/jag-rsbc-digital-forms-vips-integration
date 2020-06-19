@@ -27,6 +27,9 @@ public class JSONResponse<T> {
 	@JsonProperty("error")
 	private JSONError error;
 	
+	public JSONResponse(){ 
+	};
+	
 	public JSONResponse(T data){
 		this.data = data; 
 	};
