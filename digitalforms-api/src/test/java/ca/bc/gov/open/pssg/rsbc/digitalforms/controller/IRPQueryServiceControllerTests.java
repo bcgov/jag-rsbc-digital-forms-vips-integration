@@ -1,48 +1,73 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.DisplayName;
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
 
+
+/**
+ * 
+ * IRP Query Service Controller Tests. 
+ * 
+ * @author shaunmillargov
+ *
+ */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 class IRPQueryServiceControllerTests {
 
-	@LocalServerPort
-	private int port;
-	
-	@Autowired
-	private TestRestTemplate restTemplate;
+	private final String JSON_RESPONSE_GOOD = "IRP result";
 
-	@Test
-	@DisplayName("IRPQuery - whenValidResponse")
-	public void whenValidResponseTest() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/digitalforms/IRP/1",
-				String.class))
-				.contains("{\"resp\":\"success\",\"data\":\"IRP result\"}");
+	@MockBean
+	private IRPQueryServiceImpl irpService;
+
+	private IRPQueryServiceController controller;
+
+	@BeforeEach
+	public void init() {
+		controller = new IRPQueryServiceController(irpService);
+		when(irpService.getIRP(1L)).thenReturn(JSON_RESPONSE_GOOD);
 	}
-	
-	@DisplayName("IRPQuery - whenValidReturns201")
-	@SuppressWarnings("rawtypes")
+
+	// Test irpGet for 201 returned on success.
+	// TODO - update when fully functional
 	@Test
-	public void whenValidReturns201() throws Exception {
-		
-		ResponseEntity<JSONResponse> responseEntity =
-			    restTemplate.getForEntity("http://localhost:" + port + "/digitalforms/IRP/1", JSONResponse.class);
-		
-		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+	void irpGetReturns201() {
+		ResponseEntity<JSONResponse<String>> resp = controller.irpGet(1L);
+		Assert.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
+	}
+
+	// Test irpGet for proper JSON reponse on success.
+	// TODO - update when fully functional
+	@Test
+	void irpGetReturnsSuccess() {
+		ResponseEntity<JSONResponse<String>> resp = controller.irpGet(1L);
+		Assert.assertEquals(JSON_RESPONSE_GOOD, resp.getBody().getData());
+	}
+
+	// Test irpGet for IRP not found.
+	// TODO - update when fully functional
+	@Test
+	void irpGetReturnsNotFound() {
+		// test for not found
+	}
+
+	// Test irpGet for exception state.
+	// TODO - update when fully functional
+	@Test
+	void irpGetReturnException() {
+		// test for exception 
 	}
 
 }
