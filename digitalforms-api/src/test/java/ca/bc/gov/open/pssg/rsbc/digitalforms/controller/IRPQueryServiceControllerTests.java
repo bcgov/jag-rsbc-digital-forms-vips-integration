@@ -28,6 +28,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
 class IRPQueryServiceControllerTests {
 
 	private final String JSON_RESPONSE_GOOD = "IRP result";
+	private final Long IRP_TEST_ID = 1L;
 
 	@MockBean
 	private IRPQueryServiceImpl irpService;
@@ -44,7 +45,7 @@ class IRPQueryServiceControllerTests {
 	// TODO - update when fully functional
 	@Test
 	void irpGetReturns201() {
-		ResponseEntity<JSONResponse<String>> resp = controller.irpGet(1L);
+		ResponseEntity<JSONResponse<String>> resp = controller.irpGet(IRP_TEST_ID);
 		Assert.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
 
