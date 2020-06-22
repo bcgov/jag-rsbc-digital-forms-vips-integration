@@ -8,6 +8,7 @@ class DigitalFormsStarterApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Context loaded");
 	}
 
 }
