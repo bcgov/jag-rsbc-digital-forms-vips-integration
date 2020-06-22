@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPReviewFormRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPReviewService;
 
 /**
  * 
@@ -27,10 +27,10 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryService;
 public class IRPReviewController {
 
 	@Autowired
-	IRPQueryService irpService;
+	IRPReviewService irpService;
 
 	@GetMapping(value = "/{irpNoticeNumber}/application")
-	public ResponseEntity<JSONResponse<String>> irpReviewGet(
+	public ResponseEntity<JSONResponse<String>> irpReviewFormGet(
 			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
 			@RequestBody IRPReviewFormRequest formData) {
 		String data = irpService.getIRPReviewForm(irpNoticeNumber, formData);
@@ -39,7 +39,7 @@ public class IRPReviewController {
 	}
 
 	@PostMapping(value = "/{irpNoticeNumber}/application")
-	public ResponseEntity<JSONResponse<String>> irpReviewPost(
+	public ResponseEntity<JSONResponse<String>> irpReviewFormPost(
 			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
 			@RequestBody IRPReviewFormRequest formData) {
 		String data = irpService.postIRPReviewForm(irpNoticeNumber, formData);
@@ -48,12 +48,12 @@ public class IRPReviewController {
 	}
 
 	@PatchMapping(value = "/{irpNoticeNumber}/application/{id}")
-	public ResponseEntity<JSONResponse<String>> irpReviewPatch(
+	public ResponseEntity<JSONResponse<String>> irpReviewFormPatch(
 			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
 			@PathVariable(value = "id", required = true) Long id, @RequestBody IRPReviewFormRequest formData) {
 		String data = irpService.patchIRPReviewForm(irpNoticeNumber, id, formData);
 		JSONResponse<String> resp = new JSONResponse<>(data);
-		return new ResponseEntity<>(resp, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
 }
