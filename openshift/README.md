@@ -102,6 +102,12 @@ oc process -o=yaml \
   -p SPRING_PROFILES_ACTIVE= \
   | oc apply -f - -n ${TARGET_NAMESPACE}
 
+oc process -o=yaml \
+  -f ${GIT_URL}/openshift/templates/resources/secrets/splunk-config.yaml \
+  -p URL=  \
+  -p TOKEN=  \
+  | oc apply -f - -n ${TARGET_NAMESPACE}
+
 # Image stream
 oc process -o=yaml \
   -f ${GIT_URL}/openshift/templates/builds/images/generic.yaml \

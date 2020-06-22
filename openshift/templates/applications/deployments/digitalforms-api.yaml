@@ -55,6 +55,8 @@ objects:
         - envFrom:
           - secretRef:
               name: digitalforms-api
+          - secretRef:
+              name: splunk-config
           image: ''
           imagePullPolicy: IfNotPresent
           name: digitalforms-api
