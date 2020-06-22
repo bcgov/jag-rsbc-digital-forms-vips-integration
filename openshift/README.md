@@ -126,6 +126,13 @@ oc process -o=yaml \
   -p namespacePrefix=${NAMESPACE_PREFIX}  \
   | oc apply -f - -n ${TOOLS_NAMESPACE}
 ```
+Change route spec.host url to private/public as per environment
+
+|  Scope |  Url |
+|----------|----------------------|
+| Public | *.pathfinder.gov.bc.ca |
+| Private | *.pathfinder.bcgov |
+
 ### Scans Pipeline
 ```shell script
 export NAMESPACE_PREFIX=
