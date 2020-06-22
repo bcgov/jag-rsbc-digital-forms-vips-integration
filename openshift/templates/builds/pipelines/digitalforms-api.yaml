@@ -58,7 +58,7 @@ objects:
           value: master
         - name: GIT_CREDENTIALS_ID
         - name: JENKINS_POD
-          value: maven35
+          value: maven
         - name: SONAR_TOKEN
         - name: SONAR_CREDENTIAL_ID
         - name: SONAR_URL
