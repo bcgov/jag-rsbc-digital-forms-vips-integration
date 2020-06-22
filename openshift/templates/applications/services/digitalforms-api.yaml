@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: digitalforms-api-template
+message: |-
+  A Jenkins server must be instantiated in this project to manage
+  the Pipeline BuildConfig created by this template. You will be able to log in to
+  it using your OpenShift user credentials.
+metadata:
+  annotations:
+    openshift.io/display-name: digitalforms-api template
+    description: |-
+      This is a template for digitalforms-api.
+    iconClass: icon-jenkins
+    tags: instant-app,jenkins
+  name: digitalforms-api-template
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Exposes and load balances the application pods
+    labels:
+      app: digitalforms-api
+      template: meta-service
+    name: digitalforms-api
+  spec:
+    ports:
+    - name: web
+      port: 80
+      protocol: TCP
+      targetPort: 8082
+    selector:
+      deploymentconfig: digitalforms-api
+    sessionAffinity: None
+    type: ClusterIP
