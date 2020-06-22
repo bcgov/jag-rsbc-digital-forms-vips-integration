@@ -45,6 +45,16 @@ objects:
     resources:
       requests:
         storage: ${VOLUME_CAPACITY}
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    name: jenkins
+  spec:
+    tags:
+      - from:
+          kind: DockerImage
+          name: registry.access.redhat.com/openshift3/jenkins-2-rhel7:v3.11
+        name: latest
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -212,8 +222,8 @@ parameters:
 - description: The OpenShift Namespace where the Jenkins ImageStream resides.
   displayName: Jenkins ImageStream Namespace
   name: NAMESPACE
-  value: openshift
+  value:
 - description: Name of the ImageStreamTag to be used for the Jenkins image.
   displayName: Jenkins ImageStreamTag
   name: JENKINS_IMAGE_STREAM_TAG
-  value: jenkins:2
+  value: jenkins:latest

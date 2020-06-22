@@ -1,27 +1,19 @@
 # Bootstrap
 Setup openshift tools
 ## Network policies
+If Aporato is enabled then apply network policies from
+https://github.com/BCDevOps/platform-services/tree/master/security/aporeto/docs
 ```shell script
 export NAMESPACE_PREFIX=
 export NAMESPACE_SUFFIX=
 export TARGET_NAMESPACE=${NAMESPACE_PREFIX}-${NAMESPACE_SUFFIX}
 export TOOLS_NAMESPACE=${NAMESPACE_PREFIX}-tools
-export GIT_REPO="bcgov/jag-rsbc-digital-forms-vips-integration"
+export GIT_REPO="BCDevOps/platform-services"
 export GIT_BRANCH="master"
 export GIT_URL="https://raw.githubusercontent.com/${GIT_REPO}/${GIT_BRANCH}"
 
 oc process -o=yaml \
-  -f ${GIT_URL}/openshift/templates/resources/other_resources/network_security_policy/intra-namespace-comms.yaml \
-  -p namespace=${TARGET_NAMESPACE} \
-  | oc apply -f - -n ${TOOLS_NAMESPACE}
-  
-oc process -o=yaml \
-  -f ${GIT_URL}/openshift/templates/resources/other_resources/network_security_policy/int-cluster-k8s-api-comms.yaml \
-  -p namespace=${TARGET_NAMESPACE} \
-  | oc apply -f - -n ${TOOLS_NAMESPACE}
-  
-oc process -o=yaml \
-  -f ${GIT_URL}/openshift/templates/resources/other_resources/network_security_policy/egress-internet.yaml \
+  -f ${GIT_URL}/security/aporeto/docs/sample/quickstart-nsp.yaml \
   -p namespace=${TARGET_NAMESPACE} \
   | oc apply -f - -n ${TOOLS_NAMESPACE}
 ```
