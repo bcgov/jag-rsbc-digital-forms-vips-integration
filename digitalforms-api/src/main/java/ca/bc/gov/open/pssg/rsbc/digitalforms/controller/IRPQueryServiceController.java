@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
 
 /**
  * 
@@ -23,8 +24,12 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryService;
 public class IRPQueryServiceController {
 	
 	@Autowired 
-	IRPQueryService irpService; 
+	private IRPQueryService irpService; 
 	
+	public IRPQueryServiceController(IRPQueryServiceImpl irpService) {
+		this.irpService = irpService;
+	}
+
 	@RequestMapping(value ="/{id}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<JSONResponse<String>> irpGet(@PathVariable (value="id",required=true) Long id)  {
 	    String data = irpService.getIRP(id);
