@@ -53,6 +53,7 @@ class IRPReviewControllerTests {
 		Assert.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
+	@DisplayName("Post success - IRPReviewController")
 	@Test
 	void irpPostFormSuccess() {
 		when(irpService.postIRPReviewForm(any(), any())).thenReturn(JSON_RESPONSE_GOOD);
@@ -60,6 +61,7 @@ class IRPReviewControllerTests {
 		Assert.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
 
+	@DisplayName("Patch success - IRPReviewController")
 	@Test
 	void irpPatchFormSuccess() {
 		when(irpService.patchIRPReviewForm(any(), any(), any())).thenReturn(JSON_RESPONSE_GOOD);
