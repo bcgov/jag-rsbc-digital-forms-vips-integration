@@ -66,7 +66,7 @@ class IRPReviewControllerTests {
 	void irpPatchFormSuccess() {
 		when(irpService.patchIRPReviewForm(any(), any(), any())).thenReturn(JSON_RESPONSE_GOOD);
 		ResponseEntity<JSONResponse<String>> resp = controller.irpReviewFormPatch(1L, 1L, new IRPReviewFormRequest());
-		Assert.assertEquals(HttpStatus.NO_CONTENT, resp.getStatusCode());
+		Assert.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
 }
