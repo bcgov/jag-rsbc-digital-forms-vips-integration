@@ -4,6 +4,9 @@ on: [push]
 
 jobs:
   build:
+    env:
+      DIGITALFORMS_SWAGGER_ENABLED: true
+
     runs-on: ubuntu-latest
 
     steps:
