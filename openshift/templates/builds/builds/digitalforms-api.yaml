@@ -56,6 +56,9 @@ objects:
       type: Git
     strategy:
       sourceStrategy:
+        env:
+          - name: DIGITALFORMS_SWAGGER_ENABLED
+            value: 'true'
         from:
           kind: ImageStreamTag
           name: java-s2i:8
