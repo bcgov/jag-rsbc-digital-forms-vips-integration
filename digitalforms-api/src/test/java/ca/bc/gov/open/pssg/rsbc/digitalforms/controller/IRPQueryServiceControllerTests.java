@@ -41,12 +41,12 @@ class IRPQueryServiceControllerTests {
 		when(irpService.getIRP(1L)).thenReturn(JSON_RESPONSE_GOOD);
 	}
 
-	// Test irpGet for 201 returned on success.
+	// Test irpGet for 200 returned on success.
 	// TODO - update when fully functional
 	@Test
-	void irpGetReturns201() {
+	void irpGetReturns200() {
 		ResponseEntity<JSONResponse<String>> resp = controller.irpGet(IRP_TEST_ID);
-		Assert.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
+		Assert.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
 	// Test irpGet for proper JSON reponse on success.
