@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPReviewFormRequest;
@@ -30,6 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 class IRPReviewControllerTests {
 
 	private final String JSON_RESPONSE_GOOD = "IRP review form";
