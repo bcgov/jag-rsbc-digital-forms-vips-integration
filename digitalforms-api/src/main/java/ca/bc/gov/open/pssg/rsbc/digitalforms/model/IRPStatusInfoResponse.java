@@ -12,22 +12,22 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "IRPInfo" })
+@JsonPropertyOrder({ "iRPInfo" })
 public class IRPStatusInfoResponse {
 
-	@JsonProperty("IRPInfo")
+	@JsonProperty("iRPInfo")
 	private IRPInfo iRPInfo;
 	
 	public IRPStatusInfoResponse(IRPInfo irpInfo) {
 		this.iRPInfo = irpInfo;
 	}
 	
-	@JsonProperty("IRPInfo")
+	@JsonProperty("iRPInfo")
 	public IRPInfo getIRPInfo() {
 		return iRPInfo;
 	}
 
-	@JsonProperty("IRPInfo")
+	@JsonProperty("iRPInfo")
 	public void setIRPInfo(IRPInfo iRPInfo) {
 		this.iRPInfo = iRPInfo;
 	}

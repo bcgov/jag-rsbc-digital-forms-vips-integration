@@ -12,16 +12,16 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "effectiveDate", "driversLicenceSeizedYN", "SurnameNm", "IRPStatus", "cancelledYN" })
+@JsonPropertyOrder({ "effectiveDate", "driversLicenceSeizedYN", "surnameNm", "iRPStatus", "cancelledYN" })
 public class IRPInfo {
 
 	@JsonProperty("effectiveDate")
 	private String effectiveDate;
 	@JsonProperty("driversLicenceSeizedYN")
 	private String driversLicenceSeizedYN;
-	@JsonProperty("SurnameNm")
+	@JsonProperty("surnameNm")
 	private String surnameNm;
-	@JsonProperty("IRPStatus")
+	@JsonProperty("iRPStatus")
 	private String iRPStatus;
 	@JsonProperty("cancelledYN")
 	private String cancelledYN;
@@ -54,22 +54,22 @@ public class IRPInfo {
 		this.driversLicenceSeizedYN = driversLicenceSeizedYN;
 	}
 
-	@JsonProperty("SurnameNm")
+	@JsonProperty("surnameNm")
 	public String getSurnameNm() {
 		return surnameNm;
 	}
 
-	@JsonProperty("SurnameNm")
+	@JsonProperty("surnameNm")
 	public void setSurnameNm(String surnameNm) {
 		this.surnameNm = surnameNm;
 	}
 
-	@JsonProperty("IRPStatus")
+	@JsonProperty("iRPStatus")
 	public String getIRPStatus() {
 		return iRPStatus;
 	}
 
-	@JsonProperty("IRPStatus")
+	@JsonProperty("iRPStatus")
 	public void setIRPStatus(String iRPStatus) {
 		this.iRPStatus = iRPStatus;
 	}

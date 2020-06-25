@@ -30,12 +30,15 @@ public class IRPQueryServiceController {
 	@Autowired 
 	private IRPQueryService irpService; 
 	
+	// Provides generic type class defs for Swagger 2. 
+	private class ResponseClass extends JSONResponse<IRPStatusInfoResponse>{};
+	
 	public IRPQueryServiceController(IRPQueryServiceImpl irpService) {
 		this.irpService = irpService;
 	}
 
 	@ApiOperation(value = "Get IRP status", response = JSONResponse.class, tags={ "IRP Query" }) 
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = JSONResponse.class)})
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ResponseClass.class)})
 	@RequestMapping(value ="/{id}",
 		method = RequestMethod.GET, 
 		produces = "application/json"

@@ -17,7 +17,7 @@ public class IRPQueryServiceImpl implements IRPQueryService {
 	public IRPStatusInfoResponse getIRP(Long id) {
 		
 		// TODO Service to be built out here
-		return new IRPStatusInfoResponse(new IRPInfo( "01/02/2020", "0123456", "Rothschild:", "Decided", "N")); 
+		return new IRPStatusInfoResponse(new IRPInfo( "01/02/2020", "0123456", "Rothschild", "Decided", "N")); 
 	}
 	
 }
