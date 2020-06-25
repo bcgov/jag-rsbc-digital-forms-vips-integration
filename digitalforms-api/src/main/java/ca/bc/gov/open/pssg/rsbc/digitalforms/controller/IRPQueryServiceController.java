@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
@@ -39,9 +40,9 @@ public class IRPQueryServiceController {
 		method = RequestMethod.GET, 
 		produces = "application/json"
 	)
-	public ResponseEntity<JSONResponse<String>> irpGet(@PathVariable (value="id",required=true) Long id)  {
-	    String data = irpService.getIRP(id);
-	    JSONResponse<String> resp = new JSONResponse<String>(data);
-	    return new ResponseEntity<JSONResponse<String>>(resp, HttpStatus.OK);
+	public ResponseEntity<JSONResponse<IRPStatusInfoResponse>> irpGet(@PathVariable (value="id",required=true) Long id)  {
+		IRPStatusInfoResponse data = irpService.getIRP(id);
+	    JSONResponse<IRPStatusInfoResponse> resp = new JSONResponse<IRPStatusInfoResponse>(data);
+	    return new ResponseEntity<JSONResponse<IRPStatusInfoResponse>>(resp, HttpStatus.OK);
 	}
 }

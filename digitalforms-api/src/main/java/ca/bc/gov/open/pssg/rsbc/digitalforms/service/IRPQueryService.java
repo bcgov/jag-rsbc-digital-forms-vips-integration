@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
+
 /**
  * 
  * IRP Query Service Interface 
@@ -9,7 +11,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
  */
 public interface IRPQueryService {
 
-	public String getIRP(Long id);
+	public IRPStatusInfoResponse getIRP(Long id);
 	
 }
 
