@@ -13,7 +13,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.config.ConfigProperties;
  * 
  * This class enforces Basic Auth on all API operations.  
  * 
- * It is assumed all API operations are prefixed with /api/*	   (Basic Auth)
+ * It is assumed all API operations are prefixed with /IRP/*	   (Basic Auth)
  * It is assumed all Actuator calls are prefixed with /actuator/*  (No security)
  * 
  * @author shaunmillargov
@@ -23,6 +23,16 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.config.ConfigProperties;
 @EnableConfigurationProperties(ConfigProperties.class)
 public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	private static final String[] AUTH_WHITELIST = {
+
+            // -- Non protected Swagger ui, actuator endpoints. 
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**",
+            "/actuator/**"
+    };
+	
 	@Autowired
 	private ConfigProperties properties;
 	
@@ -30,8 +40,8 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable().authorizeRequests()
-			.antMatchers("/api/**").authenticated()
-			.antMatchers("/actuator/**").permitAll()
+			//.antMatchers("/api/**").authenticated() // - TODO - uncomment and updated after dev to enable basic auth for all API operations. 
+			.antMatchers(AUTH_WHITELIST).permitAll()
 			.and()
 			.httpBasic();
 	}
