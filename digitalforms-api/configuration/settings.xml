@@ -7,12 +7,12 @@
 
   <servers>
     <server>
-      <id>digitalforms-snapshot</id>
+      <id>digitalforms-snapshots</id>
       <username>${env.NEXUS_ADMIN_USER}</username>
       <password>${env.NEXUS_ADMIN_PASSWORD}</password>
     </server>
     <server>
-      <id>digitalforms-release</id>
+      <id>digitalforms-releases</id>
       <username>${env.NEXUS_ADMIN_USER}</username>
       <password>${env.NEXUS_ADMIN_PASSWORD}</password>
     </server>

@@ -23,12 +23,12 @@
 <!-- moved repositories to nexus3-->
 	<distributionManagement>
 		<snapshotRepository>
-			<id>digitalforms-snapshot</id>
-			<url>${env.NEXUS_URL}/repository/digitalforms-snapshot/</url>
+			<id>digitalforms-snapshots</id>
+			<url>${env.NEXUS_URL}/repository/digitalforms-snapshots/</url>
     	</snapshotRepository>
     	<repository>
-      		<id>digitalforms-release</id>
-      		<url>${env.NEXUS_URL}/repository/digitalforms-release/</url>
+      		<id>digitalforms-releases</id>
+      		<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
     	</repository>
     </distributionManagement>
 

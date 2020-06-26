@@ -43,25 +43,25 @@ curl -u admin:"${NEXUS_ADMIN_PASSWORD}" -X PUT "${NEXUS_URL}/service/rest/beta/s
 # Check if repositories already exists
 
 # Hosted
-REPO_ID="digitalforms-snapshot"
+REPO_ID="digitalforms-snapshots"
 echo "Checking proxy repository $REPO_ID exists ..."
 if curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X GET "${NEXUS_URL}/service/rest/beta/repositories" -H  "accept: application/json" | jq '.[]?.name' | grep -q "${REPO_ID}"
 then
   echo "Repository $REPO_ID exists"
 else
   echo "Creating repository $REPO_ID..."
-  curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X POST "${NEXUS_URL}/service/rest/beta/repositories/maven/hosted" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"digitalforms-snapshot\",  \"online\": true,  \"storage\": {    \"blobStoreName\": \"default\",    \"strictContentTypeValidation\": true,    \"writePolicy\": \"allow_once\"  },  \"cleanup\": {    \"policyNames\": [      \"string\"    ]  },  \"maven\": {    \"versionPolicy\": \"MIXED\",    \"layoutPolicy\": \"STRICT\"  }}"
+  curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X POST "${NEXUS_URL}/service/rest/beta/repositories/maven/hosted" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"digitalforms-snapshots\",  \"online\": true,  \"storage\": {    \"blobStoreName\": \"default\",    \"strictContentTypeValidation\": true,    \"writePolicy\": \"allow_once\"  },  \"cleanup\": {    \"policyNames\": [      \"string\"    ]  },  \"maven\": {    \"versionPolicy\": \"MIXED\",    \"layoutPolicy\": \"STRICT\"  }}"
 fi
 
 # Hosted
-REPO_ID="digitalforms-release"
+REPO_ID="digitalforms-releases"
 echo "Checking proxy repository $REPO_ID exists ..."
 if curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X GET "${NEXUS_URL}/service/rest/beta/repositories" -H  "accept: application/json" | jq '.[]?.name' | grep -q "${REPO_ID}"
 then
   echo "Repository $REPO_ID exists"
 else
   echo "Creating repository $REPO_ID..."
-  curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X POST "${NEXUS_URL}/service/rest/beta/repositories/maven/hosted" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"digitalforms-release\",  \"online\": true,  \"storage\": {    \"blobStoreName\": \"default\",    \"strictContentTypeValidation\": true,    \"writePolicy\": \"allow_once\"  },  \"cleanup\": {    \"policyNames\": [      \"string\"    ]  },  \"maven\": {    \"versionPolicy\": \"MIXED\",    \"layoutPolicy\": \"STRICT\"  }}"
+  curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X POST "${NEXUS_URL}/service/rest/beta/repositories/maven/hosted" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"digitalforms-releases\",  \"online\": true,  \"storage\": {    \"blobStoreName\": \"default\",    \"strictContentTypeValidation\": true,    \"writePolicy\": \"allow_once\"  },  \"cleanup\": {    \"policyNames\": [      \"string\"    ]  },  \"maven\": {    \"versionPolicy\": \"MIXED\",    \"layoutPolicy\": \"STRICT\"  }}"
 fi
 
 # Proxy
@@ -94,6 +94,6 @@ then
   echo "Repository $REPO_ID exists"
 else
   echo "Creating repository $REPO_ID..."
-  curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X POST "${NEXUS_URL}/service/rest/beta/repositories/maven/group" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"digitalforms-group\",  \"online\": true,  \"storage\": {    \"blobStoreName\": \"default\",    \"strictContentTypeValidation\": true  },  \"group\": {    \"memberNames\": [      \"maven-central\", \"digitalforms-snapshot\", \"digitalforms-release\", \"splunk-proxy\", \"dps-group-proxy\"    ]  }}"
+  curl -sS -u admin:"${NEXUS_ADMIN_PASSWORD}" -X POST "${NEXUS_URL}/service/rest/beta/repositories/maven/group" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"digitalforms-group\",  \"online\": true,  \"storage\": {    \"blobStoreName\": \"default\",    \"strictContentTypeValidation\": true  },  \"group\": {    \"memberNames\": [      \"maven-central\", \"digitalforms-snapshots\", \"digitalforms-releases\", \"splunk-proxy\", \"dps-group-proxy\"    ]  }}"
 fi
 
