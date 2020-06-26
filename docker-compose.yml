@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 services:
   #############################################################################################
   ###                                 SPLUNK DEV BOX                                        ###
@@ -34,10 +34,10 @@ services:
       - POSTGRES_USER=sonar
       - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
       - POSTGRES_DB=sonar
-    networks:
-      - rsbc-df-vips
     volumes:
       - postgresql-data:/var/lib/pgsql/data
+    networks:
+      - rsbc-df-vips
 
   #############################################################################################
   ###                                 SONARQUBE                                             ###
@@ -51,14 +51,14 @@ services:
       - SONAR_FORCEAUTHENTICATION=true
     ports:
       - "9000:9000"
-    networks:
-      - rsbc-df-vips
     volumes:
       - sonar-data:/opt/sonarqube/data
       - sonar-logs:/opt/sonarqube/logs
       - sonar-temp:/opt/sonarqube/temp
       - sonar-plugins:/opt/sonarqube/extensions/plugins
     restart: always
+    networks:
+      - rsbc-df-vips
 
   #############################################################################################
   ###                                 SONARQUBE INIT                                        ###
@@ -72,11 +72,11 @@ services:
       - SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}
       - SONAR_PASSWORD=${SONAR_PASSWORD}
       - SONAR_URL=${SONAR_URL}
-    networks:
-      - rsbc-df-vips
     volumes:
       - sonar-plugins:/opt/plugins
       - sonar-logs:/opt/logs
+    networks:
+      - rsbc-df-vips
 
   #############################################################################################
   ###                               Digital forms API                                       ###
@@ -84,6 +84,12 @@ services:
   digitalforms-api:
     build:
       context: ./digitalforms-api
+      network: jag-rsbc-digital-forms-vips-integration_rsbc-df-vips-nexus
+      args:
+        - NEXUS_ADMIN_USER=${NEXUS_ADMIN_USER}
+        - NEXUS_ADMIN_PASSWORD=${NEXUS_ADMIN_PASSWORD}
+        - DIGITALFORMS_SWAGGER_ENABLED=${DIGITALFORMS_SWAGGER_ENABLED}
+        - NEXUS_URL=${NEXUS_URL}
     environment:
       - DIGITALFORMS_BASICAUTH_PASSWORD=${DIGITALFORMS_BASICAUTH_PASSWORD}
       - DIGITALFORMS_BASICAUTH_USER=${DIGITALFORMS_BASICAUTH_USER}
@@ -99,13 +105,10 @@ services:
       - SONAR_URL=${SONAR_URL}
     ports:
       - "8082:8082"
-    volumes:
-      - maven-repository:/root/.m2/repository
     networks:
       - rsbc-df-vips
 
 volumes:
-  maven-repository:
   postgresql-data:
   sonar-data:
   sonar-logs:

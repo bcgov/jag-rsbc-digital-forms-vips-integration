@@ -20,17 +20,17 @@
 		<springfox-version>2.9.2</springfox-version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>dps-group</id>
-			<url>http://nexus-pjztlm-tools.pathfinder.gov.bc.ca/repository/dps-group/</url>
-		</repository>
-		<repository>
-			<id>splunk-artifactory</id>
-			<name>Splunk Releases</name>
-			<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
-		</repository>
-	</repositories>
+<!-- moved repositories to nexus3-->
+	<distributionManagement>
+		<snapshotRepository>
+			<id>digitalforms-snapshot</id>
+			<url>${env.NEXUS_URL}/repository/digitalforms-snapshot/</url>
+    	</snapshotRepository>
+    	<repository>
+      		<id>digitalforms-release</id>
+      		<url>${env.NEXUS_URL}/repository/digitalforms-release/</url>
+    	</repository>
+    </distributionManagement>
 
 	<dependencies>
 		<dependency>
@@ -147,15 +147,6 @@
 		<profile>
 
 			<id>openshift</id>
-
-			<repositories>
-				<repository>
-					<id>splunk-artifactory</id>
-					<name>Splunk Releases</name>
-					<url>http://splunk.jfrog.io/splunk/ext-releases-local</url>
-				</repository>
-			</repositories>
-
 			<dependencies>
 				<dependency>
 					<groupId>com.splunk.logging</groupId>
@@ -172,6 +163,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+			   <artifactId>maven-deploy-plugin</artifactId>
+			   <version>2.8.2</version>
+			   <executions>
+				  <execution>
+					 <id>default-deploy</id>
+					 <phase>deploy</phase>
+					 <goals>
+						<goal>deploy</goal>
+					 </goals>
+				  </execution>
+			   </executions>
 			</plugin>
 		</plugins>
 	</build>
