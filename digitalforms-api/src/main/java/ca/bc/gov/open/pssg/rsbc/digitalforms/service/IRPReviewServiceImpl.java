@@ -15,7 +15,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPReviewFormRequest;
 public class IRPReviewServiceImpl implements IRPReviewService {
 
 	@Override
-	public String getIRPReviewForm(Long irpNoticeNumber, IRPReviewFormRequest formData) {
+	public String getIRPReviewForm(Long irpNoticeNumber) {
 		// TODO Service to be built out here
 		return "IRP review get";
 	}
