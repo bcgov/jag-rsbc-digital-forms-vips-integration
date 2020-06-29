@@ -22,7 +22,11 @@ public class TransactionInfo {
 	
 	@JsonProperty("cardType")
 	private String cardType;
-
+	
+	public TransactionInfo(String cardType, String totalPrice) {
+		this.cardType = cardType; 
+		this.totalPrice = totalPrice;
+	}
 
 	@JsonProperty("totalPrice")
 	public String getTotalPrice() {

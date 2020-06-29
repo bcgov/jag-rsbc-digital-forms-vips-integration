@@ -50,8 +50,8 @@ class IRPReviewControllerTests {
 	@DisplayName("Get success - IRPReviewController")
 	@Test
 	void irpGetFormSuccess() {
-		when(irpService.getIRPReviewForm(any(), any())).thenReturn(JSON_RESPONSE_GOOD);
-		ResponseEntity<JSONResponse<String>> resp = controller.irpReviewFormGet(1L, new IRPReviewFormRequest());
+		when(irpService.getIRPReviewForm(any())).thenReturn(JSON_RESPONSE_GOOD);
+		ResponseEntity<JSONResponse<String>> resp = controller.irpReviewFormGet(1L);
 		Assert.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
