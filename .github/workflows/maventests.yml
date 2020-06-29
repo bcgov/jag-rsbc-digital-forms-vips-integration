@@ -16,5 +16,5 @@ jobs:
         with:
           java-version: 1.8
       - name: Build with Maven
-        run: mvn clean test
+        run: mvn clean test -Pdefault-profile
         working-directory: digitalforms-api
