@@ -36,9 +36,8 @@ public class IRPReviewController {
 	@ApiOperation(value = "Get IRP Review Form", response = JSONResponse.class) 
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = JSONResponse.class)})
 	public ResponseEntity<JSONResponse<String>> irpReviewFormGet(
-			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
-			@RequestBody(required = true) IRPReviewFormRequest formData) {
-		String data = irpService.getIRPReviewForm(irpNoticeNumber, formData);
+			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber) {
+		String data = irpService.getIRPReviewForm(irpNoticeNumber);
 		JSONResponse<String> resp = new JSONResponse<>(data);
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
