@@ -30,7 +30,7 @@ docker-compose up --build
 ```
 Or
 ```
-mvn clean install  
+mvn clean install -Pdefault-profile
 mvn package -P all  
 ```  
 
