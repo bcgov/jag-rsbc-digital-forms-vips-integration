@@ -17,6 +17,10 @@ public class IRPPaymentTransRequest {
 
 	@JsonProperty("transactionInfo")
 	private TransactionInfo transactionInfo;
+	
+	public IRPPaymentTransRequest(TransactionInfo transInfo) {
+		this.transactionInfo = transInfo; 
+	}
 
 	@JsonProperty("transactionInfo")
 	public TransactionInfo getTransactionInfo() {
