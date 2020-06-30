@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.digitalforms.ordsclient;
+package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient;
 
 /**
  * 

@@ -19,6 +19,7 @@
         <profile>
             <id>all</id>
             <modules>
+            	<module>digitalforms-ords-client</module>
                 <module>digitalforms-api</module>
             </modules>
         </profile>

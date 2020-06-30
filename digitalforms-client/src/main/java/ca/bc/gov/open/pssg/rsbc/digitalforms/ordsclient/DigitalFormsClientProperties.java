@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.digitalforms.ordsclient;
+package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author sivakaruna
  *
  */
-@ConfigurationProperties(prefix = "digital.forms.client")
+@ConfigurationProperties(prefix = "digitalforms.client")
 public class DigitalFormsClientProperties {
 
 	private String basePath;

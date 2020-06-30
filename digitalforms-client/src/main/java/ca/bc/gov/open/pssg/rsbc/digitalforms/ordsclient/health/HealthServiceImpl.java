@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.digitalforms.ordsclient.health;
+package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health;
 
-import ca.bc.gov.open.jag.digitalforms.ordsclient.api.HealthApi;
-import ca.bc.gov.open.jag.digitalforms.ordsclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.digitalforms.ordsclient.api.model.HealthOrdsResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.HealthApi;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.handler.ApiException;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.HealthOrdsResponse;
 
 /**
  * Health Service Implementation using ORDS api

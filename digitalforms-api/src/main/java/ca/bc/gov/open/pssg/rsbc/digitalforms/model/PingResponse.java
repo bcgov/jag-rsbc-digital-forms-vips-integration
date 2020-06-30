@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.json.simple.JSONObject;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -14,18 +16,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class PingResponse {
 
 	@JsonProperty("responseMessage")
-	private String responseMessage;
-
+	private JSONObject responseMessage;
+	
 //@JsonProperty("timeDt")
 //private String timeDt;
 
 	@JsonProperty("responseMessage")
-	public String getResponseMessage() {
+	public JSONObject getResponseMessage() {
 		return responseMessage;
 	}
 
 	@JsonProperty("responseMessage")
-	public void setResponseMessage(String responseMessage) {
+	public void setResponseMessage(JSONObject responseMessage) {
 		this.responseMessage = responseMessage;
 	}
 

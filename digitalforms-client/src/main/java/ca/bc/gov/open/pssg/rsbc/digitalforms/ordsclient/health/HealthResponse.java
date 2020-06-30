@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.digitalforms.ordsclient.health;
+package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health;
 
 /**
  * Health Response

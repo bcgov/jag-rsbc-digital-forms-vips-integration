@@ -9,14 +9,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
-	<artifactId>digitalforms-client</artifactId>
+	<artifactId>digitalforms-ords-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>digitalforms-client</name>
+	<name>digitalforms-ords-client</name>
 	<description>Java client for RoadSafetyBC DigitalForms database ORDS client</description>
 	
 	<properties>
 		<java.version>1.8</java.version>
-		<default-package>ca.bc.gov.open.jag.digitalforms.ordsclient</default-package>
+		<default-package>ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient</default-package>
 		<maven-plugin-version>1.0.0</maven-plugin-version>
 		<org.glassfish.jersey.version>2.29</org.glassfish.jersey.version>
 		<com.fasterxml.jackson.version>2.11.0</com.fasterxml.jackson.version>

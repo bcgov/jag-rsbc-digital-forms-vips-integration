@@ -3,7 +3,7 @@ info:
   title: ORDS generated API for web
   version: 1.0.0
 host: dev.jag.gov.bc.ca
-basePath: /ords/deva/vipsords/web
+basePath: "/ords/deva/rsdfrmords/web"
 schemes:
 - http
 produces:
@@ -13,7 +13,6 @@ securityDefinitions:
     type: basic
     description: HTTP Basic Authentication.
 tags:
-- name: Document
 - name: Health
 paths:
   /health:
