@@ -1,0 +1,51 @@
+swagger: '2.0'
+info:
+  title: ORDS generated API for web
+  version: 1.0.0
+host: dev.jag.gov.bc.ca
+basePath: /ords/deva/vipsords/web
+schemes:
+- http
+produces:
+- application/json
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication.
+tags:
+- name: Document
+- name: Health
+paths:
+  /health:
+    get:
+      tags:
+      - Health
+      security:
+      - basicAuth: []
+      operationId: health
+      description: Dummy endpoint to check that API calls are working
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/healthOrdsResponse'
+definitions:
+  healthOrdsResponse:
+    type: object
+    required:
+    - appid
+    - method
+    - status
+    - host
+    - instance
+    properties:
+      appid:
+        type: string
+      method:
+        type: string
+      status:
+        type: string
+      host:
+        type: string
+      instance:
+        type: string
