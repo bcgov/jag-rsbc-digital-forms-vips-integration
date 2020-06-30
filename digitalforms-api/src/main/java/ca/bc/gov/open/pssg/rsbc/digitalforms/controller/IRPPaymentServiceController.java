@@ -48,7 +48,7 @@ public class IRPPaymentServiceController {
 	)	
 	public ResponseEntity<JSONResponse<Boolean>> setIRPReviewPaid(@PathVariable (value="irpNoticeNumber", required=true) Long irpNoticeNumber, @RequestBody (required=true) IRPPaymentTransRequest paymentInfo)  {
 	    boolean data = irpPaymentService.setIRPReviewPaid(irpNoticeNumber, paymentInfo);
-	    JSONResponse<Boolean> resp = new JSONResponse<Boolean>(data);
-	    return new ResponseEntity<JSONResponse<Boolean>>(resp, HttpStatus.OK);
+	    JSONResponse<Boolean> resp = new JSONResponse<>(data);
+	    return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 }
