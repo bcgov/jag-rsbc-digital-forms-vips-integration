@@ -12,6 +12,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -25,20 +26,21 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/IRP/")
+@Api(value = "IRP Query", tags = { "IRP Query" })
 public class IRPQueryServiceController {
 	
 	@Autowired 
 	private IRPQueryService irpService; 
 	
 	// Provides generic type class defs for Swagger 2. 
-	private class ResponseClass extends JSONResponse<IRPStatusInfoResponse>{};
+	private class IRPQuerySwaggerResponse extends JSONResponse<IRPStatusInfoResponse>{};
 	
 	public IRPQueryServiceController(IRPQueryServiceImpl irpService) {
 		this.irpService = irpService;
 	}
 
-	@ApiOperation(value = "Get IRP status", response = JSONResponse.class, tags={ "IRP Query" }) 
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ResponseClass.class)})
+	@ApiOperation(value = "Get IRP status", response = IRPQuerySwaggerResponse.class) 
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = IRPQuerySwaggerResponse.class)})
 	@RequestMapping(value ="/{id}",
 		method = RequestMethod.GET, 
 		produces = "application/json"
