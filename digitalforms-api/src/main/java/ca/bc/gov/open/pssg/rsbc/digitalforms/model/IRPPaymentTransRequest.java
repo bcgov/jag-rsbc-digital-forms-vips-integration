@@ -18,6 +18,8 @@ public class IRPPaymentTransRequest {
 	@JsonProperty("transactionInfo")
 	private TransactionInfo transactionInfo;
 	
+	public IRPPaymentTransRequest () {}
+	
 	public IRPPaymentTransRequest(TransactionInfo transInfo) {
 		this.transactionInfo = transInfo; 
 	}
