@@ -12,7 +12,7 @@
 	<artifactId>digitalforms-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>digitalforms-client</name>
-	<description>Java client for RoadSafetyBC DigitalForms database</description>
+	<description>Java client for RoadSafetyBC DigitalForms database ORDS client</description>
 	
 	<properties>
 		<java.version>1.8</java.version>
