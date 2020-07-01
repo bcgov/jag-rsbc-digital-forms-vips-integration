@@ -3,9 +3,9 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
@@ -33,7 +33,7 @@ public class IRPQueryServiceController {
 	private IRPQueryService irpService; 
 	
 	// Provides generic type class defs for Swagger 2. 
-	private class IRPQuerySwaggerResponse extends JSONResponse<IRPStatusInfoResponse>{};
+	private class IRPQuerySwaggerResponse extends JSONResponse<IRPStatusInfoResponse>{}
 	
 	public IRPQueryServiceController(IRPQueryServiceImpl irpService) {
 		this.irpService = irpService;
@@ -41,13 +41,12 @@ public class IRPQueryServiceController {
 
 	@ApiOperation(value = "Get IRP status", response = IRPQuerySwaggerResponse.class) 
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = IRPQuerySwaggerResponse.class)})
-	@RequestMapping(value ="/{id}",
-		method = RequestMethod.GET, 
+	@GetMapping(value ="/{id}", 
 		produces = "application/json"
 	)
 	public ResponseEntity<JSONResponse<IRPStatusInfoResponse>> irpGet(@PathVariable (value="id",required=true) Long id)  {
 		IRPStatusInfoResponse data = irpService.getIRP(id);
-	    JSONResponse<IRPStatusInfoResponse> resp = new JSONResponse<IRPStatusInfoResponse>(data);
-	    return new ResponseEntity<JSONResponse<IRPStatusInfoResponse>>(resp, HttpStatus.OK);
+	    JSONResponse<IRPStatusInfoResponse> resp = new JSONResponse<>(data);
+	    return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 }

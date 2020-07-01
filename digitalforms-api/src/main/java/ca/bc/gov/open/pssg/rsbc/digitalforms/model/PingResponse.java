@@ -17,9 +17,6 @@ public class PingResponse {
 
 	@JsonProperty("responseMessage")
 	private JSONObject responseMessage;
-	
-//@JsonProperty("timeDt")
-//private String timeDt;
 
 	@JsonProperty("responseMessage")
 	public JSONObject getResponseMessage() {
