@@ -15,11 +15,6 @@
 	<name>digitalForms-api</name>
 	<description>RoadSafetyBC DigitalForms API</description>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<springfox-version>2.9.2</springfox-version>
-	</properties>
-
 	<profiles>
 		<profile>
 			<id>openshift</id>
@@ -49,6 +44,11 @@
 			</repositories>
 		</profile>
 	</profiles>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<springfox-version>2.9.2</springfox-version>
+	</properties>
 
 	<dependencies>
 		<dependency>
