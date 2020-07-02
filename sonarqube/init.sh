@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Wait for sonarqube to startup
-while ! curl -sSI "${SONAR_URL}" | grep -qr "HTTP/[.0-9]* 200"
+while [ "$(curl -sS -o /dev/null -w "%{http_code}" "${SONAR_URL}")" != "200" ]
 do
   echo "Waiting for sonarqube ..."
   sleep 3

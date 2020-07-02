@@ -13,7 +13,7 @@ load automatically.
 
 run:   
 ```
-mvn clean install  
+mvn clean install -Pdefault-profile
 mvn spring-boot:run  
 ```  
 

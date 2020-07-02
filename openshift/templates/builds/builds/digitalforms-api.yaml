@@ -59,6 +59,21 @@ objects:
         env:
           - name: DIGITALFORMS_SWAGGER_ENABLED
             value: 'true'
+          - name: NEXUS_URL
+            valueFrom:
+              secretKeyRef:
+                key: NEXUS_URL
+                name: nexus-config
+          - name: NEXUS_ADMIN_USER
+            valueFrom:
+              secretKeyRef:
+                key: NEXUS_ADMIN_USER
+                name: nexus-config
+          - name: NEXUS_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: NEXUS_ADMIN_PASSWORD
+                name: nexus-config
         from:
           kind: ImageStreamTag
           name: java-s2i:8

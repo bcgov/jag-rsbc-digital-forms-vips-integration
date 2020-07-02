@@ -23,13 +23,14 @@ load automatically.
 
 * Set environmental variables  
 
-run:   
+run in order (wait for stage to come up before starting the next):
 ```shell script
+docker-compose -f nexus-docker-compose.yml up --build
 docker-compose up --build
 ```
 Or
 ```
-mvn clean install  
+mvn clean install -Pdefault-profile
 mvn package -P all  
 ```  
 
