@@ -49,7 +49,7 @@ objects:
         memory: 1Gi
     runPolicy: Serial
     source:
-      contextDir: digitalforms-api
+      contextDir: ./
       git:
         ref: master
         uri: https://github.com/bcgov/jag-rsbc-digital-forms-vips-integration
