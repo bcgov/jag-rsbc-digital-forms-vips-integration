@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * Supporting object for the IRPPaymentTransRequest. 
  * 
- * TODO - Needs refining once the business determines what needs to be registered in VIPS after payment received. 
+ * Needs refining once the business determines what needs to be registered in VIPS after payment received. 
  * 
  * @author shaunmillargov
  *
@@ -22,7 +22,11 @@ public class TransactionInfo {
 	
 	@JsonProperty("cardType")
 	private String cardType;
-
+	
+	public TransactionInfo(String cardType, String totalPrice) {
+		this.cardType = cardType; 
+		this.totalPrice = totalPrice;
+	}
 
 	@JsonProperty("totalPrice")
 	public String getTotalPrice() {

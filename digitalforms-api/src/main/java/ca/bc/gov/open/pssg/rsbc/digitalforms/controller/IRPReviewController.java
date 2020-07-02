@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPReviewFormRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPReviewService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -27,6 +28,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/IRP")
+@Api(value = "IRP Review", tags = { "IRP Review" })
 public class IRPReviewController {
 
 	@Autowired
@@ -36,9 +38,8 @@ public class IRPReviewController {
 	@ApiOperation(value = "Get IRP Review Form", response = JSONResponse.class) 
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = JSONResponse.class)})
 	public ResponseEntity<JSONResponse<String>> irpReviewFormGet(
-			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber,
-			@RequestBody(required = true) IRPReviewFormRequest formData) {
-		String data = irpService.getIRPReviewForm(irpNoticeNumber, formData);
+			@PathVariable(value = "irpNoticeNumber", required = true) Long irpNoticeNumber) {
+		String data = irpService.getIRPReviewForm(irpNoticeNumber);
 		JSONResponse<String> resp = new JSONResponse<>(data);
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}

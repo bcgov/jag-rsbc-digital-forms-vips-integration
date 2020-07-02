@@ -117,7 +117,7 @@ objects:
 
                           cp -r /var/lib/jenkins/.ZAP/policies /var/lib/jenkins/
 
-                          zap-api-scan.py -t "${API_DEFINITION}" \
+                          zap-api-scan.py -t "${API_DEFINITION_URL}" \
                             -f openapi \
                             -d \
                             -x ${ZAP_REPORT_NAME} \
@@ -143,7 +143,7 @@ objects:
             }
 
             if ("${SONAR_ENABLED}"!="false") {
-              node("maven") {
+              node("maven35") {
                 stage("Sonar Scan") {
                   timeout(time: 10, unit: 'MINUTES') {
 
@@ -160,7 +160,8 @@ objects:
                           mvn sonar:sonar \
                             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                             -Dsonar.host.url=${SONAR_URL} \
-                            -Dsonar.login=${SONAR_TOKEN}
+                            -Dsonar.login=${SONAR_TOKEN} \
+                            -Dsonar.zaproxy.reportPath=${WORKSPACE}/${APP_NAME}${ZAP_REPORT_PATH}
                         """
                       )
                       echo "Return value is: ${retVal}"
