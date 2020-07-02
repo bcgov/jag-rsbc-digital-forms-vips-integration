@@ -20,36 +20,6 @@
 		<springfox-version>2.9.2</springfox-version>
 	</properties>
 
-	<profiles>
-		<profile>
-			<id>openshift</id>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>digitalforms-snapshots</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-snapshots/</url>
-				</snapshotRepository>
-				<repository>
-					<id>digitalforms-releases</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
-				</repository>
-			</distributionManagement>
-		</profile>
-		<profile>
-			<id>default-profile</id>
-			<repositories>
-				<repository>
-					<id>dps-group</id>
-					<url>http://nexus-pjztlm-tools.pathfinder.gov.bc.ca/repository/dps-group/</url>
-				</repository>
-				<repository>
-					<id>splunk-artifactory</id>
-					<name>Splunk Releases</name>
-					<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
-				</repository>
-			</repositories>
-		</profile>
-	</profiles>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
