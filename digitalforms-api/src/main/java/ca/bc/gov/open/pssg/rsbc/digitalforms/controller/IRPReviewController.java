@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPReviewFormRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPReviewService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -27,6 +28,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/IRP")
+@Api(value = "IRP Review", tags = { "IRP Review" })
 public class IRPReviewController {
 
 	@Autowired

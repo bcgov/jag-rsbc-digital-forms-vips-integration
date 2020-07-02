@@ -62,7 +62,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
         return new ApiInfoBuilder()
                 .title("Digital Forms API Doc")
-                .description("Add more description content here about the API")
+                .description("Digital Forms API")
                 .version(properties.getServiceApiVersion())
                 .build();
     }
