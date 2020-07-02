@@ -31,7 +31,8 @@ docker-compose up --build
 Or
 ```
 mvn clean install -Pdefault-profile
-mvn package -P all  
+mvn package -Pdefault-profile
+mvn spring-boot:run    
 ```  
 
 * In STS4, launch the **digitalforms-api** from the Boot Dashboard.         
