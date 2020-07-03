@@ -21,6 +21,11 @@
       <username>${env.NEXUS_ADMIN_USER}</username>
       <password>${env.NEXUS_ADMIN_PASSWORD}</password>
     </server>
+    <server>
+      <id>digitalforms-group</id>
+      <username>${env.NEXUS_ADMIN_USER}</username>
+      <password>${env.NEXUS_ADMIN_PASSWORD}</password>
+    </server>
   </servers>
 
   <mirrors>
