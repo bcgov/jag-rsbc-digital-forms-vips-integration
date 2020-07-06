@@ -23,14 +23,16 @@ load automatically.
 
 * Set environmental variables  
 
-run:   
+run in order (wait for stage to come up before starting the next):
 ```shell script
+docker-compose -f nexus-docker-compose.yml up --build
 docker-compose up --build
 ```
 Or
 ```
-mvn clean install  
-mvn package -P all  
+mvn clean install -Pdefault-profile
+mvn package -Pdefault-profile
+mvn spring-boot:run    
 ```  
 
 * In STS4, launch the **digitalforms-api** from the Boot Dashboard.         

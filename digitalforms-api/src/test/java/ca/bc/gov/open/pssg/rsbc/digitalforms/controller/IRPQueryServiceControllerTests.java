@@ -2,16 +2,14 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
 import static org.mockito.Mockito.when;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPInfo;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
@@ -26,7 +24,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
  * @author shaunmillargov
  *
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class IRPQueryServiceControllerTests {
@@ -51,7 +48,7 @@ class IRPQueryServiceControllerTests {
 	@Test
 	void irpGetReturns200() {
 		ResponseEntity<JSONResponse<IRPStatusInfoResponse>> resp = controller.irpGet(IRP_TEST_ID);
-		Assert.assertEquals(HttpStatus.OK, resp.getStatusCode());
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
 	// Test irpGet for proper JSON reponse on success.
@@ -59,7 +56,7 @@ class IRPQueryServiceControllerTests {
 	@Test
 	void irpGetReturnsSuccess() {
 		ResponseEntity<JSONResponse<IRPStatusInfoResponse>> resp = controller.irpGet(1L);
-		Assert.assertEquals(JSON_RESPONSE_GOOD, resp.getBody().getData().getIRPInfo().getCancelledYN());
+		Assertions.assertEquals(JSON_RESPONSE_GOOD, resp.getBody().getData().getIRPInfo().getCancelledYN());
 	}
 
 	// Test irpGet for IRP not found.

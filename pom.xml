@@ -15,14 +15,43 @@
         <java.version>1.8</java.version>
     </properties>
 
+    <modules>
+        <module>digitalforms-ords-client</module>
+        <module>digitalforms-api</module>
+    </modules>
+
     <profiles>
-        <profile>
-            <id>all</id>
-            <modules>
-            	<module>digitalforms-ords-client</module>
-                <module>digitalforms-api</module>
-            </modules>
-        </profile>
-    </profiles>
+		<profile>
+			<id>openshift</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>digitalforms-snapshots</id>
+					<url>${env.NEXUS_URL}/repository/digitalforms-snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>digitalforms-releases</id>
+					<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>default-profile</id>
+			<repositories>
+				<repository>
+					<id>dps-group</id>
+					<url>http://nexus-pjztlm-tools.pathfinder.gov.bc.ca/repository/dps-group/</url>
+				</repository>
+				<repository>
+					<id>digitalforms-group</id>
+					<url>http://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
+				</repository>
+				<repository>
+					<id>splunk-artifactory</id>
+					<name>Splunk Releases</name>
+					<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 
 </project>

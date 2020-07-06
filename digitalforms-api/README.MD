@@ -13,7 +13,7 @@ load automatically.
 
 run:   
 ```
-mvn clean install  
+mvn clean install -Pdefault-profile
 mvn spring-boot:run  
 ```  
 
@@ -57,6 +57,9 @@ locally the API locally (As run configuration in STS4 or Eclipse)
 | DIGITALFORMS_VIPSORDS_BASEPATH | my base path |
 | DIGITALFORMS_VIPSORDS_USER | myUser |
 | DIGITALFORMS_VIPSORDS_PASSWORD  | myPassword |
+| DIGITALFORMS_ORDS_BASEPATH | my base path |
+| DIGITALFORMS_ORDS_USER |  myUser |
+| DIGITALFORMS_ORDS_PASSWORD | myPassword |
 | SPLUNK_PASSWORD  | Splunk password |
 | SPLUNK_TOKEN  | Splunk HEC Token |
 | SPLUNK_URL  | Splunk URL | 

@@ -2,17 +2,15 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
 import static org.mockito.Mockito.when;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPPaymentTransRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
@@ -26,7 +24,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPPaymentServiceImpl;
  * @author shaunmillargov
  *
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 public class IRPPaymentServiceControllerTests {
@@ -53,7 +50,7 @@ public class IRPPaymentServiceControllerTests {
 	void setIRPReviewPaidReturns200() {
 		ResponseEntity<JSONResponse<Boolean>> resp = controller.setIRPReviewPaid(IRP_TEST_NOTICE_NUMBER,
 				GOOD_TRANSACTION_REQUEST);
-		Assert.assertEquals(HttpStatus.OK, resp.getStatusCode());
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
 	// Test setIRPReviewPaid for proper JSON response on success.
@@ -63,7 +60,7 @@ public class IRPPaymentServiceControllerTests {
 	void setIRPReviewPaidReturnsSuccess() {
 		ResponseEntity<JSONResponse<Boolean>> resp = controller.setIRPReviewPaid(IRP_TEST_NOTICE_NUMBER,
 				GOOD_TRANSACTION_REQUEST);
-		Assert.assertEquals(GOOD_TRANSACTION_RESPONSE, resp.getBody().getData().booleanValue());
+		Assertions.assertEquals(GOOD_TRANSACTION_RESPONSE, resp.getBody().getData().booleanValue());
 	}
 
 	// Test setIRPReviewPaid for IRP not found.
@@ -71,7 +68,7 @@ public class IRPPaymentServiceControllerTests {
 	@DisplayName("setIRPReviewPaid - Post IRP Review not found")
 	@Test
 	void setIRPReviewPaidNotFound() {
-		Assert.assertEquals(true, true);
+		Assertions.assertEquals(true, true);
 	}
 
 	// Test setIRPReview for exception state.
@@ -79,7 +76,7 @@ public class IRPPaymentServiceControllerTests {
 	@DisplayName("setIRPReviewPaid - Post generate exception")
 	@Test
 	void setIRPReviewPaidReturnException() {
-		Assert.assertEquals(true, true);
+		Assertions.assertEquals(true, true);
 	}
 
 }
