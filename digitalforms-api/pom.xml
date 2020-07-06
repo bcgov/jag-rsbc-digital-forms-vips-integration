@@ -184,6 +184,13 @@
     		<version>1.1.1</version>
 		</dependency>
 
+		<!--	Splunk	-->
+		<dependency>
+					<groupId>com.splunk.logging</groupId>
+					<artifactId>splunk-library-javalogging</artifactId>
+					<version>1.7.1</version>
+		</dependency>
+
 
 	</dependencies>
 
