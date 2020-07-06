@@ -28,6 +28,13 @@
 					<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
 				</repository>
 			</distributionManagement>
+			<dependencies>
+				<dependency>
+					<groupId>com.splunk.logging</groupId>
+					<artifactId>splunk-library-javalogging</artifactId>
+					<version>1.7.1</version>
+				</dependency>
+			</dependencies>
 		</profile>
 		<profile>
 			<id>default-profile</id>
