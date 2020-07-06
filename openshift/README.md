@@ -82,7 +82,8 @@ Plugins to add:
 * Java Code Quality and Security
 * ZAP
 * Git
-Change the admin password. Take password from .../resources/secrets
+
+Change the admin password. Use password from .../resources/secrets
 # Deploy Applications
 ## DigitalForms-API
 ### Deployment Pipeline
