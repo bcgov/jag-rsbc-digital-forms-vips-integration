@@ -81,6 +81,7 @@ Plugins to add:
 * Jacoco
 * Java Code Quality and Security
 * ZAP
+* Git
 Change the admin password. Take password from .../resources/secrets
 # Deploy Applications
 ## DigitalForms-API

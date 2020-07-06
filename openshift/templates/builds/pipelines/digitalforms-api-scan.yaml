@@ -153,19 +153,23 @@ objects:
 
                       echo "Preparing the report for the publishing ..."
                       unstash name: "${ZAP_REPORT_STASH}"
-
-                      def retVal = sh (
-                        returnStatus: true,
-                        script: """
-                          mvn sonar:sonar \
-                            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                            -Dsonar.host.url=${SONAR_URL} \
-                            -Dsonar.login=${SONAR_TOKEN} \
-                            -Dsonar.zaproxy.reportPath=${WORKSPACE}/${APP_NAME}${ZAP_REPORT_PATH}
-                        """
-                      )
-                      echo "Return value is: ${retVal}"
-
+                      withCredentials([usernamePassword(credentialsId: '${namespacePrefix}-tools-nexus-config', usernameVariable: 'NEXUS_ADMIN_USER', passwordVariable: 'NEXUS_ADMIN_PASSWORD')]) {
+                        def retVal = sh (
+                          returnStatus: true,
+                          script: """
+                            export NEXUS_URL=http://nexus:8081
+                            mvn -Popenshift -s configuration/settings.xml \
+                               clean verify sonar:sonar \
+                              -Dsonar.scm.provider=git \
+                              -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                              -Dsonar.host.url=${SONAR_URL} \
+                              -Dsonar.login=${SONAR_TOKEN} \
+                              -Dsonar.zaproxy.reportPath=${WORKSPACE}/${APP_NAME}${ZAP_REPORT_PATH} \
+                              -Dsonar.language=java
+                          """
+                        )
+                        echo "Return value is: ${retVal}"
+                      }
                     }
                   }
                 }
