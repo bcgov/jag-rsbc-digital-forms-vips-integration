@@ -25,10 +25,38 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationResponse vipsApplication(String typeCode, String metadata, String mimeType, String mimeSubType, String authGuid, File body) {
+    public ApplicationResponse getApplication(String typeCode, String metadata, String mimeType, String mimeSubType, String authGuid, File body) {
 
         try {
-        	ApplicationOrdsResponse response = this.applicationApi.applicationPost(typeCode, sanitizeBase64(metadata), mimeType, mimeSubType, authGuid, body);
+        	ApplicationOrdsResponse response = this.applicationApi.applicationNoticeNoGet(typeCode, sanitizeBase64(metadata), mimeType, mimeSubType, authGuid, body);
+            return  ApplicationResponse.successResponse(response.getApplicationId(), response.getStatusCode(), response.getStatusMessage());
+
+        } catch (ApiException ex) {
+
+            logger.error("Application Service did throw exception: " + ex.getMessage(), ex);
+            return ApplicationResponse.errorResponse(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public ApplicationResponse postApplication(String typeCode, String metadata, String mimeType, String mimeSubType, String authGuid, File body) {
+
+        try {
+        	ApplicationOrdsResponse response = this.applicationApi.applicationNoticeNoPost(typeCode, sanitizeBase64(metadata), mimeType, mimeSubType, authGuid, body);
+            return  ApplicationResponse.successResponse(response.getApplicationId(), response.getStatusCode(), response.getStatusMessage());
+
+        } catch (ApiException ex) {
+
+            logger.error("Application Service did throw exception: " + ex.getMessage(), ex);
+            return ApplicationResponse.errorResponse(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public ApplicationResponse patchApplication(String typeCode, String metadata, String mimeType, String mimeSubType, String authGuid, File body) {
+
+        try {
+        	ApplicationOrdsResponse response = this.applicationApi.applicationNoticeNoPatch(typeCode, sanitizeBase64(metadata), mimeType, mimeSubType, authGuid, body);
             return  ApplicationResponse.successResponse(response.getApplicationId(), response.getStatusCode(), response.getStatusMessage());
 
         } catch (ApiException ex) {

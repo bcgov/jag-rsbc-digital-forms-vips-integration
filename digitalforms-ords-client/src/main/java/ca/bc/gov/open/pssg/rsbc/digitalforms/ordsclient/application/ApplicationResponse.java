@@ -9,12 +9,12 @@ import java.text.MessageFormat;
 
 /**
  *
- * Represents the VIPS application Response
+ * Represents the Application Response
  *
  * @author sivakaruna
  *
  */
-@JacksonXmlRootElement(localName = "vipsApplicationResponse")
+@JacksonXmlRootElement(localName = "applicationResponse")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ApplicationResponse {
 
@@ -57,7 +57,7 @@ public class ApplicationResponse {
 
     @Override
     public String toString() {
-        return MessageFormat.format("VipsApplicationResponse: applicationId [{0}], respCode [{1}], respMsg [{2}]", this.applicationId, this.respCode, this.respMsg);
+        return MessageFormat.format("ApplicationResponse: applicationId [{0}], respCode [{1}], respMsg [{2}]", this.applicationId, this.respCode, this.respMsg);
     }
 
 }

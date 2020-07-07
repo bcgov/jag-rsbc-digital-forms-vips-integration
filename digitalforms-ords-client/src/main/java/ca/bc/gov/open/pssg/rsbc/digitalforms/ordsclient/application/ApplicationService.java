@@ -9,7 +9,13 @@ import java.io.File;
  */
 public interface ApplicationService {
 
-     ApplicationResponse vipsApplication(String typeCode, String metadata, String mimeType, String mimeSubType,
+     ApplicationResponse getApplication(String typeCode, String metadata, String mimeType, String mimeSubType,
                                        String authGuid, File body);
+     
+     ApplicationResponse postApplication(String typeCode, String metadata, String mimeType, String mimeSubType,
+             String authGuid, File body);
+     
+     ApplicationResponse patchApplication(String typeCode, String metadata, String mimeType, String mimeSubType,
+             String authGuid, File body);
 
 }
