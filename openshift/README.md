@@ -77,7 +77,13 @@ cd /opt/sonarqube/extensions/plugins
 # ZAP
 curl -sSL -o sonar-zap-plugin-1.2.0.jar https://github.com/Coveros/zap-sonar-plugin/releases/download/sonar-zap-plugin-1.2.0/sonar-zap-plugin-1.2.0.jar
 ```
-Change the admin password. Take password from .../resources/secrets
+Plugins to add:
+* Jacoco
+* Java Code Quality and Security
+* ZAP
+* Git
+
+Change the admin password. Use password from .../resources/secrets
 # Deploy Applications
 ## DigitalForms-API
 ### Deployment Pipeline
