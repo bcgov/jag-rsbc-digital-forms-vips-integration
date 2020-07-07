@@ -13,6 +13,7 @@
 	
 	<properties>
         <java.version>1.8</java.version>
+        <nexus.url>${env.NEXUS_URL}</nexus.url>
     </properties>
 
     <modules>
@@ -26,11 +27,11 @@
 			<distributionManagement>
 				<snapshotRepository>
 					<id>digitalforms-snapshots</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-snapshots/</url>
+					<url>${nexus.url}/repository/digitalforms-snapshots/</url>
 				</snapshotRepository>
 				<repository>
 					<id>digitalforms-releases</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
+					<url>${nexus.url}/repository/digitalforms-releases/</url>
 				</repository>
 			</distributionManagement>
 		</profile>
