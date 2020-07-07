@@ -28,6 +28,148 @@ paths:
           description: output of the endpoint
           schema:
             $ref: '#/definitions/healthOrdsResponse'
+  /application/{noticeNo}:
+    get:
+      tags:
+      - Application
+      security:
+      - basicAuth: []
+      description: Retrieve a Digital forms application
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/applicationOrdsResponse'
+        '400':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/errorMessage'
+      parameters:
+      - name: type_code
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: metadata
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: mime_type
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: mime_sub_type
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: auth_guid
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: file_object
+        in: body
+        required: true
+        schema:
+          type: string
+          format: binary
+    post:
+      tags:
+      - Application
+      security:
+      - basicAuth: []
+      description: Store a Digital forms application
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/applicationOrdsResponse'
+        '400':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/errorMessage'
+      parameters:
+      - name: type_code
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: metadata
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: mime_type
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: mime_sub_type
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: auth_guid
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: file_object
+        in: body
+        required: true
+        schema:
+          type: string
+          format: binary
+    patch:
+      tags:
+      - Application
+      security:
+      - basicAuth: []
+      description: Update a Digital forms application
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/applicationOrdsResponse'
+        '400':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/errorMessage'
+      parameters:
+      - name: type_code
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: metadata
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: mime_type
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: mime_sub_type
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: auth_guid
+        in: query
+        type: string
+        required: true
+        description: Implicit parameter
+      - name: file_object
+        in: body
+        required: true
+        schema:
+          type: string
+          format: binary
 definitions:
   healthOrdsResponse:
     type: object
@@ -47,4 +189,27 @@ definitions:
       host:
         type: string
       instance:
+        type: string
+  applicationOrdsResponse:
+    type: object
+    required:
+    - application_id
+    - status_code
+    - status_message
+    properties:
+      application_id:
+        type: string
+      status_code:
+        type: string
+      status_message:
+        type: string
+  errorMessage:
+    type: object
+    required:
+    - status_code
+    - status_message
+    properties:
+      status_code:
+        type: string
+      status_message:
         type: string
