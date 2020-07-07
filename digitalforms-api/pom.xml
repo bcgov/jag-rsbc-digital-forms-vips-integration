@@ -45,7 +45,7 @@
 				</repository>
 				<repository>
 					<id>digitalforms-group</id>
-					<url>http://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
+					<url>https://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
 				</repository>
 				<repository>
 					<id>splunk-artifactory</id>
