@@ -132,6 +132,9 @@ objects:
   spec:
     port:
       targetPort: 8081-tcp
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
     to:
       kind: Service
       name: ${SERVICE_NAME}
