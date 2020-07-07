@@ -2,6 +2,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
 import org.springframework.stereotype.Service;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPPaymentStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPPaymentTransRequest;
 
 /**
@@ -17,6 +18,12 @@ public class IRPPaymentServiceImpl implements IRPPaymentService {
 		
 		// TODO Service to be built out here
 		return true;
+	}
+
+	@Override
+	public IRPPaymentStatusResponse getIRPReviewPaymentStatus(Long irpNoticeNumber) {
+		// TODO Service to be built out here
+		return new IRPPaymentStatusResponse("1");
 	}
 	
 }
