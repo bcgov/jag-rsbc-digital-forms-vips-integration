@@ -94,21 +94,48 @@ objects:
               }
 
               // Build and deploy library to nexus
-              stage("Build and deploy digitalforms-ords-client to nexus3") {
-                dir("${APP_NAME}") {
-                  git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}", credentialsId: "${GIT_CREDENTIALS_ID}"
-                  timeout(time: 10, unit: 'MINUTES') {
-                    withCredentials([usernamePassword(credentialsId: 'totdho-tools-nexus-config', usernameVariable: 'NEXUS_ADMIN_USER', passwordVariable: 'NEXUS_ADMIN_PASSWORD')]) {
-                      def retVal = sh (
-                        returnStatus: true,
-                        script: """
-                          cd digitalforms-ords-client
-                          export NEXUS_URL=http://nexus:8081
-                          mvn -Popenshift -s configuration/settings.xml -Dmaven.test.skip=true clean deploy
-                          find
-                        """
-                      )
-                      echo "Return value is: ${retVal}"
+              if ("${BUILD_VIPS_CLIENT}"!="false") {
+                stage("Build and deploy jag-vips-client to nexus3") {
+                  dir("${APP_NAME}") {
+                    git url: "https://github.com/bcgov/jag-vips-client.git", branch: "${GIT_SOURCE_REF}", credentialsId: "${GIT_CREDENTIALS_ID}"
+                    timeout(time: 10, unit: 'MINUTES') {
+                      withCredentials([usernamePassword(credentialsId: 'totdho-tools-nexus-config', usernameVariable: 'NEXUS_ADMIN_USER', passwordVariable: 'NEXUS_ADMIN_PASSWORD')]) {
+                        def retVal = sh (
+                          returnStatus: true,
+                          script: """
+                            cd src/jag-vips-client
+                            export NEXUS_URL=http://nexus:8081
+                            export NEXUS_GROUP_URL=\${NEXUS_URL}/repository/digitalforms-group
+                            export NEXUS_SNAPSHOTS_URL=\${NEXUS_URL}/repository/digitalforms-snapshots
+                            export NEXUS_RELEASES_URL=\${NEXUS_URL}/repository/digitalforms-releases
+                            mvn -Popenshift -s configuration/settings.xml -Dmaven.test.skip=true clean deploy
+                            find
+                          """
+                        )
+                        echo "Return value is: ${retVal}"
+                      }
+                    }
+                  }
+                }
+              }
+
+              if ("${BUILD_ORDS_CLIENT}"!="false") {
+                stage("Build and deploy digitalforms-ords-client to nexus3") {
+                  dir("${APP_NAME}") {
+                    git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}", credentialsId: "${GIT_CREDENTIALS_ID}"
+                    timeout(time: 10, unit: 'MINUTES') {
+                      withCredentials([usernamePassword(credentialsId: 'totdho-tools-nexus-config', usernameVariable: 'NEXUS_ADMIN_USER', passwordVariable: 'NEXUS_ADMIN_PASSWORD')]) {
+                        def retVal = sh (
+                          returnStatus: true,
+                          script: """
+                            cd digitalforms-ords-client
+                            export NEXUS_URL=http://nexus:8081
+                            mvn -Popenshift -s configuration/settings.xml -Dmaven.test.skip=true clean deploy
+                            find
+                          """
+                        )
+                        echo "Return value is: ${retVal}"
+                      }
                     }
                   }
                 }
