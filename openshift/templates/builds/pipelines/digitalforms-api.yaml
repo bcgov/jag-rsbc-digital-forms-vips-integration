@@ -94,6 +94,8 @@ objects:
               }
 
               // Build and deploy library to nexus
+              def BUILD_VIPS_CLIENT = "true"
+              def BUILD_ORDS_CLIENT = "true"
               if ("${BUILD_VIPS_CLIENT}"!="false") {
                 stage("Build and deploy jag-vips-client to nexus3") {
                   dir("${APP_NAME}") {
