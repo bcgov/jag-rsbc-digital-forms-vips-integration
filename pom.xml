@@ -38,10 +38,6 @@
 			<id>default-profile</id>
 			<repositories>
 				<repository>
-					<id>dps-group</id>
-					<url>http://nexus-pjztlm-tools.pathfinder.gov.bc.ca/repository/dps-group/</url>
-				</repository>
-				<repository>
 					<id>digitalforms-group</id>
 					<url>https://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
 				</repository>
