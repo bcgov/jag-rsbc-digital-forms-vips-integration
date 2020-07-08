@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
+
 /**
  * 
  * Supporting object for the IRPStatusInfoResponse.  
@@ -32,6 +34,14 @@ public class IRPInfo {
 		this.surnameNm = surnameNm;
 		this.iRPStatus = iRPStatus;
 		this.cancelledYN = cancelledYN;
+	}
+
+	public IRPInfo(VipsProhibitionStatusResponse ordsResp) {
+		this.effectiveDate = ordsResp.getStatus().getEffectiveDate();
+		this.driversLicenceSeizedYN = ordsResp.getStatus().getDriverLicenceSeizedYn();
+		this.surnameNm = ordsResp.getStatus().getDriverLastName();
+		this.iRPStatus = ordsResp.getStatus().getReviewStatus();
+		this.cancelledYN = ordsResp.getStatus().getCancelledYn();
 	}
 
 	@JsonProperty("effectiveDate")

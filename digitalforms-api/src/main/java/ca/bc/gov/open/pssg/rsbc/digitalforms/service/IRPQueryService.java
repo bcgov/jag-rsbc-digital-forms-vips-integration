@@ -1,6 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
+import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
 
 /**
  * 
@@ -11,7 +11,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
  */
 public interface IRPQueryService {
 
-	public IRPStatusInfoResponse getIRP(Long id);
+	public VipsProhibitionStatusResponse getIRP(Long id);
 	
 }
 

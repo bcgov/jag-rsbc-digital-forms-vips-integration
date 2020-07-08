@@ -1,9 +1,10 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPInfo;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
+import ca.bc.gov.open.jagvipsclient.prohibition.ProhibitionService;
+import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
 
 /**
  * 
@@ -12,12 +13,15 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
  */
 @Service
 public class IRPQueryServiceImpl implements IRPQueryService {
+	
+	@Autowired
+	private ProhibitionService prohibService;
 
 	@Override
-	public IRPStatusInfoResponse getIRP(Long id) {
+	public VipsProhibitionStatusResponse getIRP(Long id) {
 		
-		// TODO Service to be built out here
-		return new IRPStatusInfoResponse(new IRPInfo( "01/02/2020", "0123456", "Rothschild", "Decided", "N")); 
+		return prohibService.getVipsProhibitionStatus(id);
+		
 	}
 	
 }

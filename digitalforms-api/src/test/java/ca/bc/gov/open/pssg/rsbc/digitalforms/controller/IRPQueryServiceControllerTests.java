@@ -11,10 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPInfo;
+import ca.bc.gov.open.jagvipsclient.prohibition.ProhibitionStatus;
+import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 
 /**
@@ -29,7 +31,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
 class IRPQueryServiceControllerTests {
 
 	private final Long IRP_TEST_ID = 1L;
-	private final IRPStatusInfoResponse JSON_RESPONSE_OBJECT = new IRPStatusInfoResponse(new IRPInfo( "01/02/2020", "0123456", "Rothschild:", "Decided", "N")); 
 	private final String JSON_RESPONSE_GOOD = "N";
 
 	@MockBean
@@ -40,7 +41,18 @@ class IRPQueryServiceControllerTests {
 	@BeforeEach
 	public void init() {
 		controller = new IRPQueryServiceController(irpService);
-		when(irpService.getIRP(1L)).thenReturn(JSON_RESPONSE_OBJECT);
+		
+		ProhibitionStatus goodStatus = new ProhibitionStatus();
+		goodStatus.setResultMessage(DigitalFormsConstants.JSON_RESPONSE_SUCCESS);
+		goodStatus.setResultCode(Integer.toString(DigitalFormsConstants.ORDS_SUCCESS_CD));
+		goodStatus.setEffectiveDate("2018-06-20 00:00:00 -07:00");
+		goodStatus.setDriverLicenceSeizedYn("Y");
+		goodStatus.setDriverLastName("PATEL");
+		goodStatus.setReviewStatus("INP");
+		goodStatus.setCancelledYn("N");
+		VipsProhibitionStatusResponse goodResp = VipsProhibitionStatusResponse.successResponse(goodStatus, "0", "success");
+		
+		when(irpService.getIRP(1L)).thenReturn(goodResp);
 	}
 
 	// Test irpGet for 200 returned on success.
