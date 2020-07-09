@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/IRP")
-@Api(value = "IRP Payment Status", tags = { "IRP Payment Status" })
+@Api(value = "IRP Payment", tags = { "IRP Payment" })
 public class IRPPaymentStatusController {
 	
 	// Provides generic type class defs for Swagger 2. 
