@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * 
- * IRP Review Form Request object
+ * Review Form Request object
  * 
  * @author sivakaruna
  *
@@ -15,14 +15,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "formType", "formVersion", "fields", "formData" })
-public class IRPReviewFormRequest {
+public class ReviewFormRequest {
 
 	@JsonProperty("formType")
 	private String formType;
 	@JsonProperty("formVersion")
 	private String formVersion;
 	@JsonProperty("fields")
-	private List<IRPReviewFormRequest.Field> fields = null;
+	private List<ReviewFormRequest.Field> fields = null;
 	@JsonProperty("formData")
 	private String formData;
 

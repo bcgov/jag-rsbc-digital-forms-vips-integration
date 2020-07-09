@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPPaymentTransRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPPaymentService;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPPaymentServiceImpl;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,27 +27,27 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/IRP/")
-@Api(value = "IRP Payment", tags = { "IRP Payment" })
-public class IRPPaymentServiceController {
+@Api(value = "Payment", tags = { "Payment" })
+public class PaymentServiceController {
 	
 	// Provides generic type class defs for Swagger 2. 
 	private class IRPReviewPaidSwaggerResponse extends JSONResponse<Boolean>{}
 	
 	@Autowired 
-	private IRPPaymentService irpPaymentService; 
+	private PaymentService paymentService; 
 	
-	public IRPPaymentServiceController(IRPPaymentServiceImpl irpPaymentService) {
-		this.irpPaymentService = irpPaymentService;
+	public PaymentServiceController(PaymentServiceImpl paymentService) {
+		this.paymentService = paymentService;
 	}
 	
-	@ApiOperation(value = "Set IRP Review Paid", response = IRPReviewPaidSwaggerResponse.class) 
+	@ApiOperation(value = "Set Prohibition Review Paid", response = IRPReviewPaidSwaggerResponse.class) 
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = IRPReviewPaidSwaggerResponse.class)})
-	@PostMapping(path ="/{irpNoticeNumber}/payment",
+	@PostMapping(path ="/{noticeNumber}/payment",
 	consumes = "application/json",
 	produces = "application/json"
 	)	
-	public ResponseEntity<JSONResponse<Boolean>> setIRPReviewPaid(@PathVariable (value="irpNoticeNumber", required=true) Long irpNoticeNumber, @RequestBody (required=true) IRPPaymentTransRequest paymentInfo)  {
-	    boolean data = irpPaymentService.setIRPReviewPaid(irpNoticeNumber, paymentInfo);
+	public ResponseEntity<JSONResponse<Boolean>> setIRPReviewPaid(@PathVariable (value="noticeNumber", required=true) Long noticeNumber, @RequestBody (required=true) PaymentTransRequest paymentInfo)  {
+	    boolean data = paymentService.setReviewPaid(noticeNumber, paymentInfo);
 	    JSONResponse<Boolean> resp = new JSONResponse<>(data);
 	    return new ResponseEntity<>(resp, HttpStatus.OK);
 	}

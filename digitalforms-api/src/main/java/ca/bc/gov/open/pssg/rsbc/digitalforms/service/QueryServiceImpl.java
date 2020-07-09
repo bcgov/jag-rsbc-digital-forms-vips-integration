@@ -12,13 +12,13 @@ import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
  *
  */
 @Service
-public class IRPQueryServiceImpl implements IRPQueryService {
+public class QueryServiceImpl implements QueryService {
 	
 	@Autowired
 	private ProhibitionService prohibService;
 
 	@Override
-	public VipsProhibitionStatusResponse getIRP(Long id) {
+	public VipsProhibitionStatusResponse getProhibitionInfo(Long id) {
 		
 		return prohibService.getVipsProhibitionStatus(id);
 		

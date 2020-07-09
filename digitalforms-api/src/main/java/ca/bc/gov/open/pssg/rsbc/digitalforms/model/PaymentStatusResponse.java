@@ -13,12 +13,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "amountOwing" })
-public class IRPPaymentStatusResponse {
+public class PaymentStatusResponse {
 
 	@JsonProperty("amountOwing")
 	private String amountOwing;
 	
-	public IRPPaymentStatusResponse(String amountOwing) {
+	public PaymentStatusResponse(String amountOwing) {
 		this.amountOwing = amountOwing;
 	}
 	

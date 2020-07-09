@@ -6,19 +6,19 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * 
- * IRP Status Info Response Object
+ * Prohibition Query Info Response Object
  * 
  * @author shaunmillargov
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "iRPInfo" })
-public class IRPStatusInfoResponse {
+public class QueryInfoResponse {
 
 	@JsonProperty("iRPInfo")
 	private IRPInfo iRPInfo;
 	
-	public IRPStatusInfoResponse(IRPInfo irpInfo) {
+	public QueryInfoResponse(IRPInfo irpInfo) {
 		this.iRPInfo = irpInfo;
 	}
 	
