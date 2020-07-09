@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * 
- * IRP Status Info Response Object Tests
+ * Status Info Response Object Tests
  * 
  * @author sivakaruna
  *
