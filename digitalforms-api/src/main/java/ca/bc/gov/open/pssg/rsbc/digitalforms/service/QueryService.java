@@ -4,14 +4,14 @@ import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
 
 /**
  * 
- * IRP Query Service Interface 
+ * Query Service Interface 
  * 
  * @author shaunmillargov
  *
  */
-public interface IRPQueryService {
+public interface QueryService {
 
-	public VipsProhibitionStatusResponse getIRP(Long id);
+	public VipsProhibitionStatusResponse getProhibitionInfo(Long id);
 	
 }
 

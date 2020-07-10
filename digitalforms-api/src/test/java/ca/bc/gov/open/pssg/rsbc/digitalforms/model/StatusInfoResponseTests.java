@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Test;
 
 /**
  * 
- * IRP Status Info Response Object Tests
+ * Status Info Response Object Tests
  * 
  * @author sivakaruna
  *
  */
-public class IRPStatusInfoResponseTests {
+public class StatusInfoResponseTests {
 
 	@Test
 	public void testObj() {
 
 		IRPInfo info = new IRPInfo("effectiveDate", "driversLicenceSeizedYN", "surnameNm", "iRPStatus", "cancelledYN");
 
-		IRPStatusInfoResponse infoResponse = new IRPStatusInfoResponse(info);
+		QueryInfoResponse infoResponse = new QueryInfoResponse(info);
 
 		Assertions.assertEquals("cancelledYN", infoResponse.getIRPInfo().getCancelledYN());
 		Assertions.assertEquals("driversLicenceSeizedYN", infoResponse.getIRPInfo().getDriversLicenceSeizedYN());

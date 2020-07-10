@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
  *
  */
 @RestController
-@Api(value = "IRP Utilities", tags = { "IRP Utilities" })
+@Api(value = "Utilities", tags = { "Utilities" })
 public class UtilityController {
 	
 	private final Logger logger = LogManager.getLogger(UtilityController.class);

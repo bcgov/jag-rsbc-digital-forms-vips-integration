@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Assertions;
@@ -14,57 +15,55 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPReviewFormRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPReviewService;
-
-import static org.mockito.ArgumentMatchers.any;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewFormRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.FormSubmissionService;
 
 /**
  * 
- * IRP Review Controller Tests.
+ * Form Submission Tests.
  * 
  * @author sivakaruna
  *
  */
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
-class IRPReviewControllerTests {
+class FormSubmissionControllerTests {
 
 	private final String JSON_RESPONSE_GOOD = "IRP review form";
 
 	@Mock
-	private IRPReviewService irpService;
+	private FormSubmissionService service;
 
 	@InjectMocks
-	private IRPReviewController controller = new IRPReviewController();
+	private FormSubmissionController controller = new FormSubmissionController();
 
 	@BeforeEach
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	@DisplayName("Get success - IRPReviewController")
+	@DisplayName("Get success - FormSubmissionController")
 	@Test
 	void irpGetFormSuccess() {
-		when(irpService.getIRPReviewForm(any())).thenReturn(JSON_RESPONSE_GOOD);
-		ResponseEntity<JSONResponse<String>> resp = controller.irpReviewFormGet(1L);
+		when(service.getReviewForm(any())).thenReturn(JSON_RESPONSE_GOOD);
+		ResponseEntity<JSONResponse<String>> resp = controller.reviewFormGet(1L);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
-	@DisplayName("Post success - IRPReviewController")
+	@DisplayName("Post success - FormSubmissionController")
 	@Test
 	void irpPostFormSuccess() {
-		when(irpService.postIRPReviewForm(any(), any())).thenReturn(JSON_RESPONSE_GOOD);
-		ResponseEntity<JSONResponse<String>> resp = controller.irpReviewFormPost(1L, new IRPReviewFormRequest());
+		when(service.postReviewForm(any(), any())).thenReturn(JSON_RESPONSE_GOOD);
+		ResponseEntity<JSONResponse<String>> resp = controller.reviewFormPost(1L, new ReviewFormRequest());
 		Assertions.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
 
-	@DisplayName("Patch success - IRPReviewController")
+	@DisplayName("Patch success - FormSubmissionController")
 	@Test
 	void irpPatchFormSuccess() {
-		when(irpService.patchIRPReviewForm(any(), any(), any())).thenReturn(JSON_RESPONSE_GOOD);
-		ResponseEntity<JSONResponse<String>> resp = controller.irpReviewFormPatch(1L, 1L, new IRPReviewFormRequest());
+		when(service.patchReviewForm(any(), any(), any())).thenReturn(JSON_RESPONSE_GOOD);
+		ResponseEntity<JSONResponse<String>> resp = controller.reviewFormPatch(1L, 1L, new ReviewFormRequest());
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
