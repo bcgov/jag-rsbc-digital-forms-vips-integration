@@ -8,10 +8,10 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application;
  */
 public interface ApplicationService {
 
-	ApplicationResponse getApplication(Long noticeNo);
+	ApplicationResponse getApplication(String formGuid);
 
 	ApplicationResponse postApplication(ApplicationInfo applicationInfo);
 
-	ApplicationResponse patchApplication(Long noticeNo, ApplicationInfo applicationInfo);
+	ApplicationResponse patchApplication(String formGuid, ApplicationInfo applicationInfo);
 
 }

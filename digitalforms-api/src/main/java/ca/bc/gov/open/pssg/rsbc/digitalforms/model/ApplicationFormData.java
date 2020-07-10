@@ -15,14 +15,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "formType", "formVersion", "fields", "formData" })
-public class ReviewFormRequest {
+public class ApplicationFormData {
 
 	@JsonProperty("formType")
 	private String formType;
 	@JsonProperty("formVersion")
 	private String formVersion;
 	@JsonProperty("fields")
-	private List<ReviewFormRequest.Field> fields = null;
+	private List<ApplicationFormData.Field> fields = null;
 	@JsonProperty("formData")
 	private String formData;
 

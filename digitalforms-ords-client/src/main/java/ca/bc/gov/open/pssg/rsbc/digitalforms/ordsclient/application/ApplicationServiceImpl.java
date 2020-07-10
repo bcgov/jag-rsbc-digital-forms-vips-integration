@@ -26,9 +26,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public ApplicationResponse getApplication(Long noticeNo) {
+	public ApplicationResponse getApplication(String formGuid) {
 		try {
-			DigitalFormGetResponse response = this.applicationApi.digitalFormGuidGet(Long.toString(noticeNo));
+			DigitalFormGetResponse response = this.applicationApi.digitalFormGuidGet(formGuid);
 			ApplicationInfo applicationInfo = new ApplicationInfo();
 			applicationInfo.setElectronicAddressTxt(response.getElectronicAddressTxt());
 			applicationInfo.setFaxNo(response.getFaxNo());
@@ -92,7 +92,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public ApplicationResponse patchApplication(Long noticeNo, ApplicationInfo applicationInfo) {
+	public ApplicationResponse patchApplication(String formGuid, ApplicationInfo applicationInfo) {
 		try {
 			DigitalFormPatchRequest request = new DigitalFormPatchRequest();
 			
@@ -118,7 +118,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 			request.setHearingStartTm(applicationInfo.getHearingStartTm());
 			request.setReceiptNumberTxt(applicationInfo.getReceiptNumberTxt());
 			
-			DigitalFormPatchResponse response = this.applicationApi.digitalFormGuidPatch(Long.toString(noticeNo), request);
+			DigitalFormPatchResponse response = this.applicationApi.digitalFormGuidPatch(formGuid, request);
 
 			return ApplicationResponse.successResponse(response.getFormObjectGuid(), response.getStatusCode(),
 					response.getStatusMessage());

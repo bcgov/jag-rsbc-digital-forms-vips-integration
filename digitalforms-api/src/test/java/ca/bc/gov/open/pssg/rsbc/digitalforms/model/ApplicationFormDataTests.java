@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewFormRequest.Field;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData.Field;
 
 /**
  * 
@@ -15,11 +15,11 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewFormRequest.Field;
  * @author sivakaruna
  *
  */
-public class ReviewFormRequestTests {
+public class ApplicationFormDataTests {
 
 	@Test
 	public void testObj() {
-		ReviewFormRequest formRequest = new ReviewFormRequest();
+		ApplicationFormData formRequest = new ApplicationFormData();
 
 		Field fields = new Field();
 		fields.setFirstGivenNm("firstGivenNm");
