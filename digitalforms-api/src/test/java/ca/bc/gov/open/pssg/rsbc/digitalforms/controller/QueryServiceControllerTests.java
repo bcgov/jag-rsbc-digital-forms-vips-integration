@@ -13,9 +13,9 @@ import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.jagvipsclient.prohibition.ProhibitionStatus;
 import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.IRPStatusInfoResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.service.IRPQueryServiceImpl;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.QueryInfoResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryServiceImpl;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 
@@ -34,13 +34,13 @@ class IRPQueryServiceControllerTests {
 	private final String JSON_RESPONSE_GOOD = "N";
 
 	@MockBean
-	private IRPQueryServiceImpl irpService;
+	private QueryServiceImpl irpService;
 
-	private IRPQueryServiceController controller;
+	private QueryServiceController controller;
 
 	@BeforeEach
 	public void init() {
-		controller = new IRPQueryServiceController(irpService);
+		controller = new QueryServiceController(irpService);
 		
 		ProhibitionStatus goodStatus = new ProhibitionStatus();
 		goodStatus.setResultMessage(DigitalFormsConstants.JSON_RESPONSE_SUCCESS);
@@ -52,14 +52,14 @@ class IRPQueryServiceControllerTests {
 		goodStatus.setCancelledYn("N");
 		VipsProhibitionStatusResponse goodResp = VipsProhibitionStatusResponse.successResponse(goodStatus, "0", "success");
 		
-		when(irpService.getIRP(1L)).thenReturn(goodResp);
+		when(irpService.getProhibitionInfo(1L)).thenReturn(goodResp);
 	}
 
 	// Test irpGet for 200 returned on success.
 	// TODO - update when fully functional
 	@Test
 	void irpGetReturns200() {
-		ResponseEntity<JSONResponse<IRPStatusInfoResponse>> resp = controller.irpGet(IRP_TEST_ID);
+		ResponseEntity<JSONResponse<QueryInfoResponse>> resp = controller.irpGet(IRP_TEST_ID);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
@@ -67,7 +67,7 @@ class IRPQueryServiceControllerTests {
 	// TODO - update when fully functional
 	@Test
 	void irpGetReturnsSuccess() {
-		ResponseEntity<JSONResponse<IRPStatusInfoResponse>> resp = controller.irpGet(1L);
+		ResponseEntity<JSONResponse<QueryInfoResponse>> resp = controller.irpGet(1L);
 		Assertions.assertEquals(JSON_RESPONSE_GOOD, resp.getBody().getData().getIRPInfo().getCancelledYN());
 	}
 

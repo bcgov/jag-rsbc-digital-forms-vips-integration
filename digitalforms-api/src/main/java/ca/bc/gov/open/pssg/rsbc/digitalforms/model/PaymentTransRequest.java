@@ -6,21 +6,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * 
- * IRP Payment Received Object
+ * Payment Received Object
  * 
  * @author shaunmillargov
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "transactionInfo" })
-public class IRPPaymentTransRequest {
+public class PaymentTransRequest {
 
 	@JsonProperty("transactionInfo")
 	private TransactionInfo transactionInfo;
 	
-	public IRPPaymentTransRequest () {}
+	public PaymentTransRequest () {}
 	
-	public IRPPaymentTransRequest(TransactionInfo transInfo) {
+	public PaymentTransRequest(TransactionInfo transInfo) {
 		this.transactionInfo = transInfo; 
 	}
 

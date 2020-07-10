@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * 
- * Supporting object for the IRPPaymentTransRequest. 
+ * Supporting object for the PaymentTransRequest. 
  * 
  * Needs refining once the business determines what needs to be registered in VIPS after payment received. 
  * 
