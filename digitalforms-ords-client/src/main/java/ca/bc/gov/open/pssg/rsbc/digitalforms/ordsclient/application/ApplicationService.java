@@ -1,6 +1,5 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application;
 
-import java.io.File;
 
 /**
  * Collection of services for applications.
@@ -9,13 +8,10 @@ import java.io.File;
  */
 public interface ApplicationService {
 
-     ApplicationResponse getApplication(String typeCode, String metadata, String mimeType, String mimeSubType,
-                                       String authGuid, File body);
-     
-     ApplicationResponse postApplication(String typeCode, String metadata, String mimeType, String mimeSubType,
-             String authGuid, File body);
-     
-     ApplicationResponse patchApplication(String typeCode, String metadata, String mimeType, String mimeSubType,
-             String authGuid, File body);
+	ApplicationResponse getApplication(Long noticeNo);
+
+	ApplicationResponse postApplication(ApplicationInfo applicationInfo);
+
+	ApplicationResponse patchApplication(Long noticeNo, ApplicationInfo applicationInfo);
 
 }
