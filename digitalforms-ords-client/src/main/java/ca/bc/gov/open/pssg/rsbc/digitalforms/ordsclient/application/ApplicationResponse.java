@@ -22,6 +22,9 @@ public class ApplicationResponse {
 	private ApplicationInfo applicationInfo;
 	private int respCode;
 	private String respMsg;
+	private String updatedTime;
+	private String createdTime;
+	private String formXml;
 
 	private ApplicationResponse(int respCode, String respMsg) {
 		this.respCode = respCode;
@@ -33,25 +36,18 @@ public class ApplicationResponse {
 		this.applicationId = applicationId;
 	}
 
-	private ApplicationResponse(ApplicationInfo applicationInfo, int respCode, String respMsg) {
+	private ApplicationResponse(ApplicationInfo applicationInfo, int respCode, String respMsg, String formXml) {
 		this(respCode, respMsg);
 		this.applicationInfo = applicationInfo;
+		this.formXml = formXml;
 	}
 
 	public String getApplicationId() {
 		return applicationId;
 	}
 
-	public void setApplicationId(String applicationId) {
-		this.applicationId = applicationId;
-	}
-
 	public ApplicationInfo getApplicationInfo() {
 		return applicationInfo;
-	}
-
-	public void setApplicationInfo(ApplicationInfo applicationInfo) {
-		this.applicationInfo = applicationInfo;
 	}
 
 	public int getRespCode() {
@@ -62,26 +58,59 @@ public class ApplicationResponse {
 		return respMsg;
 	}
 
+	public String getUpdatedTime() {
+		return updatedTime;
+	}
+
+	public String getCreatedTime() {
+		return createdTime;
+	}
+
+	public String getFormXml() {
+		return formXml;
+	}
+
+	public void setUpdatedTime(String updatedTime) {
+		this.updatedTime = updatedTime;
+	}
+
+	public void setCreatedTime(String createdTime) {
+		this.createdTime = createdTime;
+	}
+
 	public static ApplicationResponse errorResponse(String errorMessage) {
 		return new ApplicationResponse(DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD, errorMessage);
 	}
 
-	public static ApplicationResponse successResponse(String applicationIdStr, String respCodeStr, String respMsg) {
+	public static ApplicationResponse successResponseGet(ApplicationInfo applicationInfo, String respCodeStr,
+			String respMsg, String formXml) {
 
-		return new ApplicationResponse(applicationIdStr, Integer.parseInt(respCodeStr), respMsg);
+		return new ApplicationResponse(applicationInfo, Integer.parseInt(respCodeStr), respMsg, formXml);
 	}
 
-	public static ApplicationResponse successResponseWithInfo(ApplicationInfo applicationInfo, String respCodeStr,
-			String respMsg) {
+	public static ApplicationResponse successResponsePost(String applicationId, String respCodeStr, String respMsg,
+			String createdTime) {
 
-		return new ApplicationResponse(applicationInfo, Integer.parseInt(respCodeStr), respMsg);
+		ApplicationResponse response = new ApplicationResponse(applicationId, Integer.parseInt(respCodeStr), respMsg);
+		response.setCreatedTime(createdTime);
+		return response;
+	}
+
+	public static ApplicationResponse successResponsePatch(String applicationId, String respCodeStr, String respMsg,
+			String updatedTime) {
+
+		ApplicationResponse response = new ApplicationResponse(applicationId, Integer.parseInt(respCodeStr), respMsg);
+		response.setUpdatedTime(updatedTime);
+		return response;
 	}
 
 	@Override
 	public String toString() {
 		return MessageFormat.format(
-				"ApplicationResponse: applicationId [{0}], applicationInfo [{1}], respCode [{2}], respMsg [{3}]",
-				this.applicationId, this.applicationInfo, this.respCode, this.respMsg);
+				"ApplicationResponse: applicationId [{0}], applicationInfo [{1}], respCode [{2}], "
+						+ "respMsg [{3}], createdTime [{4}], updatedTime [{5}], formXml [{6}]",
+				this.applicationId, this.applicationInfo, this.respCode, this.respMsg, this.createdTime,
+				this.updatedTime, this.formXml);
 	}
 
 }

@@ -1,7 +1,10 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.ApplicationApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.HealthApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.handler.ApiClient;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationServiceImpl;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health.HealthService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health.HealthServiceImpl;
 
@@ -33,12 +36,13 @@ public class AutoConfiguration {
 
 		apiClient.setBasePath(digitalFormsClientProperties.getBasePath());
 
-		if (StringUtils.isNotBlank(digitalFormsClientProperties.getUsername()))
-			apiClient.setUsername(digitalFormsClientProperties.getUsername());
-
-		if (StringUtils.isNotBlank(digitalFormsClientProperties.getPassword()))
-			apiClient.setPassword(digitalFormsClientProperties.getPassword());
-
+		/*
+		 * if (StringUtils.isNotBlank(digitalFormsClientProperties.getUsername()))
+		 * apiClient.setUsername(digitalFormsClientProperties.getUsername());
+		 * 
+		 * if (StringUtils.isNotBlank(digitalFormsClientProperties.getPassword()))
+		 * apiClient.setPassword(digitalFormsClientProperties.getPassword());
+		 */
 		return apiClient;
 	}
 
@@ -50,6 +54,16 @@ public class AutoConfiguration {
 	@Bean
 	public HealthService digitalFormsHealthService(HealthApi digitalFormsHealthApi) {
 		return new HealthServiceImpl(digitalFormsHealthApi);
+	}
+
+	@Bean
+	public ApplicationApi digitalFormsApplicationApi(ApiClient apiClient) {
+		return new ApplicationApi(apiClient);
+	}
+
+	@Bean
+	public ApplicationService digitalFormsApplicationService(ApplicationApi digitalFormsApplicationApi) {
+		return new ApplicationServiceImpl(digitalFormsApplicationApi);
 	}
 
 }

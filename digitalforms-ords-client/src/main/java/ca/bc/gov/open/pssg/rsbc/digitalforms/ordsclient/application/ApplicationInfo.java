@@ -2,6 +2,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import java.text.MessageFormat;
@@ -15,281 +16,178 @@ import java.text.MessageFormat;
  */
 @JacksonXmlRootElement(localName = "applicationInfo")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "prohibitionNoticeNo", "noticeSubjectCd", "noticeTypeCd", "reviewApplnTypeCd",
+		"presentationTypeCd", "reviewRoleTypeCd", "firstGivenNm", "secondGivenNm", "surnameNm", "phoneNo", "faxNo",
+		"email", "manualEntryYN" })
 public class ApplicationInfo {
 
-	@JsonProperty("user_id")
-	private String userId;
-
-	@JsonProperty("prohibition_notice_no")
+	@JsonProperty("prohibitionNoticeNo")
 	private String prohibitionNoticeNo;
-
-	@JsonProperty("notice_subject_cd")
+	@JsonProperty("noticeSubjectCd")
 	private String noticeSubjectCd;
-
-	@JsonProperty("notice_type_cd")
+	@JsonProperty("noticeTypeCd")
 	private String noticeTypeCd;
-
-	@JsonProperty("review_application_type_cd")
-	private String reviewApplicationTypeCd;
-
-	@JsonProperty("presentation_format_cd")
-	private String presentationFormatCd;
-
-	@JsonProperty("review_role_type_cd")
+	@JsonProperty("reviewApplnTypeCd")
+	private String reviewApplnTypeCd;
+	@JsonProperty("presentationTypeCd")
+	private String presentationTypeCd;
+	@JsonProperty("reviewRoleTypeCd")
 	private String reviewRoleTypeCd;
-
-	@JsonProperty("first_given_nm")
+	@JsonProperty("firstGivenNm")
 	private String firstGivenNm;
-
-	@JsonProperty("second_given_nm")
+	@JsonProperty("secondGivenNm")
 	private String secondGivenNm;
-
-	@JsonProperty("surname_nm")
+	@JsonProperty("surnameNm")
 	private String surnameNm;
-
-	@JsonProperty("phone_no")
+	@JsonProperty("phoneNo")
 	private String phoneNo;
-
-	@JsonProperty("fax_no")
+	@JsonProperty("faxNo")
 	private String faxNo;
+	@JsonProperty("email")
+	private String email;
+	@JsonProperty("manualEntryYN")
+	private String manualEntryYN;
 
-	@JsonProperty("electronic_address_txt")
-	private String electronicAddressTxt;
-
-	@JsonProperty("manual_entry_yn")
-	private String manualEntryYn;
-
-	@JsonProperty("form_xml")
-	private String formXml;
-
-	@JsonProperty("hearing_dt")
-	private String hearingDt;
-
-	@JsonProperty("hearing_start_tm")
-	private String hearingStartTm;
-
-	@JsonProperty("hearing_end_tm")
-	private String hearingEndTm;
-
-	@JsonProperty("application_received_dt")
-	private String applicationReceivedDt;
-
-	@JsonProperty("receipt_number_txt")
-	private String receiptNumberTxt;
-
-	@JsonProperty("user_id")
-	public String getUserId() {
-		return userId;
-	}
-
-	@JsonProperty("user_id")
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	@JsonProperty("prohibition_notice_no")
+	@JsonProperty("prohibitionNoticeNo")
 	public String getProhibitionNoticeNo() {
 		return prohibitionNoticeNo;
 	}
 
-	@JsonProperty("prohibition_notice_no")
+	@JsonProperty("prohibitionNoticeNo")
 	public void setProhibitionNoticeNo(String prohibitionNoticeNo) {
 		this.prohibitionNoticeNo = prohibitionNoticeNo;
 	}
 
-	@JsonProperty("notice_subject_cd")
+	@JsonProperty("noticeSubjectCd")
 	public String getNoticeSubjectCd() {
 		return noticeSubjectCd;
 	}
 
-	@JsonProperty("notice_subject_cd")
+	@JsonProperty("noticeSubjectCd")
 	public void setNoticeSubjectCd(String noticeSubjectCd) {
 		this.noticeSubjectCd = noticeSubjectCd;
 	}
 
-	@JsonProperty("notice_type_cd")
+	@JsonProperty("noticeTypeCd")
 	public String getNoticeTypeCd() {
 		return noticeTypeCd;
 	}
 
-	@JsonProperty("notice_type_cd")
+	@JsonProperty("noticeTypeCd")
 	public void setNoticeTypeCd(String noticeTypeCd) {
 		this.noticeTypeCd = noticeTypeCd;
 	}
 
-	@JsonProperty("review_application_type_cd")
-	public String getReviewApplicationTypeCd() {
-		return reviewApplicationTypeCd;
+	@JsonProperty("reviewApplnTypeCd")
+	public String getReviewApplnTypeCd() {
+		return reviewApplnTypeCd;
 	}
 
-	@JsonProperty("review_application_type_cd")
-	public void setReviewApplicationTypeCd(String reviewApplicationTypeCd) {
-		this.reviewApplicationTypeCd = reviewApplicationTypeCd;
+	@JsonProperty("reviewApplnTypeCd")
+	public void setReviewApplnTypeCd(String reviewApplnTypeCd) {
+		this.reviewApplnTypeCd = reviewApplnTypeCd;
 	}
 
-	@JsonProperty("presentation_format_cd")
-	public String getPresentationFormatCd() {
-		return presentationFormatCd;
+	@JsonProperty("presentationTypeCd")
+	public String getPresentationTypeCd() {
+		return presentationTypeCd;
 	}
 
-	@JsonProperty("presentation_format_cd")
-	public void setPresentationFormatCd(String presentationFormatCd) {
-		this.presentationFormatCd = presentationFormatCd;
+	@JsonProperty("presentationTypeCd")
+	public void setPresentationTypeCd(String presentationTypeCd) {
+		this.presentationTypeCd = presentationTypeCd;
 	}
 
-	@JsonProperty("review_role_type_cd")
+	@JsonProperty("reviewRoleTypeCd")
 	public String getReviewRoleTypeCd() {
 		return reviewRoleTypeCd;
 	}
 
-	@JsonProperty("review_role_type_cd")
+	@JsonProperty("reviewRoleTypeCd")
 	public void setReviewRoleTypeCd(String reviewRoleTypeCd) {
 		this.reviewRoleTypeCd = reviewRoleTypeCd;
 	}
 
-	@JsonProperty("first_given_nm")
+	@JsonProperty("firstGivenNm")
 	public String getFirstGivenNm() {
 		return firstGivenNm;
 	}
 
-	@JsonProperty("first_given_nm")
+	@JsonProperty("firstGivenNm")
 	public void setFirstGivenNm(String firstGivenNm) {
 		this.firstGivenNm = firstGivenNm;
 	}
 
-	@JsonProperty("second_given_nm")
+	@JsonProperty("secondGivenNm")
 	public String getSecondGivenNm() {
 		return secondGivenNm;
 	}
 
-	@JsonProperty("second_given_nm")
+	@JsonProperty("secondGivenNm")
 	public void setSecondGivenNm(String secondGivenNm) {
 		this.secondGivenNm = secondGivenNm;
 	}
 
-	@JsonProperty("surname_nm")
+	@JsonProperty("surnameNm")
 	public String getSurnameNm() {
 		return surnameNm;
 	}
 
-	@JsonProperty("surname_nm")
+	@JsonProperty("surnameNm")
 	public void setSurnameNm(String surnameNm) {
 		this.surnameNm = surnameNm;
 	}
 
-	@JsonProperty("phone_no")
+	@JsonProperty("phoneNo")
 	public String getPhoneNo() {
 		return phoneNo;
 	}
 
-	@JsonProperty("phone_no")
+	@JsonProperty("phoneNo")
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 
-	@JsonProperty("fax_no")
+	@JsonProperty("faxNo")
 	public String getFaxNo() {
 		return faxNo;
 	}
 
-	@JsonProperty("fax_no")
+	@JsonProperty("faxNo")
 	public void setFaxNo(String faxNo) {
 		this.faxNo = faxNo;
 	}
 
-	@JsonProperty("electronic_address_txt")
-	public String getElectronicAddressTxt() {
-		return electronicAddressTxt;
+	@JsonProperty("email")
+	public String getEmail() {
+		return email;
 	}
 
-	@JsonProperty("electronic_address_txt")
-	public void setElectronicAddressTxt(String electronicAddressTxt) {
-		this.electronicAddressTxt = electronicAddressTxt;
+	@JsonProperty("email")
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	@JsonProperty("manual_entry_yn")
-	public String getManualEntryYn() {
-		return manualEntryYn;
+	@JsonProperty("manualEntryYN")
+	public String getManualEntryYN() {
+		return manualEntryYN;
 	}
 
-	@JsonProperty("manual_entry_yn")
-	public void setManualEntryYn(String manualEntryYn) {
-		this.manualEntryYn = manualEntryYn;
-	}
-
-	@JsonProperty("form_xml")
-	public String getFormXml() {
-		return formXml;
-	}
-
-	@JsonProperty("form_xml")
-	public void setFormXml(String formXml) {
-		this.formXml = formXml;
-	}
-
-	@JsonProperty("hearing_dt")
-	public String getHearingDt() {
-		return hearingDt;
-	}
-
-	@JsonProperty("hearing_dt")
-	public void setHearingDt(String hearingDt) {
-		this.hearingDt = hearingDt;
-	}
-
-	@JsonProperty("hearing_start_tm")
-	public String getHearingStartTm() {
-		return hearingStartTm;
-	}
-
-	@JsonProperty("hearing_start_tm")
-	public void setHearingStartTm(String hearingStartTm) {
-		this.hearingStartTm = hearingStartTm;
-	}
-
-	@JsonProperty("hearing_end_tm")
-	public String getHearingEndTm() {
-		return hearingEndTm;
-	}
-
-	@JsonProperty("hearing_end_tm")
-	public void setHearingEndTm(String hearingEndTm) {
-		this.hearingEndTm = hearingEndTm;
-	}
-
-	@JsonProperty("application_received_dt")
-	public String getApplicationReceivedDt() {
-		return applicationReceivedDt;
-	}
-
-	@JsonProperty("application_received_dt")
-	public void setApplicationReceivedDt(String applicationReceivedDt) {
-		this.applicationReceivedDt = applicationReceivedDt;
-	}
-
-	@JsonProperty("receipt_number_txt")
-	public String getReceiptNumberTxt() {
-		return receiptNumberTxt;
-	}
-
-	@JsonProperty("receipt_number_txt")
-	public void setReceiptNumberTxt(String receiptNumberTxt) {
-		this.receiptNumberTxt = receiptNumberTxt;
+	@JsonProperty("manualEntryYN")
+	public void setManualEntryYN(String manualEntryYN) {
+		this.manualEntryYN = manualEntryYN;
 	}
 
 	@Override
 	public String toString() {
 		return MessageFormat.format(
-				"ApplicationInfo : userId[{0}], prohibitionNoticeNo[{1}], noticeSubjectCd[{2}], noticeTypeCd[{3}], "
-				+ "reviewApplicationTypeCd[{4}], presentationFormatCd[{5}], reviewRoleTypeCd[{6}], firstGivenNm[{7}], "
-				+ "secondGivenNm[{8}], surnameNm[{9}], phoneNo[{10}], faxNo[{11}], electronicAddressTxt[{12}], "
-				+ "manualEntryYn[{13}], formXml[{14}], hearingDt[{15}], hearingStartTm[{16}], hearingEndTm[{17}], "
-				+ "applicationReceivedDt[{18}], receiptNumberTxt[{19}]]",
-				this.userId, this.prohibitionNoticeNo, this.noticeSubjectCd, this.noticeTypeCd,
-				this.reviewApplicationTypeCd, this.presentationFormatCd, this.reviewRoleTypeCd, this.firstGivenNm,
-				this.secondGivenNm, this.surnameNm, this.phoneNo, this.faxNo, this.electronicAddressTxt,
-				this.manualEntryYn, this.formXml, this.hearingDt, this.hearingStartTm, this.hearingEndTm,
-				this.applicationReceivedDt, this.receiptNumberTxt);
+				"ApplicationInfo :  prohibitionNoticeNo[{0}], noticeSubjectCd[{1}], noticeTypeCd[{2}], "
+						+ "reviewApplnTypeCd[{3}], presentationTypeCd[{4}], reviewRoleTypeCd[{5}], firstGivenNm[{6}], "
+						+ "secondGivenNm[{7}], surnameNm[{8}], phoneNo[{9}], faxNo[{10}], email[{11}], "
+						+ "manualEntryYN[{12}], formXml[{13}]]",
+				this.prohibitionNoticeNo, this.noticeSubjectCd, this.noticeTypeCd, this.reviewApplnTypeCd,
+				this.presentationTypeCd, this.reviewRoleTypeCd, this.firstGivenNm, this.secondGivenNm, this.surnameNm,
+				this.phoneNo, this.faxNo, this.email, this.manualEntryYN);
 	}
 
 }

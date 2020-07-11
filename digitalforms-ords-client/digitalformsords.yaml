@@ -34,8 +34,6 @@ paths:
           description: output of the endpoint
           schema:
             $ref: '#/definitions/digitalFormErrorResponse'
-      consumes:
-      - application/json
       parameters:
       - name: payload
         in: body
@@ -76,8 +74,6 @@ paths:
           description: output of the endpoint
           schema:
             $ref: '#/definitions/digitalFormErrorResponse'
-      consumes:
-      - application/json
       parameters:
       - name: guid
         in: path
@@ -111,6 +107,23 @@ definitions:
       instance:
         type: string
   digitalFormPostRequest:
+    type: object
+    required: 
+    - user_id
+    - prohibition_notice_no
+    - notice_subject_cd
+    - notice_type_cd
+    - review_application_type_cd
+    - presentation_format_cd
+    - review_role_type_cd
+    - first_given_nm
+    - second_given_nm
+    - surname_nm
+    - phone_no
+    - fax_no
+    - electronic_address_txt
+    - manual_entry_yn
+    - form_xml
     properties:
       user_id:
         type: string
@@ -153,6 +166,9 @@ definitions:
       form_xml:
         type: string
   digitalFormPatchRequest:
+    type: object
+    required: 
+    - user_id
     properties:
       user_id:
         type: string
@@ -195,6 +211,23 @@ definitions:
       form_xml:
         type: string
   digitalFormGetResponse:
+    type: object
+    required: 
+    - user_id
+    - prohibition_notice_no
+    - notice_subject_cd
+    - notice_type_cd
+    - review_application_type_cd
+    - presentation_format_cd
+    - review_role_type_cd
+    - first_given_nm
+    - second_given_nm
+    - surname_nm
+    - phone_no
+    - fax_no
+    - electronic_address_txt
+    - manual_entry_yn
+    - form_xml
     properties:
       status_code:
         type: string
@@ -231,6 +264,12 @@ definitions:
       form_xml:
         type: string
   digitalFormCreateResponse:
+    type: object
+    required:
+    - status_code
+    - status_message
+    - form_object_guid
+    - ent_dtm
     properties:
       status_code:
         type: string
@@ -241,6 +280,12 @@ definitions:
       ent_dtm:
         type: string
   digitalFormPatchResponse:
+    type: object
+    required:
+    - status_code
+    - status_message
+    - form_object_guid
+    - upd_dtm
     properties:
       status_code:
         type: string
@@ -251,6 +296,10 @@ definitions:
       upd_dtm:
         type: string
   digitalFormErrorResponse:
+    type: object
+    required:
+    - status_code
+    - status_message
     properties:
       status_code:
         type: string

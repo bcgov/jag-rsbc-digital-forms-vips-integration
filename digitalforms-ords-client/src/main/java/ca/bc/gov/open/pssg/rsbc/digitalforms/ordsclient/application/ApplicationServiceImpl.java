@@ -29,25 +29,24 @@ public class ApplicationServiceImpl implements ApplicationService {
 	public ApplicationResponse getApplication(String formGuid) {
 		try {
 			DigitalFormGetResponse response = this.applicationApi.digitalFormGuidGet(formGuid);
+
 			ApplicationInfo applicationInfo = new ApplicationInfo();
-			applicationInfo.setElectronicAddressTxt(response.getElectronicAddressTxt());
+			applicationInfo.setEmail(response.getElectronicAddressTxt());
 			applicationInfo.setFaxNo(response.getFaxNo());
 			applicationInfo.setFirstGivenNm(response.getFirstGivenNm());
-			applicationInfo.setFormXml(response.getFormXml());
-			applicationInfo.setManualEntryYn(response.getManualEntryYn());
+			applicationInfo.setManualEntryYN(response.getManualEntryYn());
 			applicationInfo.setNoticeSubjectCd(response.getNoticeSubjectCd());
 			applicationInfo.setNoticeTypeCd(response.getNoticeTypeCd());
 			applicationInfo.setPhoneNo(response.getPhoneNo());
-			applicationInfo.setPresentationFormatCd(response.getPresentationFormatCd());
+			applicationInfo.setPresentationTypeCd(response.getPresentationFormatCd());
 			applicationInfo.setProhibitionNoticeNo(response.getProhibitionNoticeNo());
-			applicationInfo.setReviewApplicationTypeCd(response.getReviewApplicationTypeCd());
+			applicationInfo.setReviewApplnTypeCd(response.getReviewApplicationTypeCd());
 			applicationInfo.setReviewRoleTypeCd(response.getReviewRoleTypeCd());
 			applicationInfo.setSecondGivenNm(response.getSecondGivenNm());
 			applicationInfo.setSurnameNm(response.getSurnameNm());
-			applicationInfo.setUserId(response.getUserId());
 
-			return ApplicationResponse.successResponseWithInfo(applicationInfo, response.getStatusCode(),
-					response.getStatusMessage());
+			return ApplicationResponse.successResponseGet(applicationInfo, response.getStatusCode(),
+					response.getStatusMessage(), response.getFormXml());
 		} catch (ApiException ex) {
 			logger.error("Application Service Get did throw exception: " + ex.getMessage(), ex);
 			return ApplicationResponse.errorResponse(ex.getMessage());
@@ -55,73 +54,25 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public ApplicationResponse postApplication(ApplicationInfo applicationInfo) {
+	public ApplicationResponse patchApplication(String formGuid, DigitalFormPatchRequest request) {
 		try {
-			DigitalFormPostRequest request = new DigitalFormPostRequest();
-			
-			request.setElectronicAddressTxt(applicationInfo.getElectronicAddressTxt());
-			request.setFaxNo(applicationInfo.getFaxNo());
-			request.setFirstGivenNm(applicationInfo.getFirstGivenNm());
-			request.setFormXml(applicationInfo.getFormXml());
-			request.setManualEntryYn(applicationInfo.getManualEntryYn());
-			request.setNoticeSubjectCd(applicationInfo.getNoticeSubjectCd());
-			request.setNoticeTypeCd(applicationInfo.getNoticeTypeCd());
-			request.setPhoneNo(applicationInfo.getPhoneNo());
-			request.setPresentationFormatCd(applicationInfo.getPresentationFormatCd());
-			request.setProhibitionNoticeNo(applicationInfo.getProhibitionNoticeNo());
-			request.setReviewApplicationTypeCd(applicationInfo.getReviewApplicationTypeCd());
-			request.setReviewRoleTypeCd(applicationInfo.getReviewRoleTypeCd());
-			request.setSecondGivenNm(applicationInfo.getSecondGivenNm());
-			request.setSurnameNm(applicationInfo.getSurnameNm());
-			request.setUserId(applicationInfo.getUserId());
-			
-			request.setApplicationReceivedDt(applicationInfo.getApplicationReceivedDt());
-			request.setHearingDt(applicationInfo.getHearingDt());
-			request.setHearingEndTm(applicationInfo.getHearingEndTm());
-			request.setHearingStartTm(applicationInfo.getHearingStartTm());
-			request.setReceiptNumberTxt(applicationInfo.getReceiptNumberTxt());
-			
-			DigitalFormCreateResponse response = this.applicationApi.digitalFormPost(request);
 
-			return ApplicationResponse.successResponse(response.getFormObjectGuid(), response.getStatusCode(),
-					response.getStatusMessage());
+			DigitalFormPatchResponse response = this.applicationApi.digitalFormGuidPatch(formGuid, request);
+			return ApplicationResponse.successResponsePatch(response.getFormObjectGuid(), response.getStatusCode(),
+					response.getStatusMessage(), response.getUpdDtm());
 		} catch (ApiException ex) {
-			logger.error("Application Service Post did throw exception: " + ex.getMessage(), ex);
+			logger.error("Application Service Patch did throw exception: " + ex.getMessage(), ex);
 			return ApplicationResponse.errorResponse(ex.getMessage());
 		}
 	}
 
 	@Override
-	public ApplicationResponse patchApplication(String formGuid, ApplicationInfo applicationInfo) {
+	public ApplicationResponse postApplication(DigitalFormPostRequest request) {
 		try {
-			DigitalFormPatchRequest request = new DigitalFormPatchRequest();
-			
-			request.setElectronicAddressTxt(applicationInfo.getElectronicAddressTxt());
-			request.setFaxNo(applicationInfo.getFaxNo());
-			request.setFirstGivenNm(applicationInfo.getFirstGivenNm());
-			request.setFormXml(applicationInfo.getFormXml());
-			request.setManualEntryYn(applicationInfo.getManualEntryYn());
-			request.setNoticeSubjectCd(applicationInfo.getNoticeSubjectCd());
-			request.setNoticeTypeCd(applicationInfo.getNoticeTypeCd());
-			request.setPhoneNo(applicationInfo.getPhoneNo());
-			request.setPresentationFormatCd(applicationInfo.getPresentationFormatCd());
-			request.setProhibitionNoticeNo(applicationInfo.getProhibitionNoticeNo());
-			request.setReviewApplicationTypeCd(applicationInfo.getReviewApplicationTypeCd());
-			request.setReviewRoleTypeCd(applicationInfo.getReviewRoleTypeCd());
-			request.setSecondGivenNm(applicationInfo.getSecondGivenNm());
-			request.setSurnameNm(applicationInfo.getSurnameNm());
-			request.setUserId(applicationInfo.getUserId());
-			
-			request.setApplicationReceivedDt(applicationInfo.getApplicationReceivedDt());
-			request.setHearingDt(applicationInfo.getHearingDt());
-			request.setHearingEndTm(applicationInfo.getHearingEndTm());
-			request.setHearingStartTm(applicationInfo.getHearingStartTm());
-			request.setReceiptNumberTxt(applicationInfo.getReceiptNumberTxt());
-			
-			DigitalFormPatchResponse response = this.applicationApi.digitalFormGuidPatch(formGuid, request);
 
-			return ApplicationResponse.successResponse(response.getFormObjectGuid(), response.getStatusCode(),
-					response.getStatusMessage());
+			DigitalFormCreateResponse response = this.applicationApi.digitalFormPost(request);
+			return ApplicationResponse.successResponsePost(response.getFormObjectGuid(), response.getStatusCode(),
+					response.getStatusMessage(), response.getEntDtm());
 		} catch (ApiException ex) {
 			logger.error("Application Service Patch did throw exception: " + ex.getMessage(), ex);
 			return ApplicationResponse.errorResponse(ex.getMessage());

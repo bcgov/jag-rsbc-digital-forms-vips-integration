@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData.Field;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationInfo;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class ApplicationFormDataTests {
 	public void testObj() {
 		ApplicationFormData formRequest = new ApplicationFormData();
 
-		Field fields = new Field();
+		ApplicationInfo fields = new ApplicationInfo();
 		fields.setFirstGivenNm("firstGivenNm");
 		fields.setEmail("email");
 		fields.setFaxNo("faxNo");
@@ -36,7 +36,7 @@ public class ApplicationFormDataTests {
 		fields.setSecondGivenNm("secondGivenNm");
 		fields.setSurnameNm("surnameNm");
 
-		List<Field> array = new ArrayList<Field>();
+		List<ApplicationInfo> array = new ArrayList<ApplicationInfo>();
 		array.add(fields);
 
 		formRequest.setFormData("formData");

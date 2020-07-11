@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.DigitalFormsOrdsClientConstants;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
@@ -33,7 +34,7 @@ public class ApplicationFormController {
 	@Autowired
 	ApplicationFormService service;
 
-	@GetMapping(value = "/{formType}/application/{formGuid}")
+	@GetMapping(value = "/{formType}/application/{formGuid}", produces = "application/json")
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = JSONResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationResponse>> reviewFormGet(
@@ -41,10 +42,14 @@ public class ApplicationFormController {
 			@PathVariable(value = "formGuid", required = true) String formGuid) {
 		ApplicationResponse data = service.getApplicationForm(formType, formGuid);
 		JSONResponse<ApplicationResponse> resp = new JSONResponse<>(data);
+
+		if (data.getRespCode() == DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD) {
+			return new ResponseEntity<>(resp, HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/{formType}/application")
+	@PostMapping(value = "/{formType}/application", consumes = "application/json", produces = "application/json")
 	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Success", response = JSONResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationResponse>> reviewFormPost(
@@ -52,10 +57,13 @@ public class ApplicationFormController {
 			@RequestBody(required = true) ApplicationFormData formData) {
 		ApplicationResponse data = service.postApplicationForm(formType, formData);
 		JSONResponse<ApplicationResponse> resp = new JSONResponse<>(data);
+		if (data.getRespCode() == DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD) {
+			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
-	@PatchMapping(value = "/{formType}/application/{formGuid}")
+	@PatchMapping(value = "/{formType}/application/{formGuid}", consumes = "application/json", produces = "application/json")
 	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = JSONResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationResponse>> reviewFormPatch(
@@ -64,6 +72,9 @@ public class ApplicationFormController {
 			@RequestBody(required = true) ApplicationFormData formData) {
 		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData);
 		JSONResponse<ApplicationResponse> resp = new JSONResponse<>(data);
+		if (data.getRespCode() == DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD) {
+			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
