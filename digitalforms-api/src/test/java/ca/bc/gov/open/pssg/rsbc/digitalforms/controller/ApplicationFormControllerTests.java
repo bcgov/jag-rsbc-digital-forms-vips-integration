@@ -22,7 +22,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 
 /**
  * 
- * Form Submission Tests.
+ * Application Form Controller Tests.
  * 
  * @author sivakaruna
  *
@@ -30,8 +30,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 class ApplicationFormControllerTests {
-
-	private final String JSON_RESPONSE_GOOD = "IRP review form";
 
 	@Mock
 	private ApplicationFormService service;
@@ -44,30 +42,56 @@ class ApplicationFormControllerTests {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	@DisplayName("Get success - FormSubmissionController")
+	@DisplayName("Get success - ApplicationFormController")
 	@Test
-	void irpGetFormSuccess() {
-		when(service.getApplicationForm(any(), any())).thenReturn(null);
-		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.reviewFormGet("abc", "abc");
+	void getFormSuccess() {
+		when(service.getApplicationForm(any(), any())).thenReturn(ApplicationResponse.successResponseGet(null,"1",null,null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormGet("abc", "abc");
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
-	@DisplayName("Post success - FormSubmissionController")
+	@DisplayName("Post success - ApplicationFormController")
 	@Test
-	void irpPostFormSuccess() {
-		when(service.postApplicationForm(any(), any())).thenReturn(null);
-		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.reviewFormPost("abc",
+	void postFormSuccess() {
+		when(service.postApplicationForm(any(), any())).thenReturn(ApplicationResponse.successResponseGet(null,"1",null,null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPost("abc",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
 
-	@DisplayName("Patch success - FormSubmissionController")
+	@DisplayName("Patch success - ApplicationFormController")
 	@Test
-	void irpPatchFormSuccess() {
-		when(service.patchApplicationForm(any(), any(), any())).thenReturn(null);
-		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.reviewFormPatch("abc", "abc",
+	void patchFormSuccess() {
+		when(service.patchApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.successResponseGet(null,"1",null,null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPatch("abc", "abc",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
+	}
+	
+	@DisplayName("Get error - ApplicationFormController")
+	@Test
+	void getFormError() {
+		when(service.getApplicationForm(any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormGet("abc", "abc");
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+	}
+
+	@DisplayName("Post error - ApplicationFormController")
+	@Test
+	void postFormError() {
+		when(service.postApplicationForm(any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPost("abc",
+				new ApplicationFormData());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+	}
+
+	@DisplayName("Patch error - ApplicationFormController")
+	@Test
+	void patchFormError() {
+		when(service.patchApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPatch("abc", "abc",
+				new ApplicationFormData());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
 
 }

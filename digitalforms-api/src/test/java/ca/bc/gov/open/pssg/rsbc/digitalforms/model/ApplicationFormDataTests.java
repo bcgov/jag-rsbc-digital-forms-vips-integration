@@ -10,7 +10,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationI
 
 /**
  * 
- * IRP Review Form Request Object Tests
+ * Application Form Request Object Tests
  * 
  * @author sivakaruna
  *

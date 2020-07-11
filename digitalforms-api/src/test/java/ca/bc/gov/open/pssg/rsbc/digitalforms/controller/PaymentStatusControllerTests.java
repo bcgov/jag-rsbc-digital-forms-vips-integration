@@ -43,7 +43,7 @@ class PaymentStatusControllerTests {
 
 	@DisplayName("Get success - paymentStatusController")
 	@Test
-	void irpGetFormSuccess() {
+	void getPaymentStatusSuccess() {
 		when(paymentService.getReviewPaymentStatus(any())).thenReturn(new PaymentStatusResponse("1"));
 		ResponseEntity<JSONResponse<PaymentStatusResponse>> resp = controller.paymentStatusGet(1L);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());

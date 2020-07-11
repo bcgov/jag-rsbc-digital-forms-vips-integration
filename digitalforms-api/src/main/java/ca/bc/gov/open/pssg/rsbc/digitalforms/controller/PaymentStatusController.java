@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
@@ -18,13 +17,12 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * 
- * IRP Payment Status.
+ * Payment Status.
  * 
  * @author sivakaruna
  *
  */
 @RestController
-@RequestMapping("/IRP")
 @Api(value = "Payment", tags = { "Payment" })
 public class PaymentStatusController {
 	
@@ -34,7 +32,7 @@ public class PaymentStatusController {
 	@Autowired
 	PaymentService paymentService;
 
-	@GetMapping(value = "/{noticeNumber}/payment/status")
+	@GetMapping(value = "{formType}/{noticeNumber}/payment/status")
 	@ApiOperation(value = "Get Payment Status", response = PaymentStatusSwaggerResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = PaymentStatusSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<PaymentStatusResponse>> paymentStatusGet(
