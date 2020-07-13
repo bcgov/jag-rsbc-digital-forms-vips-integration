@@ -48,7 +48,7 @@ public class PaymentServiceControllerTests {
 	@DisplayName("setIRPReviewPaid - Post HTTP status code - good")
 	@Test
 	void setReviewPaidReturns200() {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setIRPReviewPaid(IRP_TEST_NOTICE_NUMBER,
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER,
 				GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
@@ -58,7 +58,7 @@ public class PaymentServiceControllerTests {
 	@DisplayName("setIRPReviewPaid - Post response object - good")
 	@Test
 	void setReviewPaidReturnsSuccess() {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setIRPReviewPaid(IRP_TEST_NOTICE_NUMBER,
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER,
 				GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(GOOD_TRANSACTION_RESPONSE, resp.getBody().getData().booleanValue());
 	}
