@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * 
- * IRP Payment Controller. 
+ * Payment Controller. 
  * 
  * @author shaunmillargov
  *
