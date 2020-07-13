@@ -14,7 +14,7 @@ public interface ApplicationFormService {
 
 	public ApplicationResponse getApplicationForm(String formType, String formGuid);
 
-	public ApplicationResponse postApplicationForm(String formType, ApplicationFormData formData);
+	public ApplicationResponse postApplicationForm(String formType, String noticeNo, ApplicationFormData formData);
 
 	public ApplicationResponse patchApplicationForm(String formType, String formGuid, ApplicationFormData formData);
 

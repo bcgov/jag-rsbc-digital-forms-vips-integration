@@ -34,12 +34,12 @@ public class ApplicationFormController {
 	@Autowired
 	ApplicationFormService service;
 
-	@GetMapping(value = "/{formType}/application/{formGuid}", produces = "application/json")
+	@GetMapping(value = "/{formType}/{GUID}/application", produces = "application/json")
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = JSONResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationResponse>> applicationFormGet(
 			@PathVariable(value = "formType", required = true) String formType,
-			@PathVariable(value = "formGuid", required = true) String formGuid) {
+			@PathVariable(value = "GUID", required = true) String formGuid) {
 		ApplicationResponse data = service.getApplicationForm(formType, formGuid);
 		JSONResponse<ApplicationResponse> resp = new JSONResponse<>(data);
 
@@ -49,13 +49,14 @@ public class ApplicationFormController {
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/{formType}/application", consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/{formType}/{noticeNo}/application", consumes = "application/json", produces = "application/json")
 	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Success", response = JSONResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationResponse>> applicationFormPost(
 			@PathVariable(value = "formType", required = true) String formType,
+			@PathVariable(value = "noticeNo", required = true) String noticeNo,
 			@RequestBody(required = true) ApplicationFormData formData) {
-		ApplicationResponse data = service.postApplicationForm(formType, formData);
+		ApplicationResponse data = service.postApplicationForm(formType, noticeNo, formData);
 		JSONResponse<ApplicationResponse> resp = new JSONResponse<>(data);
 		if (data.getRespCode() == DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD) {
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
@@ -63,12 +64,12 @@ public class ApplicationFormController {
 		return new ResponseEntity<>(resp, HttpStatus.CREATED);
 	}
 
-	@PatchMapping(value = "/{formType}/application/{formGuid}", consumes = "application/json", produces = "application/json")
+	@PatchMapping(value = "/{formType}/{GUID}/application", consumes = "application/json", produces = "application/json")
 	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = JSONResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationResponse>> applicationFormPatch(
 			@PathVariable(value = "formType", required = true) String formType,
-			@PathVariable(value = "formGuid", required = true) String formGuid,
+			@PathVariable(value = "GUID", required = true) String formGuid,
 			@RequestBody(required = true) ApplicationFormData formData) {
 		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData);
 		JSONResponse<ApplicationResponse> resp = new JSONResponse<>(data);

@@ -26,28 +26,27 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	public ApplicationResponse getApplicationForm(String formType, String formGuid) {
 		return applicationService.getApplication(formGuid);
 	}
-	
+
 	@Override
-	public ApplicationResponse postApplicationForm(String formType, ApplicationFormData formData) {
+	public ApplicationResponse postApplicationForm(String formType, String noticeNo, ApplicationFormData formData) {
 		DigitalFormPostRequest request = new DigitalFormPostRequest();
 
-		request.setElectronicAddressTxt(formData.getFields().get(0).getEmail());
-		request.setFaxNo(formData.getFields().get(0).getFaxNo());
-		request.setFirstGivenNm(formData.getFields().get(0).getFirstGivenNm());
+		request.setElectronicAddressTxt(formData.getEmail());
+		request.setFaxNo(formData.getFaxNo());
+		request.setFirstGivenNm(formData.getFirstGivenNm());
 		request.setFormXml(formData.getFormData());
-		request.setManualEntryYn(formData.getFields().get(0).getManualEntryYN());
-		request.setNoticeSubjectCd(formData.getFields().get(0).getNoticeSubjectCd());
-		request.setNoticeTypeCd(formData.getFields().get(0).getNoticeTypeCd());
-		request.setPhoneNo(formData.getFields().get(0).getPhoneNo());
-		request.setPresentationFormatCd(formData.getFields().get(0).getPresentationTypeCd());
-		request.setProhibitionNoticeNo(formData.getFields().get(0).getProhibitionNoticeNo());
-		request.setReviewApplicationTypeCd(formData.getFields().get(0).getReviewApplnTypeCd());
-		request.setReviewRoleTypeCd(formData.getFields().get(0).getReviewRoleTypeCd());
-		request.setSecondGivenNm(formData.getFields().get(0).getSecondGivenNm());
-		request.setSurnameNm(formData.getFields().get(0).getSurnameNm());
+		request.setManualEntryYn(formData.getManualEntryYN());
+		request.setNoticeSubjectCd(formData.getNoticeSubjectCd());
+		request.setNoticeTypeCd(formData.getNoticeTypeCd());
+		request.setPhoneNo(formData.getPhoneNo());
+		request.setPresentationFormatCd(formData.getPresentationTypeCd());
+		request.setProhibitionNoticeNo(noticeNo);
+		request.setReviewApplicationTypeCd(formData.getReviewApplnTypeCd());
+		request.setReviewRoleTypeCd(formData.getReviewRoleTypeCd());
+		request.setSecondGivenNm(formData.getSecondGivenNm());
+		request.setSurnameNm(formData.getSurnameNm());
 		request.setUserId("DigitalFormsApi");
-		
-		
+
 		return applicationService.postApplication(request);
 	}
 
@@ -55,23 +54,21 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	public ApplicationResponse patchApplicationForm(String formType, String formGuid, ApplicationFormData formData) {
 		DigitalFormPatchRequest request = new DigitalFormPatchRequest();
 
-		request.setElectronicAddressTxt(formData.getFields().get(0).getEmail());
-		request.setFaxNo(formData.getFields().get(0).getFaxNo());
-		request.setFirstGivenNm(formData.getFields().get(0).getFirstGivenNm());
+		request.setElectronicAddressTxt(formData.getEmail());
+		request.setFaxNo(formData.getFaxNo());
+		request.setFirstGivenNm(formData.getFirstGivenNm());
 		request.setFormXml(formData.getFormData());
-		request.setManualEntryYn(formData.getFields().get(0).getManualEntryYN());
-		request.setNoticeSubjectCd(formData.getFields().get(0).getNoticeSubjectCd());
-		request.setNoticeTypeCd(formData.getFields().get(0).getNoticeTypeCd());
-		request.setPhoneNo(formData.getFields().get(0).getPhoneNo());
-		request.setPresentationFormatCd(formData.getFields().get(0).getPresentationTypeCd());
-		request.setProhibitionNoticeNo(formData.getFields().get(0).getProhibitionNoticeNo());
-		request.setReviewApplicationTypeCd(formData.getFields().get(0).getReviewApplnTypeCd());
-		request.setReviewRoleTypeCd(formData.getFields().get(0).getReviewRoleTypeCd());
-		request.setSecondGivenNm(formData.getFields().get(0).getSecondGivenNm());
-		request.setSurnameNm(formData.getFields().get(0).getSurnameNm());
+		request.setManualEntryYn(formData.getManualEntryYN());
+		request.setNoticeSubjectCd(formData.getNoticeSubjectCd());
+		request.setNoticeTypeCd(formData.getNoticeTypeCd());
+		request.setPhoneNo(formData.getPhoneNo());
+		request.setPresentationFormatCd(formData.getPresentationTypeCd());
+		request.setReviewApplicationTypeCd(formData.getReviewApplnTypeCd());
+		request.setReviewRoleTypeCd(formData.getReviewRoleTypeCd());
+		request.setSecondGivenNm(formData.getSecondGivenNm());
+		request.setSurnameNm(formData.getSurnameNm());
 		request.setUserId("DigitalFormsApi");
-		
-		
+
 		return applicationService.patchApplication(formGuid, request);
 	}
 }

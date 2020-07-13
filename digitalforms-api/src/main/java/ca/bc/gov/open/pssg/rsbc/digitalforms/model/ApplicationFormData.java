@@ -1,11 +1,8 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationInfo;
 
 /**
  * 
@@ -16,27 +13,39 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationI
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "formType", "formVersion", "fields", "formData" })
+@JsonPropertyOrder({ "formVersion", "noticeSubjectCd", "noticeTypeCd", "reviewApplnTypeCd", "presentationTypeCd",
+		"reviewRoleTypeCd", "firstGivenNm", "secondGivenNm", "surnameNm", "phoneNo", "faxNo", "email", "manualEntryYN",
+		"formData" })
 public class ApplicationFormData {
 
-	@JsonProperty("formType")
-	private String formType;
 	@JsonProperty("formVersion")
 	private String formVersion;
-	@JsonProperty("fields")
-	private List<ApplicationInfo> fields = null;
+	@JsonProperty("noticeSubjectCd")
+	private String noticeSubjectCd;
+	@JsonProperty("noticeTypeCd")
+	private String noticeTypeCd;
+	@JsonProperty("reviewApplnTypeCd")
+	private String reviewApplnTypeCd;
+	@JsonProperty("presentationTypeCd")
+	private String presentationTypeCd;
+	@JsonProperty("reviewRoleTypeCd")
+	private String reviewRoleTypeCd;
+	@JsonProperty("firstGivenNm")
+	private String firstGivenNm;
+	@JsonProperty("secondGivenNm")
+	private String secondGivenNm;
+	@JsonProperty("surnameNm")
+	private String surnameNm;
+	@JsonProperty("phoneNo")
+	private String phoneNo;
+	@JsonProperty("faxNo")
+	private String faxNo;
+	@JsonProperty("email")
+	private String email;
+	@JsonProperty("manualEntryYN")
+	private String manualEntryYN;
 	@JsonProperty("formData")
 	private String formData;
-
-	@JsonProperty("formType")
-	public String getFormType() {
-		return formType;
-	}
-
-	@JsonProperty("formType")
-	public void setFormType(String formType) {
-		this.formType = formType;
-	}
 
 	@JsonProperty("formVersion")
 	public String getFormVersion() {
@@ -48,14 +57,124 @@ public class ApplicationFormData {
 		this.formVersion = formVersion;
 	}
 
-	@JsonProperty("fields")
-	public List<ApplicationInfo> getFields() {
-		return fields;
+	@JsonProperty("noticeSubjectCd")
+	public String getNoticeSubjectCd() {
+		return noticeSubjectCd;
 	}
 
-	@JsonProperty("fields")
-	public void setFields(List<ApplicationInfo> fields) {
-		this.fields = fields;
+	@JsonProperty("noticeSubjectCd")
+	public void setNoticeSubjectCd(String noticeSubjectCd) {
+		this.noticeSubjectCd = noticeSubjectCd;
+	}
+
+	@JsonProperty("noticeTypeCd")
+	public String getNoticeTypeCd() {
+		return noticeTypeCd;
+	}
+
+	@JsonProperty("noticeTypeCd")
+	public void setNoticeTypeCd(String noticeTypeCd) {
+		this.noticeTypeCd = noticeTypeCd;
+	}
+
+	@JsonProperty("reviewApplnTypeCd")
+	public String getReviewApplnTypeCd() {
+		return reviewApplnTypeCd;
+	}
+
+	@JsonProperty("reviewApplnTypeCd")
+	public void setReviewApplnTypeCd(String reviewApplnTypeCd) {
+		this.reviewApplnTypeCd = reviewApplnTypeCd;
+	}
+
+	@JsonProperty("presentationTypeCd")
+	public String getPresentationTypeCd() {
+		return presentationTypeCd;
+	}
+
+	@JsonProperty("presentationTypeCd")
+	public void setPresentationTypeCd(String presentationTypeCd) {
+		this.presentationTypeCd = presentationTypeCd;
+	}
+
+	@JsonProperty("reviewRoleTypeCd")
+	public String getReviewRoleTypeCd() {
+		return reviewRoleTypeCd;
+	}
+
+	@JsonProperty("reviewRoleTypeCd")
+	public void setReviewRoleTypeCd(String reviewRoleTypeCd) {
+		this.reviewRoleTypeCd = reviewRoleTypeCd;
+	}
+
+	@JsonProperty("firstGivenNm")
+	public String getFirstGivenNm() {
+		return firstGivenNm;
+	}
+
+	@JsonProperty("firstGivenNm")
+	public void setFirstGivenNm(String firstGivenNm) {
+		this.firstGivenNm = firstGivenNm;
+	}
+
+	@JsonProperty("secondGivenNm")
+	public String getSecondGivenNm() {
+		return secondGivenNm;
+	}
+
+	@JsonProperty("secondGivenNm")
+	public void setSecondGivenNm(String secondGivenNm) {
+		this.secondGivenNm = secondGivenNm;
+	}
+
+	@JsonProperty("surnameNm")
+	public String getSurnameNm() {
+		return surnameNm;
+	}
+
+	@JsonProperty("surnameNm")
+	public void setSurnameNm(String surnameNm) {
+		this.surnameNm = surnameNm;
+	}
+
+	@JsonProperty("phoneNo")
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	@JsonProperty("phoneNo")
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	@JsonProperty("faxNo")
+	public String getFaxNo() {
+		return faxNo;
+	}
+
+	@JsonProperty("faxNo")
+	public void setFaxNo(String faxNo) {
+		this.faxNo = faxNo;
+	}
+
+	@JsonProperty("email")
+	public String getEmail() {
+		return email;
+	}
+
+	@JsonProperty("email")
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@JsonProperty("manualEntryYN")
+	public String getManualEntryYN() {
+		return manualEntryYN;
+	}
+
+	@JsonProperty("manualEntryYN")
+	public void setManualEntryYN(String manualEntryYN) {
+		this.manualEntryYN = manualEntryYN;
 	}
 
 	@JsonProperty("formData")
@@ -67,4 +186,5 @@ public class ApplicationFormData {
 	public void setFormData(String formData) {
 		this.formData = formData;
 	}
+
 }

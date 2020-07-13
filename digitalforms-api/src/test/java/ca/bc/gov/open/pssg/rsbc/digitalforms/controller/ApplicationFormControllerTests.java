@@ -45,7 +45,8 @@ class ApplicationFormControllerTests {
 	@DisplayName("Get success - ApplicationFormController")
 	@Test
 	void getFormSuccess() {
-		when(service.getApplicationForm(any(), any())).thenReturn(ApplicationResponse.successResponseGet(null,"1",null,null));
+		when(service.getApplicationForm(any(), any()))
+				.thenReturn(ApplicationResponse.successResponseGet(null, "1", null, null));
 		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormGet("abc", "abc");
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
@@ -53,8 +54,9 @@ class ApplicationFormControllerTests {
 	@DisplayName("Post success - ApplicationFormController")
 	@Test
 	void postFormSuccess() {
-		when(service.postApplicationForm(any(), any())).thenReturn(ApplicationResponse.successResponseGet(null,"1",null,null));
-		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPost("abc",
+		when(service.postApplicationForm(any(), any(), any()))
+				.thenReturn(ApplicationResponse.successResponseGet(null, "1", null, null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPost("abc", "abc",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
@@ -62,12 +64,13 @@ class ApplicationFormControllerTests {
 	@DisplayName("Patch success - ApplicationFormController")
 	@Test
 	void patchFormSuccess() {
-		when(service.patchApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.successResponseGet(null,"1",null,null));
+		when(service.patchApplicationForm(any(), any(), any()))
+				.thenReturn(ApplicationResponse.successResponseGet(null, "1", null, null));
 		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPatch("abc", "abc",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
-	
+
 	@DisplayName("Get error - ApplicationFormController")
 	@Test
 	void getFormError() {
@@ -79,8 +82,8 @@ class ApplicationFormControllerTests {
 	@DisplayName("Post error - ApplicationFormController")
 	@Test
 	void postFormError() {
-		when(service.postApplicationForm(any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPost("abc",
+		when(service.postApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
+		ResponseEntity<JSONResponse<ApplicationResponse>> resp = controller.applicationFormPost("abc", "abc",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
