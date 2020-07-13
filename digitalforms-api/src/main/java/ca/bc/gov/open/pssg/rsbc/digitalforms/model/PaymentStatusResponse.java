@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * 
- * IRP Payment Status Response Object
+ * Payment Status Response Object
  * 
  * @author sivakaruna
  *

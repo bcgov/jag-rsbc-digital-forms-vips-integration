@@ -5,22 +5,14 @@ info:
 host: dev.jag.gov.bc.ca
 basePath: "/ords/deva/rsdfrmords/web"
 schemes:
-- http
+- https
 produces:
 - application/json
-securityDefinitions:
-  basicAuth:
-    type: basic
-    description: HTTP Basic Authentication.
-tags:
-- name: Health
 paths:
-  /health:
+  "/health":
     get:
       tags:
       - Health
-      security:
-      - basicAuth: []
       operationId: health
       description: Dummy endpoint to check that API calls are working
       responses:
@@ -28,148 +20,72 @@ paths:
           description: output of the endpoint
           schema:
             $ref: '#/definitions/healthOrdsResponse'
-  /application/{noticeNo}:
-    get:
-      tags:
-      - Application
-      security:
-      - basicAuth: []
-      description: Retrieve a Digital forms application
-      responses:
-        '200':
-          description: output of the endpoint
-          schema:
-            $ref: '#/definitions/applicationOrdsResponse'
-        '400':
-          description: output of the endpoint
-          schema:
-            $ref: '#/definitions/errorMessage'
-      parameters:
-      - name: type_code
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: metadata
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: mime_type
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: mime_sub_type
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: auth_guid
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: file_object
-        in: body
-        required: true
-        schema:
-          type: string
-          format: binary
+  "/digitalForm":
     post:
       tags:
       - Application
-      security:
-      - basicAuth: []
-      description: Store a Digital forms application
+      description: Create digital form
       responses:
         '200':
           description: output of the endpoint
           schema:
-            $ref: '#/definitions/applicationOrdsResponse'
+            "$ref": "#/definitions/digitalFormCreateResponse"
         '400':
           description: output of the endpoint
           schema:
-            $ref: '#/definitions/errorMessage'
+            $ref: '#/definitions/digitalFormErrorResponse'
       parameters:
-      - name: type_code
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: metadata
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: mime_type
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: mime_sub_type
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: auth_guid
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: file_object
+      - name: payload
         in: body
         required: true
         schema:
-          type: string
-          format: binary
+          "$ref": "#/definitions/digitalFormPostRequest"
+  "/digitalForm/{guid}":
+    get:
+      tags:
+      - Application
+      description: Get digital form
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            "$ref": "#/definitions/digitalFormGetResponse"
+        '400':
+          description: output of the endpoint
+          schema:
+            $ref: '#/definitions/digitalFormErrorResponse'
+      parameters:
+      - name: guid
+        in: path
+        required: true
+        type: string
+        description: implicit
+        pattern: "^[^/]+$"
     patch:
       tags:
       - Application
-      security:
-      - basicAuth: []
-      description: Update a Digital forms application
+      description: Patch digital form
       responses:
         '200':
           description: output of the endpoint
           schema:
-            $ref: '#/definitions/applicationOrdsResponse'
+            "$ref": "#/definitions/digitalFormPatchResponse"
         '400':
           description: output of the endpoint
           schema:
-            $ref: '#/definitions/errorMessage'
+            $ref: '#/definitions/digitalFormErrorResponse'
       parameters:
-      - name: type_code
-        in: query
-        type: string
+      - name: guid
+        in: path
         required: true
-        description: Implicit parameter
-      - name: metadata
-        in: query
         type: string
-        required: true
-        description: Implicit parameter
-      - name: mime_type
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: mime_sub_type
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: auth_guid
-        in: query
-        type: string
-        required: true
-        description: Implicit parameter
-      - name: file_object
+        description: implicit
+        pattern: "^[^/]+$"
+      - name: payload
         in: body
         required: true
         schema:
-          type: string
-          format: binary
+          "$ref": "#/definitions/digitalFormPatchRequest"
 definitions:
   healthOrdsResponse:
     type: object
@@ -190,20 +106,196 @@ definitions:
         type: string
       instance:
         type: string
-  applicationOrdsResponse:
+  digitalFormPostRequest:
     type: object
-    required:
-    - application_id
-    - status_code
-    - status_message
+    required: 
+    - user_id
+    - prohibition_notice_no
+    - notice_subject_cd
+    - notice_type_cd
+    - review_application_type_cd
+    - presentation_format_cd
+    - review_role_type_cd
+    - first_given_nm
+    - second_given_nm
+    - surname_nm
+    - phone_no
+    - fax_no
+    - electronic_address_txt
+    - manual_entry_yn
+    - form_xml
     properties:
-      application_id:
+      user_id:
         type: string
+      prohibition_notice_no:
+        type: string
+      notice_subject_cd:
+        type: string
+      notice_type_cd:
+        type: string
+      review_application_type_cd:
+        type: string
+      presentation_format_cd:
+        type: string
+      review_role_type_cd:
+        type: string
+      hearing_dt:
+        type: string
+      hearing_start_tm:
+        type: string
+      hearing_end_tm:
+        type: string
+      application_received_dt:
+        type: string
+      receipt_number_txt:
+        type: string
+      first_given_nm:
+        type: string
+      second_given_nm:
+        type: string
+      surname_nm:
+        type: string
+      phone_no:
+        type: string
+      fax_no:
+        type: string
+      electronic_address_txt:
+        type: string
+      manual_entry_yn:
+        type: string
+      form_xml:
+        type: string
+  digitalFormPatchRequest:
+    type: object
+    required: 
+    - user_id
+    properties:
+      user_id:
+        type: string
+      prohibition_notice_no:
+        type: string
+      notice_subject_cd:
+        type: string
+      notice_type_cd:
+        type: string
+      review_application_type_cd:
+        type: string
+      presentation_format_cd:
+        type: string
+      review_role_type_cd:
+        type: string
+      hearing_dt:
+        type: string
+      hearing_start_tm:
+        type: string
+      hearing_end_tm:
+        type: string
+      application_received_dt:
+        type: string
+      receipt_number_txt:
+        type: string
+      first_given_nm:
+        type: string
+      second_given_nm:
+        type: string
+      surname_nm:
+        type: string
+      phone_no:
+        type: string
+      fax_no:
+        type: string
+      electronic_address_txt:
+        type: string
+      manual_entry_yn:
+        type: string
+      form_xml:
+        type: string
+  digitalFormGetResponse:
+    type: object
+    required: 
+    - user_id
+    - prohibition_notice_no
+    - notice_subject_cd
+    - notice_type_cd
+    - review_application_type_cd
+    - presentation_format_cd
+    - review_role_type_cd
+    - first_given_nm
+    - second_given_nm
+    - surname_nm
+    - phone_no
+    - fax_no
+    - electronic_address_txt
+    - manual_entry_yn
+    - form_xml
+    properties:
       status_code:
         type: string
       status_message:
         type: string
-  errorMessage:
+      user_id:
+        type: string
+      prohibition_notice_no:
+        type: string
+      notice_subject_cd:
+        type: string
+      notice_type_cd:
+        type: string
+      review_application_type_cd:
+        type: string
+      presentation_format_cd:
+        type: string
+      review_role_type_cd:
+        type: string
+      first_given_nm:
+        type: string
+      second_given_nm:
+        type: string
+      surname_nm:
+        type: string
+      phone_no:
+        type: string
+      fax_no:
+        type: string
+      electronic_address_txt:
+        type: string
+      manual_entry_yn:
+        type: string
+      form_xml:
+        type: string
+  digitalFormCreateResponse:
+    type: object
+    required:
+    - status_code
+    - status_message
+    - form_object_guid
+    - ent_dtm
+    properties:
+      status_code:
+        type: string
+      status_message:
+        type: string
+      form_object_guid:
+        type: string
+      ent_dtm:
+        type: string
+  digitalFormPatchResponse:
+    type: object
+    required:
+    - status_code
+    - status_message
+    - form_object_guid
+    - upd_dtm
+    properties:
+      status_code:
+        type: string
+      status_message:
+        type: string
+      form_object_guid:
+        type: string
+      upd_dtm:
+        type: string
+  digitalFormErrorResponse:
     type: object
     required:
     - status_code
