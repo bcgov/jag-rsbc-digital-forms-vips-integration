@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
@@ -20,18 +19,17 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * 
- * IRP Payment Controller. 
+ * Payment Controller. 
  * 
  * @author shaunmillargov
  *
  */
 @RestController
-@RequestMapping("/IRP/")
 @Api(value = "Payment", tags = { "Payment" })
 public class PaymentServiceController {
 	
 	// Provides generic type class defs for Swagger 2. 
-	private class IRPReviewPaidSwaggerResponse extends JSONResponse<Boolean>{}
+	private class ReviewPaidSwaggerResponse extends JSONResponse<Boolean>{}
 	
 	@Autowired 
 	private PaymentService paymentService; 
@@ -40,13 +38,13 @@ public class PaymentServiceController {
 		this.paymentService = paymentService;
 	}
 	
-	@ApiOperation(value = "Set Prohibition Review Paid", response = IRPReviewPaidSwaggerResponse.class) 
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = IRPReviewPaidSwaggerResponse.class)})
+	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class) 
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class)})
 	@PostMapping(path ="/{noticeNumber}/payment",
 	consumes = "application/json",
 	produces = "application/json"
 	)	
-	public ResponseEntity<JSONResponse<Boolean>> setIRPReviewPaid(@PathVariable (value="noticeNumber", required=true) Long noticeNumber, @RequestBody (required=true) PaymentTransRequest paymentInfo)  {
+	public ResponseEntity<JSONResponse<Boolean>> setReviewPaid(@PathVariable (value="noticeNumber", required=true) Long noticeNumber, @RequestBody (required=true) PaymentTransRequest paymentInfo)  {
 	    boolean data = paymentService.setReviewPaid(noticeNumber, paymentInfo);
 	    JSONResponse<Boolean> resp = new JSONResponse<>(data);
 	    return new ResponseEntity<>(resp, HttpStatus.OK);
