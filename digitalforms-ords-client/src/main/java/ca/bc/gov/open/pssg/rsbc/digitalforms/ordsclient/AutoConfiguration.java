@@ -36,13 +36,12 @@ public class AutoConfiguration {
 
 		apiClient.setBasePath(digitalFormsClientProperties.getBasePath());
 
-		/*
-		 * if (StringUtils.isNotBlank(digitalFormsClientProperties.getUsername()))
-		 * apiClient.setUsername(digitalFormsClientProperties.getUsername());
-		 * 
-		 * if (StringUtils.isNotBlank(digitalFormsClientProperties.getPassword()))
-		 * apiClient.setPassword(digitalFormsClientProperties.getPassword());
-		 */
+		if (StringUtils.isNotBlank(digitalFormsClientProperties.getUsername()))
+			apiClient.setUsername(digitalFormsClientProperties.getUsername());
+
+		if (StringUtils.isNotBlank(digitalFormsClientProperties.getPassword()))
+			apiClient.setPassword(digitalFormsClientProperties.getPassword());
+
 		return apiClient;
 	}
 
