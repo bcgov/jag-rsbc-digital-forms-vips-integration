@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.jag.ordsvipsclient.api.HealthApi;
-import ca.bc.gov.open.jag.ordsvipsclient.api.handler.ApiException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PingResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,18 +45,25 @@ public class UtilityController {
 	@GetMapping(path ="/api/utility/ping",
 	produces = "application/json"
 	)
-	public ResponseEntity<PingResponse> getPing() throws ApiException, ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.handler.ApiException {
+	public ResponseEntity<PingResponse> getPing() {
 
 		logger.info("Heard call to Ping utility");
+		try {
 
-		PingResponse resp = new PingResponse();
-		JSONObject jsonResponse = new JSONObject();
-		
-		jsonResponse.put("VIPS ORDS Health Status", vipsHealthApi.health().getStatus());
-		jsonResponse.put("DIGITAL FORMS ORDS Health Status", digitalFormsHealthApi.health().getStatus());
-		
-		resp.setResponseMessage(jsonResponse);
-		
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+			PingResponse resp = new PingResponse();
+			JSONObject jsonResponse = new JSONObject();
+
+			jsonResponse.put("VIPS ORDS Health Status", vipsHealthApi.health().getStatus());
+			jsonResponse.put("DIGITAL FORMS ORDS Health Status", digitalFormsHealthApi.health().getStatus());
+
+			resp.setResponseMessage(jsonResponse);
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} catch (Exception e) {
+			JSONObject errorJSON = new JSONObject();
+			errorJSON.put("message", e.getMessage());
+			PingResponse errorResp = new PingResponse();
+			errorResp.setResponseMessage(errorJSON);
+			return new ResponseEntity<>(errorResp, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

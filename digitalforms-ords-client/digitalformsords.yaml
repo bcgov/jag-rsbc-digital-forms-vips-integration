@@ -8,11 +8,17 @@ schemes:
 - https
 produces:
 - application/json
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication.
 paths:
   "/health":
     get:
       tags:
       - Health
+      security:
+      - basicAuth: []
       operationId: health
       description: Dummy endpoint to check that API calls are working
       responses:
@@ -24,6 +30,8 @@ paths:
     post:
       tags:
       - Application
+      security:
+      - basicAuth: []
       description: Create digital form
       responses:
         '200':
@@ -44,6 +52,8 @@ paths:
     get:
       tags:
       - Application
+      security:
+      - basicAuth: []
       description: Get digital form
       responses:
         '200':
@@ -64,6 +74,8 @@ paths:
     patch:
       tags:
       - Application
+      security:
+      - basicAuth: []
       description: Patch digital form
       responses:
         '200':
