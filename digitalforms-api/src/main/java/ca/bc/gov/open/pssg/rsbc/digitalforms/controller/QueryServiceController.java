@@ -40,7 +40,8 @@ public class QueryServiceController {
 	@GetMapping(value ="/{noticeNumber}/status", 
 		produces = "application/json"
 	)
-	public ResponseEntity<JSONResponse<MockProhibitionStatusResponse>> getProhibitionInfo(@PathVariable (value="noticeNumber",required=true) Long id)  {
+	public ResponseEntity<JSONResponse<MockProhibitionStatusResponse>> getProhibitionInfo(
+			@PathVariable (value="noticeNumber",required=true) Long id)  {
 		
 		//TODO - uncomment once update VIPS ORDS /prohibitionInfo operation available. 
 		//VipsProhibitionStatusResponse ordsResp = service.getProhibitionInfo(id);

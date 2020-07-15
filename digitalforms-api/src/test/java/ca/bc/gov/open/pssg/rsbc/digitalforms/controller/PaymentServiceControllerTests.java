@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TransactionInfo;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
@@ -43,9 +45,9 @@ public class PaymentServiceControllerTests {
 		when(paymentService.setReviewPaid(1L, GOOD_TRANSACTION_REQUEST)).thenReturn(GOOD_TRANSACTION_RESPONSE);
 	}
 
-	// Test setIRPReviewPaid for 200 returned on success.
+	// Test setReviewPaid for 200 returned on success.
 	// TODO - update when fully functional
-	@DisplayName("setIRPReviewPaid - Post HTTP status code - good")
+	@DisplayName("setReviewPaid - Post HTTP status code - good")
 	@Test
 	void setReviewPaidReturns200() {
 		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER,
@@ -53,9 +55,9 @@ public class PaymentServiceControllerTests {
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
-	// Test setIRPReviewPaid for proper JSON response on success.
+	// Test setReviewPaid for proper JSON response on success.
 	// TODO - update when fully functional
-	@DisplayName("setIRPReviewPaid - Post response object - good")
+	@DisplayName("setReviewPaid - Post response object - good")
 	@Test
 	void setReviewPaidReturnsSuccess() {
 		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER,
@@ -63,20 +65,28 @@ public class PaymentServiceControllerTests {
 		Assertions.assertEquals(GOOD_TRANSACTION_RESPONSE, resp.getBody().getData().booleanValue());
 	}
 
-	// Test setIRPReviewPaid for IRP not found.
+	// Test setReviewPaid for prohibition not found.
 	// TODO - update when fully functional
-	@DisplayName("setIRPReviewPaid - Post IRP Review not found")
+	@DisplayName("setReviewPaid - Post Review Prohibition not found")
 	@Test
 	void setReviewPaidNotFound() {
 		Assertions.assertEquals(true, true);
 	}
 
-	// Test setIRPReview for exception state.
+	// Test setReviewPaid for exception state.
 	// TODO - update when fully functional
-	@DisplayName("setIRPReviewPaid - Post generate exception")
+	@DisplayName("setReviewPaid - Post generate exception")
 	@Test
 	void setReviewPaidReturnException() {
 		Assertions.assertEquals(true, true);
+	}
+	
+	@DisplayName("paymentStatusGet - Get success")
+	@Test
+	void getPaymentStatusSuccess() {
+		when(paymentService.getReviewPaymentStatus(any())).thenReturn(new PaymentStatusResponse("1"));
+		ResponseEntity<JSONResponse<PaymentStatusResponse>> resp = controller.paymentStatusGet(1L);
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
 }
