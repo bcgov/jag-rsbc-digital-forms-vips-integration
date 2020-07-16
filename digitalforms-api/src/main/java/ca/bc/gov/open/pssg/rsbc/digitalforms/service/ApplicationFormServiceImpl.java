@@ -8,6 +8,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPat
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPostRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
  * 
@@ -37,15 +38,15 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 		request.setFormXml(formData.getFormData());
 		request.setManualEntryYn(formData.getManualEntryYN());
 		request.setNoticeSubjectCd(formData.getNoticeSubjectCd());
-		request.setNoticeTypeCd(formData.getNoticeTypeCd());
+		request.setNoticeTypeCd(formType);
 		request.setPhoneNo(formData.getPhoneNo());
 		request.setPresentationFormatCd(formData.getPresentationTypeCd());
 		request.setProhibitionNoticeNo(noticeNo);
-		request.setReviewApplicationTypeCd(formData.getReviewApplnTypeCd());
+		request.setReviewApplicationTypeCd(formType);
 		request.setReviewRoleTypeCd(formData.getReviewRoleTypeCd());
 		request.setSecondGivenNm(formData.getSecondGivenNm());
 		request.setSurnameNm(formData.getSurnameNm());
-		request.setUserId("DigitalFormsApi");
+		request.setUserId(DigitalFormsConstants.ORDS_USER_ID);
 
 		return applicationService.postApplication(request);
 	}
@@ -60,14 +61,14 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 		request.setFormXml(formData.getFormData());
 		request.setManualEntryYn(formData.getManualEntryYN());
 		request.setNoticeSubjectCd(formData.getNoticeSubjectCd());
-		request.setNoticeTypeCd(formData.getNoticeTypeCd());
+		request.setNoticeTypeCd(formType);
 		request.setPhoneNo(formData.getPhoneNo());
 		request.setPresentationFormatCd(formData.getPresentationTypeCd());
-		request.setReviewApplicationTypeCd(formData.getReviewApplnTypeCd());
+		request.setReviewApplicationTypeCd(formType);
 		request.setReviewRoleTypeCd(formData.getReviewRoleTypeCd());
 		request.setSecondGivenNm(formData.getSecondGivenNm());
 		request.setSurnameNm(formData.getSurnameNm());
-		request.setUserId("DigitalFormsApi");
+		request.setUserId(DigitalFormsConstants.ORDS_USER_ID);
 
 		return applicationService.patchApplication(formGuid, request);
 	}

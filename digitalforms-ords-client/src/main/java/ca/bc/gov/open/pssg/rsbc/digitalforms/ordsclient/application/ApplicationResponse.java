@@ -1,9 +1,11 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.DigitalFormsOrdsClientConstants;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGetResponse;
 
 import java.text.MessageFormat;
 
@@ -18,13 +20,23 @@ import java.text.MessageFormat;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ApplicationResponse {
 
+	@JsonProperty("applicationId")
 	private String applicationId;
-	private ApplicationInfo applicationInfo;
+	
+	@JsonProperty("applicationInfo")
+	private DigitalFormGetResponse applicationInfo;
+	
+	@JsonProperty("respCode")
 	private int respCode;
+	
+	@JsonProperty("respMsg")
 	private String respMsg;
+	
+	@JsonProperty("updatedTime")
 	private String updatedTime;
+	
+	@JsonProperty("createdTime")
 	private String createdTime;
-	private String formXml;
 
 	private ApplicationResponse(int respCode, String respMsg) {
 		this.respCode = respCode;
@@ -36,17 +48,16 @@ public class ApplicationResponse {
 		this.applicationId = applicationId;
 	}
 
-	private ApplicationResponse(ApplicationInfo applicationInfo, int respCode, String respMsg, String formXml) {
+	private ApplicationResponse(DigitalFormGetResponse applicationInfo, int respCode, String respMsg) {
 		this(respCode, respMsg);
 		this.applicationInfo = applicationInfo;
-		this.formXml = formXml;
 	}
 
 	public String getApplicationId() {
 		return applicationId;
 	}
 
-	public ApplicationInfo getApplicationInfo() {
+	public DigitalFormGetResponse getApplicationInfo() {
 		return applicationInfo;
 	}
 
@@ -66,10 +77,6 @@ public class ApplicationResponse {
 		return createdTime;
 	}
 
-	public String getFormXml() {
-		return formXml;
-	}
-
 	public void setUpdatedTime(String updatedTime) {
 		this.updatedTime = updatedTime;
 	}
@@ -82,10 +89,10 @@ public class ApplicationResponse {
 		return new ApplicationResponse(DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD, errorMessage);
 	}
 
-	public static ApplicationResponse successResponseGet(ApplicationInfo applicationInfo, String respCodeStr,
-			String respMsg, String formXml) {
+	public static ApplicationResponse successResponseGet(DigitalFormGetResponse applicationInfo, String respCodeStr,
+			String respMsg) {
 
-		return new ApplicationResponse(applicationInfo, Integer.parseInt(respCodeStr), respMsg, formXml);
+		return new ApplicationResponse(applicationInfo, Integer.parseInt(respCodeStr), respMsg);
 	}
 
 	public static ApplicationResponse successResponsePost(String applicationId, String respCodeStr, String respMsg,
@@ -108,9 +115,9 @@ public class ApplicationResponse {
 	public String toString() {
 		return MessageFormat.format(
 				"ApplicationResponse: applicationId [{0}], applicationInfo [{1}], respCode [{2}], "
-						+ "respMsg [{3}], createdTime [{4}], updatedTime [{5}], formXml [{6}]",
+						+ "respMsg [{3}], createdTime [{4}], updatedTime [{5}]]",
 				this.applicationId, this.applicationInfo, this.respCode, this.respMsg, this.createdTime,
-				this.updatedTime, this.formXml);
+				this.updatedTime);
 	}
 
 }
