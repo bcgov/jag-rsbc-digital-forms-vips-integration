@@ -13,19 +13,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "formVersion", "noticeSubjectCd", "noticeTypeCd", "reviewApplnTypeCd", "presentationTypeCd",
-		"reviewRoleTypeCd", "firstGivenNm", "secondGivenNm", "surnameNm", "phoneNo", "faxNo", "email", "manualEntryYN",
-		"formData" })
+@JsonPropertyOrder({ "noticeSubjectCd", "presentationTypeCd", "reviewRoleTypeCd", "firstGivenNm", "secondGivenNm",
+		"surnameNm", "phoneNo", "faxNo", "email", "manualEntryYN", "formData" })
 public class ApplicationFormData {
 
-	@JsonProperty("formVersion")
-	private String formVersion;
 	@JsonProperty("noticeSubjectCd")
 	private String noticeSubjectCd;
-	@JsonProperty("noticeTypeCd")
-	private String noticeTypeCd;
-	@JsonProperty("reviewApplnTypeCd")
-	private String reviewApplnTypeCd;
 	@JsonProperty("presentationTypeCd")
 	private String presentationTypeCd;
 	@JsonProperty("reviewRoleTypeCd")
@@ -47,16 +40,6 @@ public class ApplicationFormData {
 	@JsonProperty("formData")
 	private String formData;
 
-	@JsonProperty("formVersion")
-	public String getFormVersion() {
-		return formVersion;
-	}
-
-	@JsonProperty("formVersion")
-	public void setFormVersion(String formVersion) {
-		this.formVersion = formVersion;
-	}
-
 	@JsonProperty("noticeSubjectCd")
 	public String getNoticeSubjectCd() {
 		return noticeSubjectCd;
@@ -65,26 +48,6 @@ public class ApplicationFormData {
 	@JsonProperty("noticeSubjectCd")
 	public void setNoticeSubjectCd(String noticeSubjectCd) {
 		this.noticeSubjectCd = noticeSubjectCd;
-	}
-
-	@JsonProperty("noticeTypeCd")
-	public String getNoticeTypeCd() {
-		return noticeTypeCd;
-	}
-
-	@JsonProperty("noticeTypeCd")
-	public void setNoticeTypeCd(String noticeTypeCd) {
-		this.noticeTypeCd = noticeTypeCd;
-	}
-
-	@JsonProperty("reviewApplnTypeCd")
-	public String getReviewApplnTypeCd() {
-		return reviewApplnTypeCd;
-	}
-
-	@JsonProperty("reviewApplnTypeCd")
-	public void setReviewApplnTypeCd(String reviewApplnTypeCd) {
-		this.reviewApplnTypeCd = reviewApplnTypeCd;
 	}
 
 	@JsonProperty("presentationTypeCd")

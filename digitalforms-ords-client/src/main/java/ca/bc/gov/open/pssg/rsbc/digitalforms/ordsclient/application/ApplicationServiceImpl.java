@@ -30,23 +30,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 		try {
 			DigitalFormGetResponse response = this.applicationApi.digitalFormGuidGet(formGuid);
 
-			ApplicationInfo applicationInfo = new ApplicationInfo();
-			applicationInfo.setEmail(response.getElectronicAddressTxt());
-			applicationInfo.setFaxNo(response.getFaxNo());
-			applicationInfo.setFirstGivenNm(response.getFirstGivenNm());
-			applicationInfo.setManualEntryYN(response.getManualEntryYn());
-			applicationInfo.setNoticeSubjectCd(response.getNoticeSubjectCd());
-			applicationInfo.setNoticeTypeCd(response.getNoticeTypeCd());
-			applicationInfo.setPhoneNo(response.getPhoneNo());
-			applicationInfo.setPresentationTypeCd(response.getPresentationFormatCd());
-			applicationInfo.setProhibitionNoticeNo(response.getProhibitionNoticeNo());
-			applicationInfo.setReviewApplnTypeCd(response.getReviewApplicationTypeCd());
-			applicationInfo.setReviewRoleTypeCd(response.getReviewRoleTypeCd());
-			applicationInfo.setSecondGivenNm(response.getSecondGivenNm());
-			applicationInfo.setSurnameNm(response.getSurnameNm());
-
-			return ApplicationResponse.successResponseGet(applicationInfo, response.getStatusCode(),
-					response.getStatusMessage(), response.getFormXml());
+			return ApplicationResponse.successResponseGet(response, response.getStatusCode(),
+					response.getStatusMessage());
 		} catch (ApiException ex) {
 			logger.error("Application Service Get did throw exception: " + ex.getMessage(), ex);
 			return ApplicationResponse.errorResponse(ex.getMessage());
