@@ -21,8 +21,6 @@ public final class DigitalFormsConstants {
 	public static final int ORDS_FAILURE_CD = -1;
 	public static final int ORDS_SUCCESS_CD = 0;
 	
-	public static final int DIGITAL_FORMS_ORDS_SUCCESS_CD = 1;
-	
 	// specific ORDS response codes. 
 	public static final int VIPS_ORDS_IRP_NOT_FOUND = 2;
 	
