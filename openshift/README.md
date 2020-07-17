@@ -1,5 +1,7 @@
 # Bootstrap
 Setup openshift tools
+
+**NOTE:**  Openshift pipeline is triggered using GitHub webhooks
 ## Network policies
 If Aporato is enabled then apply network policies from
 https://github.com/BCDevOps/platform-services/tree/master/security/aporeto/docs
