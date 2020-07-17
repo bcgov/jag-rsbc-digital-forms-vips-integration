@@ -12,7 +12,7 @@ class DigitalFormsStarterApplicationTests {
 	@Test
 	void contextLoads() {
 		System.out.println("Context loaded");
-		Assertions.assertEquals(true, true);
+		Assertions.assertTrue(true);
 	}
 
 }

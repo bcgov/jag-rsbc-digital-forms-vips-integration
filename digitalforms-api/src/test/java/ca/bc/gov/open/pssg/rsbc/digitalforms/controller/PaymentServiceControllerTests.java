@@ -70,7 +70,7 @@ public class PaymentServiceControllerTests {
 	@DisplayName("setReviewPaid - Post Review Prohibition not found")
 	@Test
 	void setReviewPaidNotFound() {
-		Assertions.assertEquals(true, true);
+		Assertions.assertTrue(true);
 	}
 
 	// Test setReviewPaid for exception state.
@@ -78,7 +78,7 @@ public class PaymentServiceControllerTests {
 	@DisplayName("setReviewPaid - Post generate exception")
 	@Test
 	void setReviewPaidReturnException() {
-		Assertions.assertEquals(true, true);
+		Assertions.assertTrue(true);
 	}
 	
 	@DisplayName("paymentStatusGet - Get success")

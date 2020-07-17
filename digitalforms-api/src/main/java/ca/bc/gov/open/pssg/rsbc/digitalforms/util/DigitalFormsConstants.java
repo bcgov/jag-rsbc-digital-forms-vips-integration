@@ -39,5 +39,10 @@ public final class DigitalFormsConstants {
 	public static final String UNKNOWN_ERROR = "Unexpected error occured";
 	
 	public static final String NOT_PROCESSED = "Request cannot be processed";
+	
+	public static final String UNAUTHORIZED = "Unauthorized entry, please authenticate";
+	
+	// rest response media type
+	public static final String JSON_CONTENT = "application/json";
    
 }

@@ -10,5 +10,5 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.handler.ApiException
  */
 public interface HealthService {
 
-	HealthResponse health() throws ApiException, ApiException;
+	HealthResponse health() throws ApiException;
 }

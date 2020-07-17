@@ -3,6 +3,8 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
@@ -61,5 +63,17 @@ public class JSONResponse<T> {
 		this.resp = DigitalFormsConstants.JSON_RESPONSE_FAIL; 
 		this.error = error;
 	}
+
+	@Override
+	public String toString() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			return objectMapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			return "{}";
+		}
+	}
+	
+	
 
 }

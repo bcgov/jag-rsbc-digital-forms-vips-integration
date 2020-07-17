@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationIdResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoResponse;
@@ -43,97 +44,64 @@ public class ApplicationFormController {
 	@Autowired
 	ApplicationFormService service;
 
-	@GetMapping(value = "/{formType}/{GUID}/application", produces = "application/json")
+	@GetMapping(value = "/{formType}/{GUID}/application", produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationInfoResponse>> applicationFormGet(
 			@PathVariable(value = "formType", required = true) String formType,
-			@PathVariable(value = "GUID", required = true) String formGuid) {
-		try {
-			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.getApplicationForm(formType, formGuid);
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				// success
-				JSONResponse<ApplicationInfoResponse> resp = new JSONResponse<>(
-						new ApplicationInfoResponse(data.getApplicationInfo()));
-				return new ResponseEntity<>(resp, HttpStatus.OK);
-			} else {
-				// failure
-				return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND, 404),
-						HttpStatus.NOT_FOUND);
-			}
-		} catch (IllegalArgumentException e) {
-			// invalid form type
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(e.getMessage(), 404),
+			@PathVariable(value = "GUID", required = true) String formGuid) throws DigitalFormsException {
+
+		DigitalFormsUtils.validateFormType(formType);
+		ApplicationResponse data = service.getApplicationForm(formType, formGuid);
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<ApplicationInfoResponse> resp = new JSONResponse<>(
+					new ApplicationInfoResponse(data.getApplicationInfo()));
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND, 404),
 					HttpStatus.NOT_FOUND);
-		} catch (Exception e) {
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.UNKNOWN_ERROR, 500),
-					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
 	}
 
-	@PostMapping(value = "/{formType}/{noticeNo}/application", consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/{formType}/{noticeNo}/application", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ApplicationIdSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationIdResponse>> applicationFormPost(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "noticeNo", required = true) String noticeNo,
-			@RequestBody(required = true) ApplicationFormData formData) {
-		try {
-			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.postApplicationForm(formType, noticeNo, formData);
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				// success
-				JSONResponse<ApplicationIdResponse> resp = new JSONResponse<>(
-						new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null));
-				return new ResponseEntity<>(resp, HttpStatus.CREATED);
-			} else {
-				// failure
-				return new ResponseEntity<>(
-						DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED, 400),
-						HttpStatus.BAD_REQUEST);
-			}
-		} catch (IllegalArgumentException e) {
-			// invalid form type
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(e.getMessage(), 404),
-					HttpStatus.NOT_FOUND);
-		} catch (Exception e) {
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.UNKNOWN_ERROR, 500),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			@RequestBody(required = true) ApplicationFormData formData) throws DigitalFormsException {
+		DigitalFormsUtils.validateFormType(formType);
+		ApplicationResponse data = service.postApplicationForm(formType, noticeNo, formData);
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<ApplicationIdResponse> resp = new JSONResponse<>(
+					new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null));
+			return new ResponseEntity<>(resp, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED, 400),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@PatchMapping(value = "/{formType}/{GUID}/application", consumes = "application/json", produces = "application/json")
+	@PatchMapping(value = "/{formType}/{GUID}/application", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationIdSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationIdResponse>> applicationFormPatch(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "GUID", required = true) String formGuid,
-			@RequestBody(required = true) ApplicationFormData formData) {
-		try {
-			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData);
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				// success
-				JSONResponse<ApplicationIdResponse> resp = new JSONResponse<>(
-						new ApplicationIdResponse(data.getApplicationId(), null, data.getUpdatedTime()));
-				return new ResponseEntity<>(resp, HttpStatus.OK);
-			} else {
-				// failure
-				return new ResponseEntity<>(
-						DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED, 400),
-						HttpStatus.BAD_REQUEST);
-			}
-		} catch (IllegalArgumentException e) {
-			// invalid form type
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(e.getMessage(), 404),
-					HttpStatus.NOT_FOUND);
-		} catch (Exception e) {
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.UNKNOWN_ERROR, 500),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			@RequestBody(required = true) ApplicationFormData formData) throws DigitalFormsException {
+		DigitalFormsUtils.validateFormType(formType);
+		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData);
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<ApplicationIdResponse> resp = new JSONResponse<>(
+					new ApplicationIdResponse(data.getApplicationId(), null, data.getUpdatedTime()));
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED, 400),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
 }
