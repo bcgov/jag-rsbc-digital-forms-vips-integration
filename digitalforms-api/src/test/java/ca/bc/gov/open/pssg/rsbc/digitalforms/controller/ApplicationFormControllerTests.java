@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGetResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationIdResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoResponse;
@@ -44,66 +46,59 @@ class ApplicationFormControllerTests {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	// TODO Need to update all unit tests
-	
 	@DisplayName("Get success - ApplicationFormController")
 	@Test
-	void getFormSuccess() {
+	void getFormSuccess() throws DigitalFormsException {
 		when(service.getApplicationForm(any(), any()))
-				.thenReturn(ApplicationResponse.successResponseGet(null, "1", null));
-		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("abc", "abc");
-		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "1", null));
+		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "abc");
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
-	// Need to update
 	@DisplayName("Post success - ApplicationFormController")
 	@Test
-	void postFormSuccess() {
+	void postFormSuccess() throws DigitalFormsException {
 		when(service.postApplicationForm(any(), any(), any()))
-				.thenReturn(ApplicationResponse.successResponseGet(null, "1", null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("abc", "abc",
+				.thenReturn(ApplicationResponse.successResponsePost("123", "1", null, null));
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "abc",
 				new ApplicationFormData());
-		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+		Assertions.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
 
-	// Need to update
 	@DisplayName("Patch success - ApplicationFormController")
 	@Test
-	void patchFormSuccess() {
+	void patchFormSuccess() throws DigitalFormsException {
 		when(service.patchApplicationForm(any(), any(), any()))
-				.thenReturn(ApplicationResponse.successResponseGet(null, "1", null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("abc", "abc",
+				.thenReturn(ApplicationResponse.successResponsePatch("123", "1", null, null));
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("IRP", "abc",
 				new ApplicationFormData());
-		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
-	// Need to update
 	@DisplayName("Get error - ApplicationFormController")
 	@Test
-	void getFormError() {
+	void getFormError() throws DigitalFormsException {
 		when(service.getApplicationForm(any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("abc", "abc");
+		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "abc");
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
 
-	// Need to update
 	@DisplayName("Post error - ApplicationFormController")
 	@Test
-	void postFormError() {
+	void postFormError() throws DigitalFormsException {
 		when(service.postApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("abc", "abc",
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "abc",
 				new ApplicationFormData());
-		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
 
-	// Need to update
 	@DisplayName("Patch error - ApplicationFormController")
 	@Test
-	void patchFormError() {
+	void patchFormError() throws DigitalFormsException {
 		when(service.patchApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("abc", "abc",
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("IRP", "abc",
 				new ApplicationFormData());
-		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
 
 }
