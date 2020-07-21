@@ -36,13 +36,14 @@ public class IRPInfo {
 		this.cancelledYN = cancelledYN;
 	}
 
-	public IRPInfo(VipsProhibitionStatusResponse ordsResp) {
-		this.effectiveDate = ordsResp.getStatus().getEffectiveDate();
-		this.driversLicenceSeizedYN = ordsResp.getStatus().getDriverLicenceSeizedYn();
-		this.surnameNm = ordsResp.getStatus().getDriverLastName();
-		this.iRPStatus = ordsResp.getStatus().getReviewStatus();
-		this.cancelledYN = ordsResp.getStatus().getCancelledYn();
-	}
+	/*
+	 * public IRPInfo(VipsProhibitionStatusResponse ordsResp) { this.effectiveDate =
+	 * ordsResp.getStatus().getEffectiveDate(); this.driversLicenceSeizedYN =
+	 * ordsResp.getStatus().getDriverLicenceSeizedYn(); this.surnameNm =
+	 * ordsResp.getStatus().getDriverLastName(); this.iRPStatus =
+	 * ordsResp.getStatus().getReviewStatus(); this.cancelledYN =
+	 * ordsResp.getStatus().getCancelledYn(); }
+	 */
 
 	@JsonProperty("effectiveDate")
 	public String getEffectiveDate() {
