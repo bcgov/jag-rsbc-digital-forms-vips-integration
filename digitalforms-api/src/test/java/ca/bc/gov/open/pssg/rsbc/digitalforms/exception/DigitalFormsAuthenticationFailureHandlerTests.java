@@ -18,7 +18,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
  * 
- * Controller Exception handler Tests.
+ * Authentication failure handler Tests.
  * 
  * @author sivakaruna
  *
