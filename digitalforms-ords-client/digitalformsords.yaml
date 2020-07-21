@@ -281,6 +281,7 @@ definitions:
     - status_code
     - status_message
     - form_object_guid
+    - correlation_guid
     - ent_dtm
     properties:
       status_code:
@@ -288,6 +289,8 @@ definitions:
       status_message:
         type: string
       form_object_guid:
+        type: string
+      correlation_guid:
         type: string
       ent_dtm:
         type: string
@@ -297,6 +300,7 @@ definitions:
     - status_code
     - status_message
     - form_object_guid
+    - correlation_guid
     - upd_dtm
     properties:
       status_code:
@@ -304,6 +308,8 @@ definitions:
       status_message:
         type: string
       form_object_guid:
+        type: string
+      correlation_guid:
         type: string
       upd_dtm:
         type: string

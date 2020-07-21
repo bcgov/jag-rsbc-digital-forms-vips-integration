@@ -3,6 +3,9 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import ca.bc.gov.open.jagvipsclient.prohibition.ProhibitionStatus;
+import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
+
 /**
  * 
  * Status Info Response Object Tests
@@ -38,6 +41,21 @@ public class StatusInfoResponseTests {
 		Assertions.assertEquals("date", infoResponse.getIRPInfo().getEffectiveDate());
 		Assertions.assertEquals("iRP", infoResponse.getIRPInfo().getIRPStatus());
 		Assertions.assertEquals("name", infoResponse.getIRPInfo().getSurnameNm());
+		
+		ProhibitionStatus status = new ProhibitionStatus();
+		status.setCancelledYn("Y");
+		status.setDriverLastName("John");
+		status.setDriverLicenceSeizedYn("Y");
+		status.setEffectiveDate("monday");
+		status.setReviewStatus("Y");
+		
+		IRPInfo irpInfo = new IRPInfo(VipsProhibitionStatusResponse.successResponse(status, "0", "message"));
+		
+		infoResponse.setIRPInfo(irpInfo);
+		
+		Assertions.assertEquals("Y", infoResponse.getIRPInfo().getCancelledYN());
+		Assertions.assertEquals("Y", infoResponse.getIRPInfo().getDriversLicenceSeizedYN());
+		Assertions.assertEquals("monday", infoResponse.getIRPInfo().getEffectiveDate());
 	}
 
 }

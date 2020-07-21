@@ -110,14 +110,4 @@ public class ApplicationResponse {
 		response.setUpdatedTime(updatedTime);
 		return response;
 	}
-
-	@Override
-	public String toString() {
-		return MessageFormat.format(
-				"ApplicationResponse: applicationId [{0}], applicationInfo [{1}], respCode [{2}], "
-						+ "respMsg [{3}], createdTime [{4}], updatedTime [{5}]]",
-				this.applicationId, this.applicationInfo, this.respCode, this.respMsg, this.createdTime,
-				this.updatedTime);
-	}
-
 }

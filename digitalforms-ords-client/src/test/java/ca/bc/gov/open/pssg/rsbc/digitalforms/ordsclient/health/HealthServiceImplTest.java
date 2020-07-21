@@ -24,7 +24,7 @@ import org.mockito.MockitoAnnotations;
 public class HealthServiceImplTest {
 
     public static final String API_EXCEPTION = "api exception";
-    private HealthServiceImpl sut;
+    private HealthServiceImpl service;
 
     private static final String APP_ID = "VIPS";
     private static final String METHOD = "health_check";
@@ -39,7 +39,7 @@ public class HealthServiceImplTest {
     public void setup() throws ApiException {
         MockitoAnnotations.initMocks(this);
 
-        sut = new HealthServiceImpl(healthApiMock);
+        service = new HealthServiceImpl(healthApiMock);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class HealthServiceImplTest {
 
         Mockito.when(healthApiMock.health()).thenReturn(successResponse);
 
-        HealthResponse result = sut.health();
+        HealthResponse result = service.health();
 
         Assertions.assertEquals(APP_ID, result.getAppid());
         Assertions.assertEquals(METHOD, result.getMethod());
