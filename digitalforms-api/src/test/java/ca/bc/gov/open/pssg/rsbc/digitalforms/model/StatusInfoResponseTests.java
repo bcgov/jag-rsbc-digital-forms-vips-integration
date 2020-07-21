@@ -42,20 +42,24 @@ public class StatusInfoResponseTests {
 		Assertions.assertEquals("iRP", infoResponse.getIRPInfo().getIRPStatus());
 		Assertions.assertEquals("name", infoResponse.getIRPInfo().getSurnameNm());
 		
-		ProhibitionStatus status = new ProhibitionStatus();
-		status.setCancelledYn("Y");
-		status.setDriverLastName("John");
-		status.setDriverLicenceSeizedYn("Y");
-		status.setEffectiveDate("monday");
-		status.setReviewStatus("Y");
-		
-		IRPInfo irpInfo = new IRPInfo(VipsProhibitionStatusResponse.successResponse(status, "0", "message"));
-		
-		infoResponse.setIRPInfo(irpInfo);
-		
-		Assertions.assertEquals("Y", infoResponse.getIRPInfo().getCancelledYN());
-		Assertions.assertEquals("Y", infoResponse.getIRPInfo().getDriversLicenceSeizedYN());
-		Assertions.assertEquals("monday", infoResponse.getIRPInfo().getEffectiveDate());
+		/*
+		 * ProhibitionStatus status = new ProhibitionStatus();
+		 * status.setCancelledYn("Y"); status.setDriverLastName("John");
+		 * status.setDriverLicenceSeizedYn("Y"); status.setEffectiveDate("monday");
+		 * status.setReviewStatus("Y");
+		 * 
+		 * IRPInfo irpInfo = new
+		 * IRPInfo(VipsProhibitionStatusResponse.successResponse(status, "0",
+		 * "message"));
+		 * 
+		 * infoResponse.setIRPInfo(irpInfo);
+		 * 
+		 * Assertions.assertEquals("Y", infoResponse.getIRPInfo().getCancelledYN());
+		 * Assertions.assertEquals("Y",
+		 * infoResponse.getIRPInfo().getDriversLicenceSeizedYN());
+		 * Assertions.assertEquals("monday",
+		 * infoResponse.getIRPInfo().getEffectiveDate());
+		 */
 	}
 
 }
