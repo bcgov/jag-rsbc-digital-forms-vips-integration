@@ -9,9 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONError;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ProhibitionStatusErrorResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ProhibitionStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryServiceImpl;
@@ -61,11 +66,27 @@ public class QueryServiceController {
 		if (ordsResp.getRespCode() == DigitalFormsConstants.ORDS_SUCCESS_CD) {	
 			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(resp);
 			return new ResponseEntity<>(r, HttpStatus.OK);
+			
 		} else if (ordsResp.getRespCode() == DigitalFormsConstants.ORDS_FAILURE_CD) {
+			
 			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(null); 
-		    r.setError(new JSONError("Notice number not found", HttpStatus.NOT_FOUND.value()));
-		    return new ResponseEntity<>(r, HttpStatus.NOT_FOUND);
+			
+			// parse the error response. 
+			ObjectMapper mapper = new ObjectMapper();
+			ProhibitionStatusErrorResponse error = null; 
+			try {
+				error = mapper.readValue(ordsResp.getRespMsg(), ProhibitionStatusErrorResponse.class);
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			r.setError(new JSONError(error.getStatusMessage(), HttpStatus.NOT_FOUND.value()));
+			return new ResponseEntity<>(r, HttpStatus.NOT_FOUND);
+		   
 		} else {
+			
 			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(null);
 			logger.fatal("Error ar QueryServiceController: " + ordsResp.getRespMsg());
 		    r.setError(new JSONError("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR.value()));

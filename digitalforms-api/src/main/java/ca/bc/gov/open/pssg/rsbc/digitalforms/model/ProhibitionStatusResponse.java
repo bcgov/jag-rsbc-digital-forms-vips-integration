@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
  * 
@@ -21,15 +22,17 @@ public class ProhibitionStatusResponse {
 
 	public ProhibitionStatusResponse(VipsProhibitionStatusResponse ordsResp) {
 		status = new Status();
-		status.setEffectiveDt(ordsResp.getStatus().getEffectiveDt());
-		status.setNoticeTypeCd(ordsResp.getStatus().getNoticeTypeCd());
-		status.setOriginalCause(ordsResp.getStatus().getOriginalCause());
-		status.setReceiptNumberTxt(ordsResp.getStatus().getReceiptNumberTxt());
-		status.setReviewCreatedYn(ordsResp.getStatus().getReviewCreatedYn());
-		status.setReviewEndDtm(ordsResp.getStatus().getReviewEndDtm());
-		status.setReviewFormSubmittedYn(ordsResp.getStatus().getReviewFormSubmittedYn());
-		status.setReviewStartDtm(ordsResp.getStatus().getReviewStartDtm());
-		status.setSurnameNm(ordsResp.getStatus().getSurnameNm());
+		if ( ordsResp.getRespCode() == DigitalFormsConstants.ORDS_SUCCESS_CD ) {
+			status.setEffectiveDt(ordsResp.getStatus().getEffectiveDt());
+			status.setNoticeTypeCd(ordsResp.getStatus().getNoticeTypeCd());
+			status.setOriginalCause(ordsResp.getStatus().getOriginalCause());
+			status.setReceiptNumberTxt(ordsResp.getStatus().getReceiptNumberTxt());
+			status.setReviewCreatedYn(ordsResp.getStatus().getReviewCreatedYn());
+			status.setReviewEndDtm(ordsResp.getStatus().getReviewEndDtm());
+			status.setReviewFormSubmittedYn(ordsResp.getStatus().getReviewFormSubmittedYn());
+			status.setReviewStartDtm(ordsResp.getStatus().getReviewStartDtm());
+			status.setSurnameNm(ordsResp.getStatus().getSurnameNm());
+		}
 	}
 
 	@JsonProperty("status")
