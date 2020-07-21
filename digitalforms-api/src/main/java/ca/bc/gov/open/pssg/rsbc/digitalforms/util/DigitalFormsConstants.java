@@ -22,7 +22,7 @@ public final class DigitalFormsConstants {
 	public static final int ORDS_SUCCESS_CD = 0;
 	
 	// specific ORDS response codes. 
-	public static final int VIPS_ORDS_IRP_NOT_FOUND = 2;
+	public static final int VIPS_ORDS_IRP_NOT_FOUND = -1;
 	
 	// user id for ORDS request
 	public static final String ORDS_USER_ID = "DigitalFormsApi";
