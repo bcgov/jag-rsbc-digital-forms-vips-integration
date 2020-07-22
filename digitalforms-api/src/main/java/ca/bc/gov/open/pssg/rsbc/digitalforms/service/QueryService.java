@@ -11,7 +11,7 @@ import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
  */
 public interface QueryService {
 
-	public VipsProhibitionStatusResponse getProhibitionInfo(Long id);
+	public VipsProhibitionStatusResponse getProhibitionStatus(Long noticeNumber);
 	
 }
 

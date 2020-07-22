@@ -21,8 +21,9 @@ public class ProhibitionStatusResponse {
 	private Status status;
 
 	public ProhibitionStatusResponse(VipsProhibitionStatusResponse ordsResp) {
-		status = new Status();
+		
 		if ( ordsResp.getRespCode() == DigitalFormsConstants.ORDS_SUCCESS_CD ) {
+			status = new Status();
 			status.setEffectiveDt(ordsResp.getStatus().getEffectiveDt());
 			status.setNoticeTypeCd(ordsResp.getStatus().getNoticeTypeCd());
 			status.setOriginalCause(ordsResp.getStatus().getOriginalCause());

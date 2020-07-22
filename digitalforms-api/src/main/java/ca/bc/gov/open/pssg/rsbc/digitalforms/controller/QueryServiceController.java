@@ -9,14 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONError;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ProhibitionStatusErrorResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ProhibitionStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryServiceImpl;
@@ -37,8 +33,6 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Query", tags = { "Query" })
 public class QueryServiceController {
 	
-	private final Logger logger = LogManager.getLogger(this.getClass());
-	
 	@Autowired 
 	private QueryService service; 
 	
@@ -55,43 +49,23 @@ public class QueryServiceController {
 		produces = "application/json"
 	)
 	public ResponseEntity<JSONResponse<ProhibitionStatusResponse>> getProhibitionInfo(
-			@PathVariable (value="noticeNumber",required=true) Long id)  {
+			@PathVariable (value="noticeNumber",required=true) Long noticeNumber) throws Exception  {
 		 
-		VipsProhibitionStatusResponse ordsResp = service.getProhibitionInfo(id);
+		VipsProhibitionStatusResponse ordsResp = service.getProhibitionStatus(noticeNumber);
 		
 		// Map the response to an interim object to rid the response of the respCd and respMsg.
 		ProhibitionStatusResponse resp = new ProhibitionStatusResponse(ordsResp);  
 
-		// 3 possible outcomes; good, not found, error. 
+		// 2 possible outcomes; good, not found. Any exception caught at DigitalFormsControllerExceptionHandler. 
 		if (ordsResp.getRespCode() == DigitalFormsConstants.ORDS_SUCCESS_CD) {	
 			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(resp);
 			return new ResponseEntity<>(r, HttpStatus.OK);
 			
-		} else if (ordsResp.getRespCode() == DigitalFormsConstants.ORDS_FAILURE_CD) {
-			
-			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(null); 
-			
-			// parse the error response. 
-			ObjectMapper mapper = new ObjectMapper();
-			ProhibitionStatusErrorResponse error = null; 
-			try {
-				error = mapper.readValue(ordsResp.getRespMsg(), ProhibitionStatusErrorResponse.class);
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-			
-			r.setError(new JSONError(error.getStatusMessage(), HttpStatus.NOT_FOUND.value()));
-			return new ResponseEntity<>(r, HttpStatus.NOT_FOUND);
-		   
 		} else {
-			
 			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(null);
-			logger.fatal("Error ar QueryServiceController: " + ordsResp.getRespMsg());
-		    r.setError(new JSONError("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR.value()));
-		    return new ResponseEntity<>(r, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+			r.setError(new JSONError(ordsResp.getRespMsg(), HttpStatus.NOT_FOUND.value()));
+			return new ResponseEntity<>(r, HttpStatus.NOT_FOUND);
+		} 
 	}
 }
 
