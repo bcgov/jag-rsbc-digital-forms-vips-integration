@@ -1,86 +1,98 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
+
+import ca.bc.gov.open.jagvipsclient.prohibition.ProhibitionStatus;
+import ca.bc.gov.open.jagvipsclient.prohibition.VipsProhibitionStatusResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ProhibitionStatusResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryServiceImpl;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 
 /**
  * 
  * Query Service Controller Tests. 
  * 
- * To be completed once update VIPS ORDS /prohibtionInfo working. 
- * 
  * @author shaunmillargov
  *
  */
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
-class IRPQueryServiceControllerTests {
+class QueryServiceControllerTests {
 
-	//private final Long PROHIBITION_TEST_ID = 1L;
-	//private final String JSON_RESPONSE_GOOD = "N";
+	private final Long NOTICE_NUMBER = 1L;
+	private final Long NOTICE_NUMBER_NOT_FOUND = 2L;
+	private final String ORIGINAL_CAUSE = "IRP3";
 
-	//@MockBean
-	//private QueryServiceImpl service;
+	@MockBean
+	private QueryServiceImpl service;
 
-	//private QueryServiceController controller;
+	private QueryServiceController controller;
 
 	@BeforeEach
-	public void init() {
-//		controller = new QueryServiceController(service);
-//		
-//		ProhibitionStatus goodStatus = new ProhibitionStatus();
-//		goodStatus.setResultMessage(DigitalFormsConstants.JSON_RESPONSE_SUCCESS);
-//		goodStatus.setResultCode(Integer.toString(DigitalFormsConstants.ORDS_SUCCESS_CD));
-//		goodStatus.setEffectiveDate("2018-06-20 00:00:00 -07:00");
-//		goodStatus.setDriverLicenceSeizedYn("Y");
-//		goodStatus.setDriverLastName("PATEL");
-//		goodStatus.setReviewStatus("INP");
-//		goodStatus.setCancelledYn("N");
-//		VipsProhibitionStatusResponse goodResp = VipsProhibitionStatusResponse.successResponse(goodStatus, "0", "success");
-//		
-//		when(irpService.getProhibitionInfo(1L)).thenReturn(goodResp);
+	public void init() throws Exception {
+		
+		controller = new QueryServiceController(service);
+		
+		ProhibitionStatus status = new ProhibitionStatus();
+		status.setEffectiveDt("2018-06-20 00:00:00 -07:00");
+		status.setNoticeTypeCd("IRP");
+		status.setOriginalCause("IRP3");
+		status.setReceiptNumberTxt("12345");
+		status.setReviewCreatedYn("Y");
+		status.setReviewEndDtm("2018-06-29 00:00:00 -07:00");
+		status.setReviewStartDtm("2018-06-25 00:00:00 -07:00");
+		status.setReviewFormSubmittedYn("Y");
+		status.setSurnameNm("Smith"); 
+		
+		// good
+		when(service.getProhibitionStatus(NOTICE_NUMBER)).thenReturn(
+				new VipsProhibitionStatusResponse(status, DigitalFormsConstants.ORDS_SUCCESS_CD, DigitalFormsConstants.JSON_RESPONSE_SUCCESS));
+		
+		// not found
+		when(service.getProhibitionStatus(NOTICE_NUMBER_NOT_FOUND)).thenReturn(
+				new VipsProhibitionStatusResponse(status, DigitalFormsConstants.ORDS_FAILURE_CD, DigitalFormsConstants.JSON_RESPONSE_FAIL));
+		
+		
 	}
 
-	// Test irpGet for 200 returned on success.
-	// TODO - update when fully functional
+	@DisplayName("Get success status code - QueryServiceController")
 	@Test
-	void irpGetReturns200() {
-//		ResponseEntity<JSONResponse<QueryInfoResponse>> resp = controller.irpGet(IRP_TEST_ID);
-//		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
-		
-		Assertions.assertTrue(true);
+	void getReturns200() throws Exception {
+		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER);
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());		
 	}
 
-	// Test irpGet for proper JSON reponse on success.
-	// TODO - update when fully functional
+	@DisplayName("Get response value success - QueryServiceController")
 	@Test
-	void irpGetReturnsSuccess() {
-//		ResponseEntity<JSONResponse<QueryInfoResponse>> resp = controller.irpGet(1L);
-//		Assertions.assertEquals(JSON_RESPONSE_GOOD, resp.getBody().getData().getIRPInfo().getCancelledYN());
-		
-		Assertions.assertTrue(true);
+	void getReturnsSuccess() throws Exception {
+		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER);
+		Assertions.assertEquals(ORIGINAL_CAUSE, resp.getBody().getData().getStatus().getOriginalCause());
 	}
 
-	// Test irpGet for IRP not found.
-	// TODO - update when fully functional
+	@DisplayName("Get fail status code - QueryServiceController")
 	@Test
-	void irpGetReturnsNotFound() {
-		// test for not found
-		
-		Assertions.assertTrue(true);
+	void getReturns404() throws Exception {
+		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER_NOT_FOUND);
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());	
 	}
 
-	// Test irpGet for exception state.
-	// TODO - update when fully functional
+	@DisplayName("Get response error object status code - QueryServiceController")
 	@Test
-	void irpGetReturnException() {
-		// test for exception 
-		
-		Assertions.assertTrue(true);
+	void getReturnFailHttpStatus() throws Exception { 
+		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER_NOT_FOUND);
+		Assertions.assertEquals(404, resp.getBody().getError().getHttpStatus());
 	}
 
 }
