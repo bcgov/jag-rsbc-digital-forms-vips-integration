@@ -85,13 +85,9 @@ class QueryServiceControllerTests {
 	@Test
 	void getReturns404() throws Exception {
 		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER_NOT_FOUND);
-		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());	
-	}
-
-	@DisplayName("Get response error object status code - QueryServiceController")
-	@Test
-	void getReturnFailHttpStatus() throws Exception { 
-		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER_NOT_FOUND);
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+		
+		// check that the error object too has the proper status code. 
 		Assertions.assertEquals(404, resp.getBody().getError().getHttpStatus());
 	}
 
