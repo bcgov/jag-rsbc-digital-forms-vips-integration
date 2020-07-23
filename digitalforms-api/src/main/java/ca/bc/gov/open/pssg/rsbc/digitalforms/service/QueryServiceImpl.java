@@ -18,9 +18,9 @@ public class QueryServiceImpl implements QueryService {
 	private ProhibitionService prohibService;
 
 	@Override
-	public VipsProhibitionStatusResponse getProhibitionInfo(Long id) {
+	public VipsProhibitionStatusResponse getProhibitionStatus(Long noticeNumber) {
 		
-		return prohibService.getVipsProhibitionStatus(id);
+		return prohibService.getVipsProhibitionStatus(noticeNumber);
 		
 	}
 	
