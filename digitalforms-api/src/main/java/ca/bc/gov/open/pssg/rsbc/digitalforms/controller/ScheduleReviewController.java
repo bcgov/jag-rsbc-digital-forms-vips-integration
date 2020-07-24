@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiResponses;
  *
  */
 @RestController
-@Api(value = "Schedule Review", tags = { "Schedule Review" })
+@Api(value = "Review Scheduling", tags = { "Review Scheduling" })
 public class ScheduleReviewController {
 
 	private class AvailabilityInfoSwaggerResponse extends JSONResponse<ReviewTimeAvailabilityInfo> {
@@ -40,10 +40,10 @@ public class ScheduleReviewController {
 	ScheduleReviewService service;
 
 	@GetMapping(value = "/{noticeTypeCd}/{reviewTypeCd}/{reviewDate}/review/availableTimeSlot", produces = DigitalFormsConstants.JSON_CONTENT)
-	@ApiOperation(value = "Get Available Review Timeslot", response = JSONResponse.class)
+	@ApiOperation(value = "Get Available Review Timeslots", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = AvailabilityInfoSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<ReviewTimeAvailabilityInfo>> availableTimeSlotGet(
+	public ResponseEntity<JSONResponse<ReviewTimeAvailabilityInfo>> availableTimeSlotsGet(
 			@PathVariable(value = "noticeTypeCd", required = true) String noticeTypeCd,
 			@PathVariable(value = "reviewTypeCd", required = true) String reviewTypeCd,
 			@PathVariable(value = "reviewDate", required = true) String reviewDate) {
