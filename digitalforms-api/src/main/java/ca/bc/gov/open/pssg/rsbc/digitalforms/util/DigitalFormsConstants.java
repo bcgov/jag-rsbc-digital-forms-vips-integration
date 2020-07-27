@@ -45,4 +45,8 @@ public final class DigitalFormsConstants {
 	// rest response media type
 	public static final String JSON_CONTENT = "application/json";
    
+	// MDC constants
+	public static final String REQUEST_CORRELATION_ID = "request.correlationid";
+    public static final String REQUEST_ENDPOINT = "request.endpoint";
+    public static final String REQUEST_FORMTYPE = "request.formtype";
 }

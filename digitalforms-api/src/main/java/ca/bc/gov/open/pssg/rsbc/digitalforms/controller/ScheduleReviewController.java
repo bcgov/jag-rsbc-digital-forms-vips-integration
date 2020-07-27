@@ -1,5 +1,8 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,34 +41,55 @@ public class ScheduleReviewController {
 
 	@Autowired
 	ScheduleReviewService service;
+	
+	Logger logger = LoggerFactory.getLogger(ScheduleReviewController.class);
 
-	@GetMapping(value = "/{noticeTypeCd}/{reviewTypeCd}/{reviewDate}/review/availableTimeSlot", produces = DigitalFormsConstants.JSON_CONTENT)
+	@GetMapping(value = "/{noticeTypeCd}/{reviewTypeCd}/{reviewDate}/review/availableTimeSlot/{correlationId}", produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Get Available Review Timeslots", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = AvailabilityInfoSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ReviewTimeAvailabilityInfo>> availableTimeSlotsGet(
 			@PathVariable(value = "noticeTypeCd", required = true) String noticeTypeCd,
 			@PathVariable(value = "reviewTypeCd", required = true) String reviewTypeCd,
-			@PathVariable(value = "reviewDate", required = true) String reviewDate) {
+			@PathVariable(value = "reviewDate", required = true) String reviewDate,
+			@PathVariable(value = "correlationId", required = true) String correlationId) {
+		
+		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
+		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "availableTimeSlotsGet");
+		logger.info("Get available time slots request received [{}]", correlationId);
 
-		ReviewTimeAvailabilityInfo data = service.getAvailableTimeSlots(noticeTypeCd, reviewTypeCd, reviewDate);
-		// TODO Update based on ORDS response
-		JSONResponse<ReviewTimeAvailabilityInfo> resp = new JSONResponse<>(data);
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		try {
+			ReviewTimeAvailabilityInfo data = service.getAvailableTimeSlots(noticeTypeCd, reviewTypeCd, reviewDate);
+			// TODO Update based on ORDS response
+			JSONResponse<ReviewTimeAvailabilityInfo> resp = new JSONResponse<>(data);
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} finally {
+			MDC.clear();
+		}
 
 	}
 
-	@PostMapping(value = "/{noticeNo}/review/schedule", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+	@PostMapping(value = "/{noticeNo}/review/schedule/{correlationId}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Selected Review Timeslot", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ReviewScheduledSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<Boolean>> selectedReviewTimePost(
 			@PathVariable(value = "noticeNo", required = true) Long noticeNo,
+			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) ReviewTimeSlot timeSlot) {
-		Boolean data = service.postSelectedReviewTime(noticeNo, timeSlot);
-		// TODO Update based on ORDS response
-		JSONResponse<Boolean> resp = new JSONResponse<>(data);
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		
+		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
+		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "selectedReviewTimePost");
+		logger.info("Post selected review time request received [{}]", correlationId);
+
+		try {
+			Boolean data = service.postSelectedReviewTime(noticeNo, timeSlot);
+			// TODO Update based on ORDS response
+			JSONResponse<Boolean> resp = new JSONResponse<>(data);
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} finally {
+			MDC.clear();
+		}
 	}
 
 }

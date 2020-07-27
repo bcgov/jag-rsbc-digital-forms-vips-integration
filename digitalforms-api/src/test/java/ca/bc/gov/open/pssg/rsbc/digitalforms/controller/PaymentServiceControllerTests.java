@@ -33,6 +33,7 @@ public class PaymentServiceControllerTests {
 	private final Long IRP_TEST_NOTICE_NUMBER = 1L;
 	private final PaymentTransRequest GOOD_TRANSACTION_REQUEST = new PaymentTransRequest(new TransactionInfo("MC", "50.01"));
 	private final boolean GOOD_TRANSACTION_RESPONSE = true;
+	private final String CORRELATION_ID = "correlationId";
 
 	@MockBean
 	private PaymentServiceImpl paymentService;
@@ -50,7 +51,7 @@ public class PaymentServiceControllerTests {
 	@DisplayName("setReviewPaid - Post HTTP status code - good")
 	@Test
 	void setReviewPaidReturns200() {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER,
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER, CORRELATION_ID,
 				GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
@@ -60,7 +61,7 @@ public class PaymentServiceControllerTests {
 	@DisplayName("setReviewPaid - Post response object - good")
 	@Test
 	void setReviewPaidReturnsSuccess() {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER,
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER, CORRELATION_ID,
 				GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(GOOD_TRANSACTION_RESPONSE, resp.getBody().getData().booleanValue());
 	}
@@ -85,7 +86,7 @@ public class PaymentServiceControllerTests {
 	@Test
 	void getPaymentStatusSuccess() {
 		when(paymentService.getReviewPaymentStatus(any())).thenReturn(new PaymentStatusResponse("1"));
-		ResponseEntity<JSONResponse<PaymentStatusResponse>> resp = controller.paymentStatusGet(1L);
+		ResponseEntity<JSONResponse<PaymentStatusResponse>> resp = controller.paymentStatusGet(1L, CORRELATION_ID);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 

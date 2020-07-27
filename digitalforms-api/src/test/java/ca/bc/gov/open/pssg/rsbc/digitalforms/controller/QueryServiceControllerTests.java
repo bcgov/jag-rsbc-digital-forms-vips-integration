@@ -34,6 +34,7 @@ class QueryServiceControllerTests {
 	private final Long NOTICE_NUMBER = 1L;
 	private final Long NOTICE_NUMBER_NOT_FOUND = 2L;
 	private final String ORIGINAL_CAUSE = "IRP3";
+	private final String CORRELATION_ID = "correlationId";
 
 	@MockBean
 	private QueryServiceImpl service;
@@ -70,21 +71,21 @@ class QueryServiceControllerTests {
 	@DisplayName("Get success status code - QueryServiceController")
 	@Test
 	void getReturns200() throws Exception {
-		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER);
+		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER, CORRELATION_ID);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());		
 	}
 
 	@DisplayName("Get response value success - QueryServiceController")
 	@Test
 	void getReturnsSuccess() throws Exception {
-		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER);
+		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER, CORRELATION_ID);
 		Assertions.assertEquals(ORIGINAL_CAUSE, resp.getBody().getData().getStatus().getOriginalCause());
 	}
 
 	@DisplayName("Get fail status code - QueryServiceController")
 	@Test
 	void getReturns404() throws Exception {
-		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER_NOT_FOUND);
+		ResponseEntity<JSONResponse<ProhibitionStatusResponse>> resp = controller.getProhibitionInfo(NOTICE_NUMBER_NOT_FOUND, CORRELATION_ID);
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 		
 		// check that the error object too has the proper status code. 
