@@ -51,7 +51,7 @@ public class QueryServiceController {
 		produces = "application/json"
 	)
 	public ResponseEntity<JSONResponse<ProhibitionStatusResponse>> getProhibitionInfo(
-			@PathVariable (value="noticeNumber",required=true) Long noticeNumber,
+			@PathVariable (value="noticeNumber",required=true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId) throws Exception  {
 		
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);

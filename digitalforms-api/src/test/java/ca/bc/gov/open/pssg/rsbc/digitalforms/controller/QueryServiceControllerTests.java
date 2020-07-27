@@ -31,8 +31,8 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 @TestPropertySource("classpath:application-test.properties")
 class QueryServiceControllerTests {
 
-	private final Long NOTICE_NUMBER = 1L;
-	private final Long NOTICE_NUMBER_NOT_FOUND = 2L;
+	private final String NOTICE_NUMBER = "1";
+	private final String NOTICE_NUMBER_NOT_FOUND = "2";
 	private final String ORIGINAL_CAUSE = "IRP3";
 	private final String CORRELATION_ID = "correlationId";
 
