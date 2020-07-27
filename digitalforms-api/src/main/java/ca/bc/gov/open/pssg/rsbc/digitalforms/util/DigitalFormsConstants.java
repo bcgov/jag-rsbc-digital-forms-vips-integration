@@ -46,7 +46,7 @@ public final class DigitalFormsConstants {
 	public static final String JSON_CONTENT = "application/json";
    
 	// MDC constants
-	public static final String REQUEST_GUID = "request.guid";
+	public static final String REQUEST_CORRELATION_ID = "request.correlationid";
     public static final String REQUEST_ENDPOINT = "request.endpoint";
     public static final String REQUEST_FORMTYPE = "request.formtype";
 }

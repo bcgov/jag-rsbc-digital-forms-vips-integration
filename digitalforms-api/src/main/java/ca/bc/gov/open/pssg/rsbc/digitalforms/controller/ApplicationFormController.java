@@ -49,19 +49,19 @@ public class ApplicationFormController {
 
 	Logger logger = LoggerFactory.getLogger(ApplicationFormController.class);
 
-	@GetMapping(value = "/{formType}/{GUID}/application/{requestGuid}", produces = DigitalFormsConstants.JSON_CONTENT)
+	@GetMapping(value = "/{formType}/{GUID}/application/{correlationId}", produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationInfoResponse>> applicationFormGet(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "GUID", required = true) String formGuid,
-			@PathVariable(value = "requestGuid", required = true) String requestGuid) throws DigitalFormsException {
+			@PathVariable(value = "correlationId", required = true) String correlationId) throws DigitalFormsException {
 
-		MDC.put(DigitalFormsConstants.REQUEST_GUID, requestGuid);
+		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormGet");
 		MDC.put(DigitalFormsConstants.REQUEST_FORMTYPE, formType);
-		logger.info("Get application form request received [{}]", requestGuid);
+		logger.info("Get application form request received [{}]", correlationId);
 
 		try {
 			DigitalFormsUtils.validateFormType(formType);
@@ -80,20 +80,20 @@ public class ApplicationFormController {
 
 	}
 
-	@PostMapping(value = "/{formType}/{noticeNo}/application/{requestGuid}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+	@PostMapping(value = "/{formType}/{noticeNo}/application/{correlationId}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ApplicationIdSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationIdResponse>> applicationFormPost(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "noticeNo", required = true) String noticeNo,
-			@PathVariable(value = "requestGuid", required = true) String requestGuid,
+			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) ApplicationFormData formData) throws DigitalFormsException {
 
-		MDC.put(DigitalFormsConstants.REQUEST_GUID, requestGuid);
+		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormPost");
 		MDC.put(DigitalFormsConstants.REQUEST_FORMTYPE, formType);
-		logger.info("Post application form request received [{}]", requestGuid);
+		logger.info("Post application form request received [{}]", correlationId);
 
 		try {
 			DigitalFormsUtils.validateFormType(formType);
@@ -112,20 +112,20 @@ public class ApplicationFormController {
 		}
 	}
 
-	@PatchMapping(value = "/{formType}/{GUID}/application/{requestGuid}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+	@PatchMapping(value = "/{formType}/{GUID}/application/{correlationId}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationIdSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationIdResponse>> applicationFormPatch(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "GUID", required = true) String formGuid,
-			@PathVariable(value = "requestGuid", required = true) String requestGuid,
+			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) ApplicationFormData formData) throws DigitalFormsException {
 
-		MDC.put(DigitalFormsConstants.REQUEST_GUID, requestGuid);
+		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormPatch");
 		MDC.put(DigitalFormsConstants.REQUEST_FORMTYPE, formType);
-		logger.info("Patch application form request received [{}]", requestGuid);
+		logger.info("Patch application form request received [{}]", correlationId);
 
 		try {
 			DigitalFormsUtils.validateFormType(formType);
