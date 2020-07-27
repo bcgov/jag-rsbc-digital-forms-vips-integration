@@ -51,7 +51,7 @@ class ApplicationFormControllerTests {
 	void getFormSuccess() throws DigitalFormsException {
 		when(service.getApplicationForm(any(), any()))
 				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "1", null));
-		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "guid");
+		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "guid", "requestGuid");
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
@@ -60,7 +60,7 @@ class ApplicationFormControllerTests {
 	void postFormSuccess() throws DigitalFormsException {
 		when(service.postApplicationForm(any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "noticeNo",
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "noticeNo", "requestGuid",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
@@ -70,7 +70,7 @@ class ApplicationFormControllerTests {
 	void patchFormSuccess() throws DigitalFormsException {
 		when(service.patchApplicationForm(any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePatch("guid", "1", null, null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("IRP", "guid",
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("IRP", "guid", "requestGuid",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
@@ -79,7 +79,7 @@ class ApplicationFormControllerTests {
 	@Test
 	void getFormError() throws DigitalFormsException {
 		when(service.getApplicationForm(any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "guid");
+		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "guid", "requestGuid");
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
 
@@ -89,7 +89,7 @@ class ApplicationFormControllerTests {
 		when(service.getApplicationForm(any(), any()))
 				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "1", null));
 		Assertions.assertThrows(DigitalFormsException.class, () -> {
-			controller.applicationFormGet("invalid", "guid");
+			controller.applicationFormGet("invalid", "guid", "requestGuid");
 		});
 	}
 
@@ -97,7 +97,7 @@ class ApplicationFormControllerTests {
 	@Test
 	void postFormError() throws DigitalFormsException {
 		when(service.postApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "guid",
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "guid", "requestGuid",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
@@ -106,7 +106,7 @@ class ApplicationFormControllerTests {
 	@Test
 	void patchFormError() throws DigitalFormsException {
 		when(service.patchApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("IRP", "guid",
+		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPatch("IRP", "guid", "requestGuid",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
