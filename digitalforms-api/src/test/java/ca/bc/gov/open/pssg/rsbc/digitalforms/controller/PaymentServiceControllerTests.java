@@ -31,7 +31,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
 public class PaymentServiceControllerTests {
 
 	private final Long IRP_TEST_NOTICE_NUMBER = 1L;
-	private final PaymentTransRequest GOOD_TRANSACTION_REQUEST = new PaymentTransRequest(new TransactionInfo("MC", "50.01"));
+	private final PaymentTransRequest GOOD_TRANSACTION_REQUEST = new PaymentTransRequest(new TransactionInfo("MC", "50.01", "12345", "2018-06-29 00:00:00 -07:00"));
 	private final boolean GOOD_TRANSACTION_RESPONSE = true;
 	private final String CORRELATION_ID = "correlationId";
 

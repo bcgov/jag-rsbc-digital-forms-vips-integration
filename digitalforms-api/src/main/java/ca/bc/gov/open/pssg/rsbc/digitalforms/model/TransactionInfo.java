@@ -17,35 +17,63 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({ "totalPrice", "cardType" })
 public class TransactionInfo {
 
-	@JsonProperty("totalPrice")
-	private String totalPrice;
+	@JsonProperty("paymentCardType")
+	private String paymentCardType;
 	
-	@JsonProperty("cardType")
-	private String cardType;
+	@JsonProperty("paymentAmount")
+	private String paymentAmount;
 	
-	public TransactionInfo(String cardType, String totalPrice) {
-		this.cardType = cardType; 
-		this.totalPrice = totalPrice;
+	@JsonProperty("receiptNumberTxt")
+	private String receiptNumberTxt;
+	
+	@JsonProperty("paymentDate")
+	private String paymentDate;
+	
+	public TransactionInfo(String paymentCardType, String paymentAmount, String receiptNumberTxt, String paymentDate) {
+		this.paymentCardType = paymentCardType; 
+		this.paymentAmount = paymentAmount;
+		this.receiptNumberTxt = receiptNumberTxt;
+		this.paymentDate = paymentDate; 
 	}
 
-	@JsonProperty("totalPrice")
-	public String getTotalPrice() {
-		return totalPrice;
+	@JsonProperty("paymentCardType")
+	public String getPaymentCardType() {
+		return paymentCardType;
 	}
 
-	@JsonProperty("totalPrice")
-	public void setTotalPrice(String totalPrice) {
-		this.totalPrice = totalPrice;
+	@JsonProperty("paymentCardType")
+	public void setPaymentCardType(String paymentCardType) {
+		this.paymentCardType = paymentCardType;
 	}
 
-	@JsonProperty("cardType")
-	public String getCardType() {
-		return cardType;
+	@JsonProperty("paymentAmount")
+	public String getPaymentAmount() {
+		return paymentAmount;
 	}
 
-	@JsonProperty("cardType")
-	public void setCardType(String cardType) {
-		this.cardType = cardType;
+	@JsonProperty("paymentAmount")
+	public void setPaymentAmount(String paymentAmount) {
+		this.paymentAmount = paymentAmount;
+	}
+
+	@JsonProperty("receiptNumberTxt")
+	public String getReceiptNumberTxt() {
+		return receiptNumberTxt;
+	}
+
+	@JsonProperty("receiptNumberTxt")
+	public void setReceiptNumberTxt(String receiptNumberTxt) {
+		this.receiptNumberTxt = receiptNumberTxt;
+	}
+
+	@JsonProperty("paymentDate")
+	public String getPaymentDate() {
+		return paymentDate;
+	}
+
+	@JsonProperty("paymentDate")
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 
 }
