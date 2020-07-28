@@ -24,7 +24,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	private ApplicationService applicationService;
 
 	@Override
-	public ApplicationResponse getApplicationForm(String formType, String formGuid) {
+	public ApplicationResponse getApplicationForm(String formGuid) {
 		return applicationService.getApplication(formGuid);
 	}
 

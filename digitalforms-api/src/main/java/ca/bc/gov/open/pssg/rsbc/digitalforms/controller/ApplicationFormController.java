@@ -50,23 +50,20 @@ public class ApplicationFormController {
 	Logger logger = LoggerFactory.getLogger(ApplicationFormController.class);
 
 	@GetMapping(value = { "**/application/**",
-			"/{formType}/{GUID}/application/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
+			"/{GUID}/application/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationInfoResponse>> applicationFormGet(
-			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "GUID", required = true) String formGuid,
 			@PathVariable(value = "correlationId", required = true) String correlationId) throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormGet");
-		MDC.put(DigitalFormsConstants.REQUEST_FORMTYPE, formType);
 		logger.info("Get application form request received [{}]", correlationId);
 
 		try {
-			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.getApplicationForm(formType, formGuid);
+			ApplicationResponse data = service.getApplicationForm(formGuid);
 			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 				JSONResponse<ApplicationInfoResponse> resp = new JSONResponse<>(
 						new ApplicationInfoResponse(data.getApplicationInfo()));
