@@ -47,9 +47,7 @@ public class QueryServiceController {
 
 	@ApiOperation(value = "Get Prohibition status", response = QuerySwaggerResponse.class) 
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = QuerySwaggerResponse.class)})
-	@GetMapping(value ="/{noticeNumber}/status/{correlationId}", 
-		produces = "application/json"
-	)
+	@GetMapping(value = { "**/status/**", "/{noticeNumber}/status/{correlationId}" }, produces = "application/json")
 	public ResponseEntity<JSONResponse<ProhibitionStatusResponse>> getProhibitionInfo(
 			@PathVariable (value="noticeNumber",required=true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId) throws Exception  {

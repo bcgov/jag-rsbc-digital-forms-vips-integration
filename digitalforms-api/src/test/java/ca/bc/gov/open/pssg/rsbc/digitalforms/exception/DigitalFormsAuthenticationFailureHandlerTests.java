@@ -40,7 +40,7 @@ class DigitalFormsAuthenticationFailureHandlerTests {
 	@WithMockUser(username = "user", password = "password", authorities = "USER")
 	@Test
 	public void authorizedEntryTest() throws Exception {
-		this.mockMvc.perform(get("/digitalforms/invalid/guid/application")).andDo(print())
+		this.mockMvc.perform(get("/digitalforms/invalid")).andDo(print())
 				.andExpect(status().isNotFound());
 	}
 

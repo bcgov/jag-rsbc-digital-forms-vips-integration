@@ -48,10 +48,8 @@ public class PaymentServiceController {
 	
 	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class) 
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class)})
-	@PostMapping(path ="/{noticeNumber}/payment/{correlationId}",
-		consumes = "application/json",
-		produces = "application/json"
-	)	
+	@PostMapping(path = { "**/payment/**",
+			"/{noticeNumber}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<JSONResponse<Boolean>> setReviewPaid(
 			@PathVariable (value="noticeNumber", required=true) Long noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
@@ -73,9 +71,8 @@ public class PaymentServiceController {
 	@ApiOperation(value = "Get Payment Status", response = PaymentStatusSwaggerResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = PaymentStatusSwaggerResponse.class) })
-	@GetMapping(value = "{noticeNumber}/payment/status/{correlationId}", 
-			produces = "application/json"
-    )
+	@GetMapping(value = { "**/payment/status/**",
+			"{noticeNumber}/payment/status/{correlationId}" }, produces = "application/json")
 	public ResponseEntity<JSONResponse<PaymentStatusResponse>> paymentStatusGet(
 			@PathVariable(value = "noticeNumber", required = true) Long noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
