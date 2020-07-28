@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "totalPrice", "cardType" })
+@JsonPropertyOrder({ "paymentCardType", "paymentAmount", "receiptNumberTxt", "paymentDate" })
 public class TransactionInfo {
 
 	@JsonProperty("paymentCardType")
