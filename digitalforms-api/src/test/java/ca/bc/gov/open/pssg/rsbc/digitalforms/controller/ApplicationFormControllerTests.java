@@ -49,9 +49,9 @@ class ApplicationFormControllerTests {
 	@DisplayName("Get success - ApplicationFormController")
 	@Test
 	void getFormSuccess() throws DigitalFormsException {
-		when(service.getApplicationForm(any(), any()))
+		when(service.getApplicationForm(any()))
 				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "1", null));
-		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "guid", "correlationId");
+		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("guid", "correlationId");
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
@@ -78,18 +78,18 @@ class ApplicationFormControllerTests {
 	@DisplayName("Get error - ApplicationFormController")
 	@Test
 	void getFormError() throws DigitalFormsException {
-		when(service.getApplicationForm(any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
-		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("IRP", "guid", "correlationId");
+		when(service.getApplicationForm(any())).thenReturn(ApplicationResponse.errorResponse(null));
+		ResponseEntity<JSONResponse<ApplicationInfoResponse>> resp = controller.applicationFormGet("guid", "correlationId");
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
 
-	@DisplayName("Get form type error - ApplicationFormController")
+	@DisplayName("Post form type error - ApplicationFormController")
 	@Test
-	void getFormTypeError() throws DigitalFormsException {
-		when(service.getApplicationForm(any(), any()))
-				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "1", null));
+	void postFormTypeError() throws DigitalFormsException {
+		when(service.postApplicationForm(any(), any(), any()))
+				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
 		Assertions.assertThrows(DigitalFormsException.class, () -> {
-			controller.applicationFormGet("invalid", "guid", "correlationId");
+			controller.applicationFormPost("invalid", "noticeNo", "correlationId", new ApplicationFormData());
 		});
 	}
 

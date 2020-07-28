@@ -47,7 +47,7 @@ class ApplicationFormServiceImplTests {
 	void getFormSuccess() throws DigitalFormsException {
 		when(service.getApplication(any()))
 				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "1", null));
-		ApplicationResponse resp = serviceImpl.getApplicationForm("IRP", "guid");
+		ApplicationResponse resp = serviceImpl.getApplicationForm("guid");
 		Assertions.assertEquals(1, resp.getRespCode());
 	}
 
@@ -73,7 +73,7 @@ class ApplicationFormServiceImplTests {
 	@Test
 	void getFormError() throws DigitalFormsException {
 		when(service.getApplication(any())).thenReturn(ApplicationResponse.errorResponse("Get error"));
-		ApplicationResponse resp = serviceImpl.getApplicationForm("IRP", "guid");
+		ApplicationResponse resp = serviceImpl.getApplicationForm("guid");
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Get error", resp.getRespMsg());
 

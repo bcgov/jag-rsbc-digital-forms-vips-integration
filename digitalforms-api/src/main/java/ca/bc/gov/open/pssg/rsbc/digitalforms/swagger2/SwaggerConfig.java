@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.google.common.base.Predicates;
+
 import ca.bc.gov.open.pssg.rsbc.digitalforms.config.ConfigProperties;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -54,7 +56,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .apiInfo(getApiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("ca.bc.gov.open.pssg.rsbc"))
-                .paths(PathSelectors.any())
+                .paths(Predicates.not(PathSelectors.regex("/\\*\\*/.*/\\*\\*"))) // Ignore default path mappings
                 .build();
     }
 
