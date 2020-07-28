@@ -44,7 +44,8 @@ public class ScheduleReviewController {
 	
 	Logger logger = LoggerFactory.getLogger(ScheduleReviewController.class);
 
-	@GetMapping(value = "/{noticeTypeCd}/{reviewTypeCd}/{reviewDate}/review/availableTimeSlot/{correlationId}", produces = DigitalFormsConstants.JSON_CONTENT)
+	@GetMapping(value = { "**/review/availableTimeSlot/**",
+			"/{noticeTypeCd}/{reviewTypeCd}/{reviewDate}/review/availableTimeSlot/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Get Available Review Timeslots", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = AvailabilityInfoSwaggerResponse.class) })
@@ -69,7 +70,8 @@ public class ScheduleReviewController {
 
 	}
 
-	@PostMapping(value = "/{noticeNo}/review/schedule/{correlationId}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+	@PostMapping(value = { "**/review/schedule/**",
+			"/{noticeNo}/review/schedule/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Selected Review Timeslot", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ReviewScheduledSwaggerResponse.class) })

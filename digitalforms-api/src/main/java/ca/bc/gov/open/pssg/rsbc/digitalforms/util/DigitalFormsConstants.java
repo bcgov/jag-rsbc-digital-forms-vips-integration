@@ -42,6 +42,10 @@ public final class DigitalFormsConstants {
 	
 	public static final String UNAUTHORIZED = "Unauthorized entry, please authenticate";
 	
+	public static final String NO_HANDLER = "Request URL does not exist";
+	
+	public static final String MISSING_PARAMS = "Missing request params";
+	
 	// rest response media type
 	public static final String JSON_CONTENT = "application/json";
    

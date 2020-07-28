@@ -49,7 +49,8 @@ public class ApplicationFormController {
 
 	Logger logger = LoggerFactory.getLogger(ApplicationFormController.class);
 
-	@GetMapping(value = "/{formType}/{GUID}/application/{correlationId}", produces = DigitalFormsConstants.JSON_CONTENT)
+	@GetMapping(value = { "**/application/**",
+			"/{formType}/{GUID}/application/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
@@ -80,7 +81,8 @@ public class ApplicationFormController {
 
 	}
 
-	@PostMapping(value = "/{formType}/{noticeNo}/application/{correlationId}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+	@PostMapping(value = { "**/application/**",
+			"/{formType}/{noticeNo}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ApplicationIdSwaggerResponse.class) })
@@ -112,7 +114,8 @@ public class ApplicationFormController {
 		}
 	}
 
-	@PatchMapping(value = "/{formType}/{GUID}/application/{correlationId}", consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+	@PatchMapping(value = { "**/application/**",
+			"/{formType}/{GUID}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationIdSwaggerResponse.class) })
