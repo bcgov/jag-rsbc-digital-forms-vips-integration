@@ -85,7 +85,7 @@ class ApplicationFormControllerTests {
 
 	@DisplayName("Post form type error - ApplicationFormController")
 	@Test
-	void getFormTypeError() throws DigitalFormsException {
+	void postFormTypeError() throws DigitalFormsException {
 		when(service.postApplicationForm(any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
 		Assertions.assertThrows(DigitalFormsException.class, () -> {
