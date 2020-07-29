@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TransactionInfo;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransaction;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
@@ -37,7 +36,7 @@ public class PaymentServiceController {
 	
 	// Provides generic type class defs for Swagger 2. 
 	private class ReviewPaidSwaggerResponse extends JSONResponse<Boolean>{}
-	private class PaymentStatusSwaggerResponse extends JSONResponse<TransactionInfo> {}
+	private class PaymentStatusSwaggerResponse extends JSONResponse<PaymentTransaction> {}
 	
 	@Autowired 
 	private PaymentService paymentService; 
@@ -55,7 +54,7 @@ public class PaymentServiceController {
 	public ResponseEntity<JSONResponse<Boolean>> setReviewPaid(
 			@PathVariable (value="noticeNumber", required=true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody (required=true) PaymentTransRequest paymentInfo)  {
+			@RequestBody (required=true) PaymentTransaction paymentInfo)  {
 		
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "setReviewPaid");
@@ -82,7 +81,7 @@ public class PaymentServiceController {
 			@ApiResponse(code = 200, message = "Success", response = PaymentStatusSwaggerResponse.class) })
 	@GetMapping(value = { "**/payment/status/**",
 			"{noticeNumber}/payment/status/{correlationId}" }, produces = "application/json")
-	public ResponseEntity<JSONResponse<TransactionInfo>> paymentStatusGet(
+	public ResponseEntity<JSONResponse<PaymentTransaction>> paymentStatusGet(
 			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
 
@@ -93,7 +92,8 @@ public class PaymentServiceController {
 		try {
 			PaymentResponse data = paymentService.getReviewPaymentStatus(noticeNumber);
 			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<TransactionInfo> resp = new JSONResponse<>(new TransactionInfo(data.getPaymentStatus()));
+				JSONResponse<PaymentTransaction> resp = new JSONResponse<>(
+						new PaymentTransaction(data.getPaymentStatus()));
 				return new ResponseEntity<>(resp, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND, 404),

@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransaction;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TransactionInfo;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
@@ -31,7 +31,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
 public class PaymentServiceControllerTests {
 
 	private final String IRP_TEST_NOTICE_NUMBER = "1";
-	private final PaymentTransRequest GOOD_TRANSACTION_REQUEST = new PaymentTransRequest(new TransactionInfo("MC", "50.01", "12345", "2018-06-29 00:00:00 -07:00"));
+	private final PaymentTransaction GOOD_TRANSACTION_REQUEST = new PaymentTransaction(new TransactionInfo("MC", "50.01", "12345", "2018-06-29 00:00:00 -07:00"));
 	private final boolean GOOD_TRANSACTION_RESPONSE = true;
 	private final String CORRELATION_ID = "correlationId";
 

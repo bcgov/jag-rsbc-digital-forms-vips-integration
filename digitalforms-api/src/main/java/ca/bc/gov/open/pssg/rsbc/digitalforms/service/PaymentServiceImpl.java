@@ -3,7 +3,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransaction;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPaymentPatchRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 
@@ -19,7 +19,7 @@ public class PaymentServiceImpl implements PaymentService {
 	private ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentService paymentService;
 
 	@Override
-	public PaymentResponse setReviewPaid(String irpNoticeNumber, PaymentTransRequest request) {
+	public PaymentResponse setReviewPaid(String irpNoticeNumber, PaymentTransaction request) {
 		DigitalFormPaymentPatchRequest ordsRequest = new DigitalFormPaymentPatchRequest();
 		ordsRequest.setPaymentAmt(request.getTransactionInfo().getPaymentAmount());
 		ordsRequest.setPaymentCardTypeTxt(request.getTransactionInfo().getPaymentCardType());
