@@ -96,7 +96,7 @@ public class ApplicationFormController {
 
 		try {
 			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.postApplicationForm(formType, noticeNo, formData);
+			ApplicationResponse data = service.postApplicationForm(formType, noticeNo, correlationId, formData);
 			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 				JSONResponse<ApplicationIdResponse> resp = new JSONResponse<>(
 						new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null));

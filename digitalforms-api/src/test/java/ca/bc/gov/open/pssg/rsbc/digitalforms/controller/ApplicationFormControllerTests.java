@@ -58,7 +58,7 @@ class ApplicationFormControllerTests {
 	@DisplayName("Post success - ApplicationFormController")
 	@Test
 	void postFormSuccess() throws DigitalFormsException {
-		when(service.postApplicationForm(any(), any(), any()))
+		when(service.postApplicationForm(any(), any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
 		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "noticeNo", "correlationId",
 				new ApplicationFormData());
@@ -86,7 +86,7 @@ class ApplicationFormControllerTests {
 	@DisplayName("Post form type error - ApplicationFormController")
 	@Test
 	void postFormTypeError() throws DigitalFormsException {
-		when(service.postApplicationForm(any(), any(), any()))
+		when(service.postApplicationForm(any(), any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
 		Assertions.assertThrows(DigitalFormsException.class, () -> {
 			controller.applicationFormPost("invalid", "noticeNo", "correlationId", new ApplicationFormData());
@@ -96,7 +96,7 @@ class ApplicationFormControllerTests {
 	@DisplayName("Post error - ApplicationFormController")
 	@Test
 	void postFormError() throws DigitalFormsException {
-		when(service.postApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
+		when(service.postApplicationForm(any(), any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
 		ResponseEntity<JSONResponse<ApplicationIdResponse>> resp = controller.applicationFormPost("IRP", "guid", "correlationId",
 				new ApplicationFormData());
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
