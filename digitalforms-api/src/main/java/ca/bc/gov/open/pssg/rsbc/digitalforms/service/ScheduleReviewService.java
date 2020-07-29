@@ -14,6 +14,6 @@ public interface ScheduleReviewService {
 	
 	public ReviewTimeAvailabilityInfo getAvailableTimeSlots(String noticeTypeCd, String reviewTypeCd, String reviewDate);
 	
-	public boolean postSelectedReviewTime(Long noticeNumber, ReviewTimeSlot timeSlot);
+	public boolean postSelectedReviewTime(String noticeNumber, ReviewTimeSlot timeSlot);
 
 }

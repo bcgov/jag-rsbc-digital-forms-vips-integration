@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPaymentStatusResponse;
+
 /**
  * 
  * Supporting object for the PaymentTransRequest. 
@@ -28,6 +30,13 @@ public class TransactionInfo {
 	
 	@JsonProperty("paymentDate")
 	private String paymentDate;
+	
+	public TransactionInfo(DigitalFormPaymentStatusResponse response) {
+		this.paymentCardType = response.getPaymentCardTypeTxt(); 
+		this.paymentAmount = response.getPaymentAmt();
+		this.receiptNumberTxt = response.getReceiptNumberTxt();
+		this.paymentDate = response.getPaymentDtm(); 
+	}
 	
 	public TransactionInfo(String paymentCardType, String paymentAmount, String receiptNumberTxt, String paymentDate) {
 		this.paymentCardType = paymentCardType; 

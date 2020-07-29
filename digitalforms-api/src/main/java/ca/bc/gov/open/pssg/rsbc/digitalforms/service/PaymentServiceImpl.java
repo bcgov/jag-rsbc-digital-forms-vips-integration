@@ -1,9 +1,11 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPaymentPatchRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 
 /**
  * 
@@ -13,20 +15,24 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
+	@Autowired
+	private ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentService paymentService;
+
 	@Override
-	public boolean setReviewPaid(Long irpNoticeNumber, PaymentTransRequest request) {
-		// TODO Service to be built out here
-		return true;
+	public PaymentResponse setReviewPaid(String irpNoticeNumber, PaymentTransRequest request) {
+		DigitalFormPaymentPatchRequest ordsRequest = new DigitalFormPaymentPatchRequest();
+		ordsRequest.setPaymentAmt(request.getTransactionInfo().getPaymentAmount());
+		ordsRequest.setPaymentCardTypeTxt(request.getTransactionInfo().getPaymentCardType());
+		ordsRequest.setPaymentDtm(request.getTransactionInfo().getPaymentDate());
+		ordsRequest.setReceiptNumberTxt(request.getTransactionInfo().getReceiptNumberTxt());
+
+		return paymentService.patchPaymentReceipt(irpNoticeNumber, ordsRequest);
+
 	}
 
 	@Override
-	public PaymentStatusResponse getReviewPaymentStatus(Long noticeNumber) {
-		// TODO Service to be built out here
-		return new PaymentStatusResponse("1");
+	public PaymentResponse getReviewPaymentStatus(String noticeNumber) {
+		return paymentService.getPaymentStatus(noticeNumber);
 	}
-	
+
 }
-
-
-
-
