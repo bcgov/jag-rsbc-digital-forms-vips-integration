@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
  * @author sivakaruna
  *
  */
-public class PaymentTransRequestTests {
+public class PaymentTransactionTests {
 
 	@Test
 	public void testObj() {
 		
-		PaymentTransRequest paymentTransRequest = new PaymentTransRequest();
+		PaymentTransaction paymentTransRequest = new PaymentTransaction();
 
 		paymentTransRequest.setTransactionInfo(new TransactionInfo("cardType", "totalPrice", "receiptNumberTxt", "paymentDate"));
 

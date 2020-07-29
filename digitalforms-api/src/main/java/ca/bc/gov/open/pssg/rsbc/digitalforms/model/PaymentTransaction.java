@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPaymentStatusResponse;
+
 /**
  * 
  * Payment Received Object
@@ -13,15 +15,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "transactionInfo" })
-public class PaymentTransRequest {
+public class PaymentTransaction {
 
 	@JsonProperty("transactionInfo")
 	private TransactionInfo transactionInfo;
 	
-	public PaymentTransRequest () {}
+	public PaymentTransaction () {}
 	
-	public PaymentTransRequest(TransactionInfo transInfo) {
+	public PaymentTransaction(TransactionInfo transInfo) {
 		this.transactionInfo = transInfo; 
+	}
+	
+	public PaymentTransaction(DigitalFormPaymentStatusResponse response) {
+		this.transactionInfo = new TransactionInfo(response.getPaymentCardTypeTxt(), response.getPaymentAmt(),
+				response.getReceiptNumberTxt(), response.getPaymentDtm());
 	}
 
 	@JsonProperty("transactionInfo")

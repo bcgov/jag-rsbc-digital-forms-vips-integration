@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGetResponse;
 
@@ -16,7 +15,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGet
  * @author sivakaruna
  *
  */
-@JacksonXmlRootElement(localName = "applicationInfo")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "prohibitionNoticeNo", "noticeTypeCd", "reviewApplnTypeCd" })
 public class ApplicationInfoResponse {

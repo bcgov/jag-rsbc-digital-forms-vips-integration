@@ -19,6 +19,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationIdResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
@@ -38,10 +39,10 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Application Form", tags = { "Application Form" })
 public class ApplicationFormController {
 
-	private class ApplicationInfoSwaggerResponse extends JSONResponse<ApplicationInfoResponse> {
+	private class ApplicationInfoSwaggerResponse extends JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>> {
 	}
 
-	private class ApplicationIdSwaggerResponse extends JSONResponse<ApplicationIdResponse> {
+	private class ApplicationIdSwaggerResponse extends JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> {
 	}
 
 	@Autowired
@@ -54,7 +55,7 @@ public class ApplicationFormController {
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<ApplicationInfoResponse>> applicationFormGet(
+	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>>> applicationFormGet(
 			@PathVariable(value = "GUID", required = true) String formGuid,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
 
@@ -65,8 +66,8 @@ public class ApplicationFormController {
 		try {
 			ApplicationResponse data = service.getApplicationForm(formGuid);
 			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<ApplicationInfoResponse> resp = new JSONResponse<>(
-						new ApplicationInfoResponse(data.getApplicationInfo()));
+				JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>> resp = new JSONResponse<>(
+						new ApplicationInfoWrapper<>(new ApplicationInfoResponse(data.getApplicationInfo())));
 				return new ResponseEntity<>(resp, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND, 404),
@@ -75,7 +76,6 @@ public class ApplicationFormController {
 		} finally {
 			MDC.clear();
 		}
-
 	}
 
 	@PostMapping(value = { "**/application/**",
@@ -83,11 +83,11 @@ public class ApplicationFormController {
 	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ApplicationIdSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<ApplicationIdResponse>> applicationFormPost(
+	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> applicationFormPost(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "noticeNo", required = true) String noticeNo,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) ApplicationFormData formData) throws DigitalFormsException {
+			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData) throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormPost");
@@ -96,10 +96,11 @@ public class ApplicationFormController {
 
 		try {
 			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.postApplicationForm(formType, noticeNo, correlationId, formData);
+			ApplicationResponse data = service.postApplicationForm(formType, noticeNo, correlationId, formData.getApplicationInfo());
 			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<ApplicationIdResponse> resp = new JSONResponse<>(
-						new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null));
+				JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
+						new ApplicationInfoWrapper<>(
+								new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null)));
 				return new ResponseEntity<>(resp, HttpStatus.CREATED);
 			} else {
 				return new ResponseEntity<>(
@@ -116,11 +117,11 @@ public class ApplicationFormController {
 	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationIdSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<ApplicationIdResponse>> applicationFormPatch(
+	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> applicationFormPatch(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "GUID", required = true) String formGuid,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) ApplicationFormData formData) throws DigitalFormsException {
+			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData) throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormPatch");
@@ -129,10 +130,11 @@ public class ApplicationFormController {
 
 		try {
 			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData);
+			ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData.getApplicationInfo());
 			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<ApplicationIdResponse> resp = new JSONResponse<>(
-						new ApplicationIdResponse(data.getApplicationId(), null, data.getUpdatedTime()));
+				JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
+						new ApplicationInfoWrapper<>(
+								new ApplicationIdResponse(data.getApplicationId(), null, data.getUpdatedTime())));
 				return new ResponseEntity<>(resp, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(
