@@ -29,9 +29,10 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	}
 
 	@Override
-	public ApplicationResponse postApplicationForm(String formType, String noticeNo, ApplicationFormData formData) {
+	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId, ApplicationFormData formData) {
 		DigitalFormPostRequest request = new DigitalFormPostRequest();
 
+		request.setCorrelationGuid(correlationId);
 		request.setElectronicAddressTxt(formData.getEmail());
 		request.setFaxNo(formData.getFaxNo());
 		request.setFirstGivenNm(formData.getFirstGivenNm());

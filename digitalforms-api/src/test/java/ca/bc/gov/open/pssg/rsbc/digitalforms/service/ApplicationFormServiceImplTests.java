@@ -56,7 +56,7 @@ class ApplicationFormServiceImplTests {
 	void postFormSuccess() throws DigitalFormsException {
 		when(service.postApplication(any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
-		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", new ApplicationFormData());
+		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormData());
 		Assertions.assertEquals(1, resp.getRespCode());
 	}
 
@@ -83,7 +83,7 @@ class ApplicationFormServiceImplTests {
 	@Test
 	void postFormError() throws DigitalFormsException {
 		when(service.postApplication(any())).thenReturn(ApplicationResponse.errorResponse("Post error"));
-		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", new ApplicationFormData());
+		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormData());
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Post error", resp.getRespMsg());
 	}
