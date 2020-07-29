@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +49,7 @@ public class PaymentServiceController {
 	
 	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class) 
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class)})
-	@PostMapping(path = { "**/payment/**",
+	@PatchMapping(path = { "**/payment/**",
 			"/{noticeNumber}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<JSONResponse<Boolean>> setReviewPaid(
 			@PathVariable (value="noticeNumber", required=true) Long noticeNumber,

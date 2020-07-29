@@ -14,18 +14,26 @@ public class PaymentTransRequestTests {
 
 	@Test
 	public void testObj() {
+		
 		PaymentTransRequest paymentTransRequest = new PaymentTransRequest();
 
-		paymentTransRequest.setTransactionInfo(new TransactionInfo("cardType", "totalPrice"));
+		paymentTransRequest.setTransactionInfo(new TransactionInfo("cardType", "totalPrice", "receiptNumberTxt", "paymentDate"));
 
-		Assertions.assertEquals("cardType", paymentTransRequest.getTransactionInfo().getCardType());
-		Assertions.assertEquals("totalPrice", paymentTransRequest.getTransactionInfo().getTotalPrice());
+		Assertions.assertEquals("cardType", paymentTransRequest.getTransactionInfo().getPaymentCardType());
+		Assertions.assertEquals("totalPrice", paymentTransRequest.getTransactionInfo().getPaymentAmount());
+		Assertions.assertEquals("receiptNumberTxt", paymentTransRequest.getTransactionInfo().getReceiptNumberTxt());
+		Assertions.assertEquals("paymentDate", paymentTransRequest.getTransactionInfo().getPaymentDate());
+		
 
-		paymentTransRequest.getTransactionInfo().setCardType("type");
-		paymentTransRequest.getTransactionInfo().setTotalPrice("price");
+		paymentTransRequest.getTransactionInfo().setPaymentCardType("type");
+		paymentTransRequest.getTransactionInfo().setPaymentAmount("price");
+		paymentTransRequest.getTransactionInfo().setReceiptNumberTxt("receipt");
+		paymentTransRequest.getTransactionInfo().setPaymentDate("date");
 
-		Assertions.assertEquals("type", paymentTransRequest.getTransactionInfo().getCardType());
-		Assertions.assertEquals("price", paymentTransRequest.getTransactionInfo().getTotalPrice());
+		Assertions.assertEquals("type", paymentTransRequest.getTransactionInfo().getPaymentCardType());
+		Assertions.assertEquals("price", paymentTransRequest.getTransactionInfo().getPaymentAmount());
+		Assertions.assertEquals("receipt", paymentTransRequest.getTransactionInfo().getReceiptNumberTxt());
+		Assertions.assertEquals("date", paymentTransRequest.getTransactionInfo().getPaymentDate());
 
 	}
 
