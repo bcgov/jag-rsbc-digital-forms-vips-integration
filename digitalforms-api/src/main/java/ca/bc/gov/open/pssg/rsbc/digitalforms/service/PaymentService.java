@@ -1,7 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 
 /**
  * 
@@ -13,10 +13,10 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransRequest;
 public interface PaymentService {
 
 	// ref: 2.17.5
-	public boolean setReviewPaid(Long noticeNumber, PaymentTransRequest request);
+	public PaymentResponse setReviewPaid(String noticeNumber, PaymentTransRequest request);
 	
 	// ref: 2.7.3
-	public PaymentStatusResponse getReviewPaymentStatus(Long noticeNumber);
+	public PaymentResponse getReviewPaymentStatus(String noticeNumber);
 	
 }
 

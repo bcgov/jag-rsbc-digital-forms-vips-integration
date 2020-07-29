@@ -76,7 +76,7 @@ public class ScheduleReviewController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ReviewScheduledSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<Boolean>> selectedReviewTimePost(
-			@PathVariable(value = "noticeNo", required = true) Long noticeNo,
+			@PathVariable(value = "noticeNo", required = true) String noticeNo,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) ReviewTimeSlot timeSlot) {
 		

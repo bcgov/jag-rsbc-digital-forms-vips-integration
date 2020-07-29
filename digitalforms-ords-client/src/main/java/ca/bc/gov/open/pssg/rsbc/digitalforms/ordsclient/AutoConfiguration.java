@@ -2,11 +2,14 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.ApplicationApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.HealthApi;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.PaymentApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.handler.ApiClient;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationServiceImpl;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health.HealthService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health.HealthServiceImpl;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentServiceImpl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -63,6 +66,16 @@ public class AutoConfiguration {
 	@Bean
 	public ApplicationService digitalFormsApplicationService(ApplicationApi digitalFormsApplicationApi) {
 		return new ApplicationServiceImpl(digitalFormsApplicationApi);
+	}
+	
+	@Bean
+	public PaymentApi digitalFormsPaymentApi(ApiClient apiClient) {
+		return new PaymentApi(apiClient);
+	}
+
+	@Bean
+	public PaymentService digitalFormsPaymentService(PaymentApi digitalFormsPaymentApi) {
+		return new PaymentServiceImpl(digitalFormsPaymentApi);
 	}
 
 }

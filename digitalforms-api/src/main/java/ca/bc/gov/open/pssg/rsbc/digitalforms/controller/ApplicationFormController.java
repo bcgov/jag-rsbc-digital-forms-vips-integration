@@ -56,7 +56,7 @@ public class ApplicationFormController {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationInfoResponse>> applicationFormGet(
 			@PathVariable(value = "GUID", required = true) String formGuid,
-			@PathVariable(value = "correlationId", required = true) String correlationId) throws DigitalFormsException {
+			@PathVariable(value = "correlationId", required = true) String correlationId) {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormGet");

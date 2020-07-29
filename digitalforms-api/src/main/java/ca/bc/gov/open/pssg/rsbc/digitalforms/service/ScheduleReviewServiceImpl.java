@@ -34,7 +34,7 @@ public class ScheduleReviewServiceImpl implements ScheduleReviewService {
 	}
 
 	@Override
-	public boolean postSelectedReviewTime(Long noticeNumber, ReviewTimeSlot timeSlot) {
+	public boolean postSelectedReviewTime(String noticeNumber, ReviewTimeSlot timeSlot) {
 		// TODO Service to be written
 		return true;
 	}
