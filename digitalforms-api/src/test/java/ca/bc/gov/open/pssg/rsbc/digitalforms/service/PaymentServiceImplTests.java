@@ -43,7 +43,8 @@ class PaymentServiceImplTests {
 	@DisplayName("Patch success - PaymentService")
 	@Test
 	void setReviewPaidSuccess() throws DigitalFormsException {
-		when(service.getPaymentStatus(any())).thenReturn(PaymentResponse.successResponse("updatedTime", "1", null));
+		when(service.patchPaymentReceipt(any(), any()))
+				.thenReturn(PaymentResponse.successResponse("updatedTime", "1", null));
 		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(
 				new TransactionInfo("paymentCardType", "paymentAmount", "receiptNumberTxt", "paymentDate")));
 		Assertions.assertEquals(1, resp.getRespCode());
@@ -60,7 +61,7 @@ class PaymentServiceImplTests {
 	@DisplayName("Patch error - PaymentService")
 	@Test
 	void setReviewPaidError() throws DigitalFormsException {
-		when(service.getPaymentStatus(any())).thenReturn(PaymentResponse.errorResponse("Get error"));
+		when(service.patchPaymentReceipt(any(), any())).thenReturn(PaymentResponse.errorResponse("Get error"));
 		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(
 				new TransactionInfo("paymentCardType", "paymentAmount", "receiptNumberTxt", "paymentDate")));
 		Assertions.assertEquals(-1, resp.getRespCode());
