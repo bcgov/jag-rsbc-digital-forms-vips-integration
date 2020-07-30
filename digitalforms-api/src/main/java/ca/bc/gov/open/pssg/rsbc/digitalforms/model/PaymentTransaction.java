@@ -8,7 +8,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPay
 
 /**
  * 
- * Payment Received Object
+ * Payment Transaction Wrapper Object
  * 
  * @author shaunmillargov
  *

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * 
- * Review Form Request object
+ * Review application form object
  * 
  * @author sivakaruna
  *

@@ -1,6 +1,5 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransaction;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TransactionInfo;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPaymentStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
 
@@ -30,10 +30,14 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
 @TestPropertySource("classpath:application-test.properties")
 public class PaymentServiceControllerTests {
 
-	private final String IRP_TEST_NOTICE_NUMBER = "1";
-	private final PaymentTransaction GOOD_TRANSACTION_REQUEST = new PaymentTransaction(new TransactionInfo("MC", "50.01", "12345", "2018-06-29 00:00:00 -07:00"));
-	private final boolean GOOD_TRANSACTION_RESPONSE = true;
+	private final String IRP_TEST_NOTICE_NUMBER_SUCCESS = "1";
+	private final String IRP_TEST_NOTICE_NUMBER_ERROR = "2";
+	private final PaymentTransaction GOOD_TRANSACTION_REQUEST = new PaymentTransaction(
+			new TransactionInfo("MC", "50.01", "12345", "2018-06-29 00:00:00 -07:00"));
 	private final String CORRELATION_ID = "correlationId";
+	private final String SUCCESS_STATUS = "success";
+	private final String SUCCESS_CODE = "1";
+	private final String ERROR_STATUS = "error";
 
 	@MockBean
 	private PaymentServiceImpl paymentService;
@@ -43,57 +47,47 @@ public class PaymentServiceControllerTests {
 	@BeforeEach
 	public void init() {
 		controller = new PaymentServiceController(paymentService);
-		when(paymentService.setReviewPaid("1", GOOD_TRANSACTION_REQUEST)).thenReturn(null);
+		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS, GOOD_TRANSACTION_REQUEST))
+				.thenReturn(PaymentResponse.successResponse("updatedTime", SUCCESS_CODE, SUCCESS_STATUS));
+		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_ERROR, GOOD_TRANSACTION_REQUEST))
+				.thenReturn(PaymentResponse.errorResponse(ERROR_STATUS));
+		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_SUCCESS)).thenReturn(PaymentResponse
+				.successStatusResponse(new DigitalFormPaymentStatusResponse(), SUCCESS_CODE, SUCCESS_STATUS));
+		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_ERROR))
+				.thenReturn(PaymentResponse.errorResponse(ERROR_STATUS));
 	}
 
-	// Test setReviewPaid for 200 returned on success.
-	// TODO - update when fully functional
-	/*
-	 * @DisplayName("setReviewPaid - Post HTTP status code - good")
-	 * 
-	 * @Test void setReviewPaidReturns200() { ResponseEntity<JSONResponse<Boolean>>
-	 * resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER, CORRELATION_ID,
-	 * GOOD_TRANSACTION_REQUEST); Assertions.assertEquals(HttpStatus.OK,
-	 * resp.getStatusCode()); }
-	 */
+	@DisplayName("setReviewPaid - Patch HTTP status code - good")
+	@Test
+	void setReviewPaidReturnsSuccess() {
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS,
+				CORRELATION_ID, GOOD_TRANSACTION_REQUEST);
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
+		Assertions.assertTrue(resp.getBody().getData().booleanValue());
+	}
 
-	// Test setReviewPaid for proper JSON response on success.
-	// TODO - update when fully functional
-	/*
-	 * @DisplayName("setReviewPaid - Post response object - good")
-	 * 
-	 * @Test void setReviewPaidReturnsSuccess() {
-	 * ResponseEntity<JSONResponse<Boolean>> resp =
-	 * controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER, CORRELATION_ID,
-	 * GOOD_TRANSACTION_REQUEST); Assertions.assertEquals(GOOD_TRANSACTION_RESPONSE,
-	 * resp.getBody().getData().booleanValue()); }
-	 */
-
-	// Test setReviewPaid for prohibition not found.
-	// TODO - update when fully functional
-	@DisplayName("setReviewPaid - Post Review Prohibition not found")
+	@DisplayName("setReviewPaid - Patch Review Prohibition not found")
 	@Test
 	void setReviewPaidNotFound() {
-		Assertions.assertTrue(true);
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER_ERROR,
+				CORRELATION_ID, GOOD_TRANSACTION_REQUEST);
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
 
-	// Test setReviewPaid for exception state.
-	// TODO - update when fully functional
-	@DisplayName("setReviewPaid - Post generate exception")
+	@DisplayName("paymentStatusGet - Get success")
 	@Test
-	void setReviewPaidReturnException() {
-		Assertions.assertTrue(true);
+	void getPaymentStatusSuccess() {
+		ResponseEntity<JSONResponse<PaymentTransaction>> resp = controller
+				.paymentStatusGet(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID);
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
-	
-	/*
-	 * @DisplayName("paymentStatusGet - Get success")
-	 * 
-	 * @Test void getPaymentStatusSuccess() {
-	 * when(paymentService.getReviewPaymentStatus(any()))
-	 * .thenReturn(PaymentResponse.successResponse(null, "respCodeStr", "respMsg"));
-	 * ResponseEntity<JSONResponse<TransactionInfo>> resp =
-	 * controller.paymentStatusGet("1", CORRELATION_ID);
-	 * Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode()); }
-	 */
+
+	@DisplayName("paymentStatusGet - Get error")
+	@Test
+	void getPaymentStatusError() {
+		ResponseEntity<JSONResponse<PaymentTransaction>> resp = controller
+				.paymentStatusGet(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID);
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+	}
 
 }

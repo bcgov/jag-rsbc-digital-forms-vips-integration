@@ -42,7 +42,7 @@ class ApplicationFormServiceImplTests {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	@DisplayName("Get success - ApplicationFormController")
+	@DisplayName("Get success - ApplicationService")
 	@Test
 	void getFormSuccess() throws DigitalFormsException {
 		when(service.getApplication(any()))
@@ -51,7 +51,7 @@ class ApplicationFormServiceImplTests {
 		Assertions.assertEquals(1, resp.getRespCode());
 	}
 
-	@DisplayName("Post success - ApplicationFormController")
+	@DisplayName("Post success - ApplicationService")
 	@Test
 	void postFormSuccess() throws DigitalFormsException {
 		when(service.postApplication(any()))
@@ -60,7 +60,7 @@ class ApplicationFormServiceImplTests {
 		Assertions.assertEquals(1, resp.getRespCode());
 	}
 
-	@DisplayName("Patch success - ApplicationFormController")
+	@DisplayName("Patch success - ApplicationService")
 	@Test
 	void patchFormSuccess() throws DigitalFormsException {
 		when(service.patchApplication(any(), any()))
@@ -69,7 +69,7 @@ class ApplicationFormServiceImplTests {
 		Assertions.assertEquals(1, resp.getRespCode());
 	}
 
-	@DisplayName("Get error - ApplicationFormController")
+	@DisplayName("Get error - ApplicationService")
 	@Test
 	void getFormError() throws DigitalFormsException {
 		when(service.getApplication(any())).thenReturn(ApplicationResponse.errorResponse("Get error"));
@@ -79,7 +79,7 @@ class ApplicationFormServiceImplTests {
 
 	}
 
-	@DisplayName("Post error - ApplicationFormController")
+	@DisplayName("Post error - ApplicationService")
 	@Test
 	void postFormError() throws DigitalFormsException {
 		when(service.postApplication(any())).thenReturn(ApplicationResponse.errorResponse("Post error"));
@@ -88,7 +88,7 @@ class ApplicationFormServiceImplTests {
 		Assertions.assertEquals("Post error", resp.getRespMsg());
 	}
 
-	@DisplayName("Patch error - ApplicationFormController")
+	@DisplayName("Patch error - ApplicationService")
 	@Test
 	void patchFormError() throws DigitalFormsException {
 		when(service.patchApplication(any(), any())).thenReturn(ApplicationResponse.errorResponse("Patch error"));
