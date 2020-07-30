@@ -149,6 +149,53 @@ paths:
         type: string
         description: implicit
         pattern: "^[^/]+$"
+  "/digitalForm/availableTimeSlot/{reviewDate}/{noticeTypeCd}/{reviewTypeCd}/{authGuid}/{correlationGuid}":
+    get:
+      tags:
+      - Available Time Slots
+      security:
+      - basicAuth: []
+      description: Get available time slots for a date
+      responses:
+        '200':
+          description: available time slots
+          schema:
+            "$ref": "#/definitions/availableTimeSlotResponse"
+      parameters:
+      - name: authGuid
+        in: path
+        required: true
+        type: string
+        description: implicit
+        pattern: "^[^/]+$"
+      - name: correlationGuid
+        in: path
+        required: true
+        type: string
+        description: implicit
+        pattern: "^[^/]+$"
+      - name: noticeTypeCd
+        in: path
+        required: true
+        type: string
+        description: implicit
+        pattern: "^[^/]+$"
+      - name: reviewDate
+        in: path
+        required: true
+        type: string
+        description: implicit
+        pattern: "^[^/]+$"
+      - name: reviewTypeCd
+        in: path
+        required: true
+        type: string
+        description: implicit
+        pattern: "^[^/]+$"
+      - name: status_code
+        in: query
+        type: string
+        description: Implicit parameter
 definitions:
   healthOrdsResponse:
     type: object
@@ -422,3 +469,23 @@ definitions:
         type: string
       status_message:
         type: string
+  availableTimeSlotResponse:
+    type: object
+    required:
+    - status_code
+    - status_message
+    - time_slots
+    properties:
+      status_code:
+        type: string
+      status_message:
+        type: string
+      time_slots:
+        type: array
+        items:
+          type: object
+          properties:
+            start_tm:
+              type: string
+            end_tm:
+              type: string
