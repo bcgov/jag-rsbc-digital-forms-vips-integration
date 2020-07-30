@@ -14,6 +14,8 @@ public class ApplicationInfoWrapper<T> {
 	@JsonProperty("applicationInfo")
 	private T applicationInfo;
 	
+	public ApplicationInfoWrapper () {}
+	
 	public ApplicationInfoWrapper(T applicationInfo) {
 		this.applicationInfo = applicationInfo;
 	}
