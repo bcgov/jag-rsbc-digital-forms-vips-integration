@@ -35,6 +35,9 @@ class PaymentServiceImplTests {
 	@InjectMocks
 	private PaymentService serviceImpl = new PaymentServiceImpl();
 
+	private TransactionInfo transactionInfoSample = new TransactionInfo("VISA", "30.12", "123",
+			"2020-03-05 00:00:00 -08:00");
+
 	@BeforeEach
 	public void init() {
 		MockitoAnnotations.initMocks(this);
@@ -45,8 +48,7 @@ class PaymentServiceImplTests {
 	void setReviewPaidSuccess() throws DigitalFormsException {
 		when(service.patchPaymentReceipt(any(), any()))
 				.thenReturn(PaymentResponse.successResponse("updatedTime", "1", null));
-		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(
-				new TransactionInfo("paymentCardType", "paymentAmount", "receiptNumberTxt", "paymentDate")));
+		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(transactionInfoSample));
 		Assertions.assertEquals(1, resp.getRespCode());
 	}
 
@@ -62,8 +64,7 @@ class PaymentServiceImplTests {
 	@Test
 	void setReviewPaidError() throws DigitalFormsException {
 		when(service.patchPaymentReceipt(any(), any())).thenReturn(PaymentResponse.errorResponse("Get error"));
-		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(
-				new TransactionInfo("paymentCardType", "paymentAmount", "receiptNumberTxt", "paymentDate")));
+		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(transactionInfoSample));
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Get error", resp.getRespMsg());
 
