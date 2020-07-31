@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransaction;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
@@ -48,31 +49,30 @@ public class PaymentServiceController {
 	}
 	
 	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class) 
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class)})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class) })
 	@PatchMapping(path = { "**/payment/**",
 			"/{noticeNumber}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<JSONResponse<Boolean>> setReviewPaid(
-			@PathVariable (value="noticeNumber", required=true) String noticeNumber,
+			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody (required=true) PaymentTransaction paymentInfo)  {
-		
+			@RequestBody(required = true) PaymentTransaction paymentInfo) throws DigitalFormsException {
+
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "setReviewPaid");
 		logger.info("Set review paid request received [{}]", correlationId);
-		
-		try {
-			PaymentResponse data = paymentService.setReviewPaid(noticeNumber, paymentInfo);
 
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
-				return new ResponseEntity<>(resp, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(
-						DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED, 404),
-						HttpStatus.NOT_FOUND);
-			}
-		} finally {
+		PaymentResponse data = paymentService.setReviewPaid(noticeNumber, paymentInfo);
+
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
 			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+
+			MDC.clear();
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 404),
+					HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -89,18 +89,16 @@ public class PaymentServiceController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "paymentStatusGet");
 		logger.info("Get payment status request received [{}]", correlationId);
 
-		try {
-			PaymentResponse data = paymentService.getReviewPaymentStatus(noticeNumber);
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<PaymentTransaction> resp = new JSONResponse<>(
-						new PaymentTransaction(data.getPaymentStatus()));
-				return new ResponseEntity<>(resp, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND, 404),
-						HttpStatus.NOT_FOUND);
-			}
-		} finally {
+		PaymentResponse data = paymentService.getReviewPaymentStatus(noticeNumber);
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<PaymentTransaction> resp = new JSONResponse<>(new PaymentTransaction(data.getPaymentStatus()));
 			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			MDC.clear();
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
+					HttpStatus.NOT_FOUND);
 		}
 	}
 }
