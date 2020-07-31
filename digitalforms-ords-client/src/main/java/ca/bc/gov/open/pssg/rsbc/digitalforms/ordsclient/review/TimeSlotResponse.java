@@ -66,13 +66,14 @@ public class TimeSlotResponse {
 	}
 	
 	public TimeSlotResponse(AvailableTimeSlotResponse response, String statusCode, String statusMessage) {
+		
 		this.respCode = Integer.parseInt(statusCode); 
-		this.respMsg = statusMessage; 
+		this.respMsg = statusMessage;
+		
 		for (AvailableTimeSlotResponseTimeSlots element:  response.getTimeSlots()) {
 			TimeSlot ts = new TimeSlot(element.getReviewStartDtm(), element.getReviewEndDtm()); 
 			this.timeslots.getTimeSlots().add(ts);
 		}
-		this.timeslots = new TimeSlots(timeSlotList);
 	}
 
 	public static TimeSlotResponse successResponse(AvailableTimeSlotResponse response, String statusCode, String statusMessage) {
