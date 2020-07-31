@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.ApplicationApi;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.AvailableTimeSlotsApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.HealthApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.PaymentApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.handler.ApiClient;
@@ -10,6 +11,8 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health.HealthService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.health.HealthServiceImpl;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentServiceImpl;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.ReviewService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.ReviewServiceImpl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -76,6 +79,16 @@ public class AutoConfiguration {
 	@Bean
 	public PaymentService digitalFormsPaymentService(PaymentApi digitalFormsPaymentApi) {
 		return new PaymentServiceImpl(digitalFormsPaymentApi);
+	}
+	
+	@Bean
+	public AvailableTimeSlotsApi digitalFormsReviewServiceApi(ApiClient apiClient) {
+		return new AvailableTimeSlotsApi(apiClient);
+	}
+	
+	@Bean
+	public ReviewService digitalFormsReviewService(AvailableTimeSlotsApi availableTimeSlotsApi) {
+		return new ReviewServiceImpl(availableTimeSlotsApi);
 	}
 
 }
