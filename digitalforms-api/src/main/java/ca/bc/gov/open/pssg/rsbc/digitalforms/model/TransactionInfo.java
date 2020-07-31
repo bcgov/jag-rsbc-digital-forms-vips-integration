@@ -1,8 +1,13 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
+import org.springframework.http.HttpStatus;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
  * 
@@ -45,8 +50,13 @@ public class TransactionInfo {
 	}
 
 	@JsonProperty("paymentAmount")
-	public String getPaymentAmount() {
-		return paymentAmount;
+	public String getPaymentAmount() throws DigitalFormsException {
+		try {
+			// Format payment amount to 2 decimal places
+			return String.format("%.2f", Double.valueOf(paymentAmount));
+		} catch (NumberFormatException e) {
+			throw new DigitalFormsException(DigitalFormsConstants.PAYMENT_FORMAT_ERROR, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@JsonProperty("paymentAmount")

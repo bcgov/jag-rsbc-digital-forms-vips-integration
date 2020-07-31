@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransaction;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TransactionInfo;
@@ -45,7 +46,7 @@ public class PaymentServiceControllerTests {
 	private PaymentServiceController controller;
 
 	@BeforeEach
-	public void init() {
+	public void init() throws DigitalFormsException {
 		controller = new PaymentServiceController(paymentService);
 		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS, GOOD_TRANSACTION_REQUEST))
 				.thenReturn(PaymentResponse.successResponse("updatedTime", SUCCESS_CODE, SUCCESS_STATUS));
@@ -59,7 +60,7 @@ public class PaymentServiceControllerTests {
 
 	@DisplayName("setReviewPaid - Patch HTTP status code - good")
 	@Test
-	void setReviewPaidReturnsSuccess() {
+	void setReviewPaidReturnsSuccess() throws DigitalFormsException {
 		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS,
 				CORRELATION_ID, GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
@@ -68,7 +69,7 @@ public class PaymentServiceControllerTests {
 
 	@DisplayName("setReviewPaid - Patch Review Prohibition not found")
 	@Test
-	void setReviewPaidNotFound() {
+	void setReviewPaidNotFound() throws DigitalFormsException {
 		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER_ERROR,
 				CORRELATION_ID, GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
