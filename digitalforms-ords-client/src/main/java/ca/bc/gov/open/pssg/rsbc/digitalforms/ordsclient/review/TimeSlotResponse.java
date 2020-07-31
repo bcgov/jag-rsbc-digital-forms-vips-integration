@@ -66,7 +66,7 @@ public class TimeSlotResponse {
 		this.respCode = Integer.parseInt(statusCode); 
 		this.respMsg = statusMessage; 
 		for (AvailableTimeSlotResponseTimeSlots element:  response.getTimeSlots()) {
-			TimeSlot ts = new TimeSlot(element.getStartTm(), element.getEndTm()); 
+			TimeSlot ts = new TimeSlot(element.getReviewStartDtm(), element.getReviewEndDtm()); 
 			this.timeslots.getTimeSlots().add(ts);
 		}
 	}
