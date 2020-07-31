@@ -192,10 +192,6 @@ paths:
         type: string
         description: implicit
         pattern: "^[^/]+$"
-      - name: status_code
-        in: query
-        type: string
-        description: Implicit parameter
 definitions:
   healthOrdsResponse:
     type: object
