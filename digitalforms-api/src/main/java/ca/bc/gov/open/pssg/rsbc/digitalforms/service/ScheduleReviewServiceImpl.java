@@ -1,12 +1,13 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeSlot;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeAvailabilityInfo;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.config.ConfigProperties;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.ReviewService;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlotResponse;
 
 /**
  * 
@@ -17,24 +18,22 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeAvailabilityInfo;
  */
 @Service
 public class ScheduleReviewServiceImpl implements ScheduleReviewService {
+	
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private ConfigProperties properties;
 
 	@Override
-	public ReviewTimeAvailabilityInfo getAvailableTimeSlots(String noticeTypeCd, String reviewTypeCd,
-			String reviewDate) {
-		// TODO Service to be written
-		// Dummy return value
-		ReviewTimeAvailabilityInfo dummy = new ReviewTimeAvailabilityInfo();
-		ReviewTimeSlot dummySlot = new ReviewTimeSlot();
-		dummySlot.setEndTm("endTime");
-		dummySlot.setStartTm("startTime");
-		List<ReviewTimeSlot> dummySlotList = new ArrayList<>();
-		dummySlotList.add(dummySlot);
-		dummy.setTimeSlots(dummySlotList);
-		return dummy;
+	public TimeSlotResponse getAvailableTimeSlots(String noticeTypeCd, String reviewTypeCd, String reviewDate,
+			String correlationId) {
+
+		return reviewService.getAvailableTimeSlots(properties.getOrdsUserGuid(), correlationId, noticeTypeCd, reviewDate, reviewTypeCd);
 	}
 
 	@Override
-	public boolean postSelectedReviewTime(String noticeNumber, ReviewTimeSlot timeSlot) {
+	public boolean postSelectedReviewTime(String noticeNumber, TimeSlot timeSlot) {
 		// TODO Service to be written
 		return true;
 	}
