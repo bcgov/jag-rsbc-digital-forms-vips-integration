@@ -60,6 +60,7 @@ locally the API locally (As run configuration in STS4 or Eclipse)
 | DIGITALFORMS_ORDS_BASEPATH | my base path |
 | DIGITALFORMS_ORDS_USER |  myUser |
 | DIGITALFORMS_ORDS_PASSWORD | myPassword |
+| DIGITALFORMS_ORDS_USER_GUID | myUser |
 | SPLUNK_PASSWORD  | Splunk password |
 | SPLUNK_TOKEN  | Splunk HEC Token |
 | SPLUNK_URL  | Splunk URL | 
