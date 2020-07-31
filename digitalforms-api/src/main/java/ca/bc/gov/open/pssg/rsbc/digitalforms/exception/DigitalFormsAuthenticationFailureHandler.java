@@ -26,7 +26,7 @@ public class DigitalFormsAuthenticationFailureHandler extends BasicAuthenticatio
 		response.setContentType(DigitalFormsConstants.JSON_CONTENT);
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.getOutputStream()
-				.print(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.UNAUTHORIZED, 401).toString());
+				.print(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.UNAUTHORIZED_ERROR, 401).toString());
 
 	}
 	

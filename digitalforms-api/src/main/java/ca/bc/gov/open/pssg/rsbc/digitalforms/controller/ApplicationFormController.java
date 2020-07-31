@@ -63,18 +63,17 @@ public class ApplicationFormController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormGet");
 		logger.info("Get application form request received [{}]", correlationId);
 
-		try {
-			ApplicationResponse data = service.getApplicationForm(formGuid);
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>> resp = new JSONResponse<>(
-						new ApplicationInfoWrapper<>(new ApplicationInfoResponse(data.getApplicationInfo())));
-				return new ResponseEntity<>(resp, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND, 404),
-						HttpStatus.NOT_FOUND);
-			}
-		} finally {
+		ApplicationResponse data = service.getApplicationForm(formGuid);
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>> resp = new JSONResponse<>(
+					new ApplicationInfoWrapper<>(new ApplicationInfoResponse(data.getApplicationInfo())));
 			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			MDC.clear();
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
+					HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -87,29 +86,30 @@ public class ApplicationFormController {
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "noticeNo", required = true) String noticeNo,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData) throws DigitalFormsException {
+			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData)
+			throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormPost");
 		MDC.put(DigitalFormsConstants.REQUEST_FORMTYPE, formType);
 		logger.info("Post application form request received [{}]", correlationId);
 
-		try {
-			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.postApplicationForm(formType, noticeNo, correlationId, formData.getApplicationInfo());
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
-						new ApplicationInfoWrapper<>(
-								new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null)));
-				return new ResponseEntity<>(resp, HttpStatus.CREATED);
-			} else {
-				return new ResponseEntity<>(
-						DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED, 400),
-						HttpStatus.BAD_REQUEST);
-			}
-		} finally {
+		DigitalFormsUtils.validateFormType(formType);
+		ApplicationResponse data = service.postApplicationForm(formType, noticeNo, correlationId,
+				formData.getApplicationInfo());
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
+					new ApplicationInfoWrapper<>(
+							new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null)));
 			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.CREATED);
+		} else {
+			MDC.clear();
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 400),
+					HttpStatus.BAD_REQUEST);
 		}
+
 	}
 
 	@PatchMapping(value = { "**/application/**",
@@ -121,28 +121,27 @@ public class ApplicationFormController {
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "GUID", required = true) String formGuid,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData) throws DigitalFormsException {
+			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData)
+			throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormPatch");
 		MDC.put(DigitalFormsConstants.REQUEST_FORMTYPE, formType);
 		logger.info("Patch application form request received [{}]", correlationId);
 
-		try {
-			DigitalFormsUtils.validateFormType(formType);
-			ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData.getApplicationInfo());
-			if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-				JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
-						new ApplicationInfoWrapper<>(
-								new ApplicationIdResponse(data.getApplicationId(), null, data.getUpdatedTime())));
-				return new ResponseEntity<>(resp, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(
-						DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED, 400),
-						HttpStatus.BAD_REQUEST);
-			}
-		} finally {
+		DigitalFormsUtils.validateFormType(formType);
+		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData.getApplicationInfo());
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
+					new ApplicationInfoWrapper<>(
+							new ApplicationIdResponse(data.getApplicationId(), null, data.getUpdatedTime())));
 			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			MDC.clear();
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 400),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
 }

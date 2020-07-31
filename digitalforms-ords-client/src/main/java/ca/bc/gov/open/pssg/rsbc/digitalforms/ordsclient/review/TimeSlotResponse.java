@@ -1,5 +1,8 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -69,6 +72,7 @@ public class TimeSlotResponse {
 			TimeSlot ts = new TimeSlot(element.getReviewStartDtm(), element.getReviewEndDtm()); 
 			this.timeslots.getTimeSlots().add(ts);
 		}
+		this.timeslots = new TimeSlots(timeSlotList);
 	}
 
 	public static TimeSlotResponse successResponse(AvailableTimeSlotResponse response, String statusCode, String statusMessage) {

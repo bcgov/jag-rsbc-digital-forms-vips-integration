@@ -1,7 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeAvailabilityInfo;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeSlot;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlotResponse;
 
 /**
  * 
@@ -12,8 +12,8 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeSlot;
  */
 public interface ScheduleReviewService {
 	
-	public ReviewTimeAvailabilityInfo getAvailableTimeSlots(String noticeTypeCd, String reviewTypeCd, String reviewDate);
+	public TimeSlotResponse getAvailableTimeSlots(String noticeTypeCd, String reviewTypeCd, String reviewDate, String correlationId);
 	
-	public boolean postSelectedReviewTime(String noticeNumber, ReviewTimeSlot timeSlot);
+	public boolean postSelectedReviewTime(String noticeNumber, TimeSlot timeSlot);
 
 }

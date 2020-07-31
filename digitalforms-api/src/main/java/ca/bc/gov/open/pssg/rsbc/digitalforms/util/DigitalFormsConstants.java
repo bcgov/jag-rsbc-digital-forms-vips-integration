@@ -34,17 +34,19 @@ public final class DigitalFormsConstants {
 	// rest service error messages
 	public static final String INVALID_FORM_TYPE_ERROR = "Form type is invalid";
 	
-	public static final String NOT_FOUND = "Requested data not found";
+	public static final String NOT_FOUND_ERROR = "Requested data not found";
 	
 	public static final String UNKNOWN_ERROR = "Unexpected error occured";
 	
-	public static final String NOT_PROCESSED = "Request cannot be processed";
+	public static final String NOT_PROCESSED_ERROR = "Request cannot be processed";
 	
-	public static final String UNAUTHORIZED = "Unauthorized entry, please authenticate";
+	public static final String UNAUTHORIZED_ERROR = "Unauthorized entry, please authenticate";
 	
-	public static final String NO_HANDLER = "Request URL does not exist";
+	public static final String NO_HANDLER_ERROR = "Request URL does not exist";
 	
-	public static final String MISSING_PARAMS = "Missing request params";
+	public static final String MISSING_PARAMS_ERROR = "Missing request params";
+	
+	public static final String PAYMENT_FORMAT_ERROR = "Invalid payment amount format";
 	
 	// rest response media type
 	public static final String JSON_CONTENT = "application/json";

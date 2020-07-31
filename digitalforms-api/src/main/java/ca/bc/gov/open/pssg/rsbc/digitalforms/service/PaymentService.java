@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PaymentTransaction;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 
@@ -13,7 +14,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 public interface PaymentService {
 
 	// ref: 2.17.5
-	public PaymentResponse setReviewPaid(String noticeNumber, PaymentTransaction request);
+	public PaymentResponse setReviewPaid(String noticeNumber, PaymentTransaction request) throws DigitalFormsException;
 	
 	// ref: 2.7.3
 	public PaymentResponse getReviewPaymentStatus(String noticeNumber);
