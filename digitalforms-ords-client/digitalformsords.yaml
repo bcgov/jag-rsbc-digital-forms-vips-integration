@@ -152,7 +152,7 @@ paths:
   "/digitalForm/availableTimeSlot/{reviewDate}/{noticeTypeCd}/{reviewTypeCd}/{authGuid}/{correlationGuid}":
     get:
       tags:
-      - Time Slots
+      - Available Time Slots
       security:
       - basicAuth: []
       description: Get available time slots for a date
@@ -195,7 +195,7 @@ paths:
   "/digitalForm/prohibition/{noticeNo}/review/schedule/{authGuid}/{correlationGuid}":
     post:
       tags:
-      - Time Slots
+      - Available Time Slots
       security:
       - basicAuth: []
       description: Save a review date time
