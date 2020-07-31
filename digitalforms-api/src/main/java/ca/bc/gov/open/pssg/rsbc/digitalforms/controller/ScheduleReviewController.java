@@ -69,7 +69,7 @@ public class ScheduleReviewController {
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
 			MDC.clear();
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND, 404),
+			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
 					HttpStatus.NOT_FOUND);
 		}
 	}
