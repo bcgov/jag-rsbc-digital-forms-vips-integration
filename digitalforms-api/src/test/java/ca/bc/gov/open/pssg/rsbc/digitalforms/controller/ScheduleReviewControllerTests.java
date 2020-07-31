@@ -1,0 +1,100 @@
+package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
+
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
+
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlotResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlots;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ScheduleReviewService;
+
+/**
+ * 
+ * Payment Service Controller Tests.
+ * 
+ * @author shaunmillargov
+ *
+ */
+@SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
+public class ScheduleReviewControllerTests {
+
+	private final String IRP_TEST_NOTICE_NUMBER_SUCCESS = "1";
+	private final String IRP_TEST_NOTICE_NUMBER_ERROR = "2";
+	private final String CORRELATION_ID = "correlationId";
+	private final String REVIEW_DATE = "2018-06-29 00:00:00 -07:00";
+	private final String NOTICE_TYPE_SUCCESS = "IRP";
+	private final String NOTICE_TYPE_ERROR = "ADP";
+	private final String REVIEW_TYPE = "WRIT";
+	private final String SUCCESS_STATUS = "success";
+	private final String SUCCESS_CODE = "1";
+	private final String ERROR_STATUS = "error";
+	private TimeSlot timeSlot = new TimeSlot("startTm", "endTm");
+
+	@Mock
+	private ScheduleReviewService service;
+
+	@InjectMocks
+	private ScheduleReviewController controller = new ScheduleReviewController();
+
+	@BeforeEach
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+		when(service.getAvailableTimeSlots(NOTICE_TYPE_SUCCESS, REVIEW_TYPE, REVIEW_DATE, CORRELATION_ID)).thenReturn(
+				TimeSlotResponse.successResponse(new AvailableTimeSlotResponse(), SUCCESS_CODE, SUCCESS_STATUS));
+		when(service.getAvailableTimeSlots(NOTICE_TYPE_ERROR, REVIEW_TYPE, REVIEW_DATE, CORRELATION_ID))
+				.thenReturn(TimeSlotResponse.errorResponse(ERROR_STATUS));
+		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_SUCCESS, timeSlot)).thenReturn(Boolean.TRUE);
+		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_ERROR, timeSlot)).thenReturn(Boolean.FALSE);
+	}
+// TODO update unit tests
+	/*
+	 * @DisplayName("availableTimeSlotsGet - Success")
+	 * 
+	 * @Test void availableTimeSlotsGetSuccess() {
+	 * ResponseEntity<JSONResponse<TimeSlots>> resp =
+	 * controller.availableTimeSlotsGet(NOTICE_TYPE_SUCCESS, REVIEW_TYPE,
+	 * REVIEW_DATE, CORRELATION_ID); Assertions.assertEquals(HttpStatus.OK,
+	 * resp.getStatusCode()); }
+	 * 
+	 * @DisplayName("availableTimeSlotsGet - Not found")
+	 * 
+	 * @Test void availableTimeSlotsGetNotFound() {
+	 * ResponseEntity<JSONResponse<TimeSlots>> resp =
+	 * controller.availableTimeSlotsGet(NOTICE_TYPE_ERROR, REVIEW_TYPE, REVIEW_DATE,
+	 * CORRELATION_ID); Assertions.assertEquals(HttpStatus.NOT_FOUND,
+	 * resp.getStatusCode()); }
+	 * 
+	 * @DisplayName("selectedReviewTimePost - Success")
+	 * 
+	 * @Test void selectedReviewTimePostSuccess() {
+	 * ResponseEntity<JSONResponse<Boolean>> resp =
+	 * controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_SUCCESS,
+	 * CORRELATION_ID, timeSlot); Assertions.assertEquals(HttpStatus.OK,
+	 * resp.getStatusCode());
+	 * Assertions.assertTrue(resp.getBody().getData().booleanValue()); }
+	 * 
+	 * @DisplayName("selectedReviewTimePost - Error")
+	 * 
+	 * @Test void selectedReviewTimePostError() {
+	 * ResponseEntity<JSONResponse<Boolean>> resp =
+	 * controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_ERROR,
+	 * CORRELATION_ID, timeSlot); Assertions.assertEquals(HttpStatus.NOT_FOUND,
+	 * resp.getStatusCode());
+	 * Assertions.assertFalse(resp.getBody().getData().booleanValue()); }
+	 */
+
+}

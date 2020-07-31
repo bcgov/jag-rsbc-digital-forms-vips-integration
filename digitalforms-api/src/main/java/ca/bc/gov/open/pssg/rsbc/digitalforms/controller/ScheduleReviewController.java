@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeAvailabilityInfo;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewTimeSlot;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlotResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlots;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ScheduleReviewService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,7 +35,7 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Review Scheduling", tags = { "Review Scheduling" })
 public class ScheduleReviewController {
 
-	private class AvailabilityInfoSwaggerResponse extends JSONResponse<ReviewTimeAvailabilityInfo> {
+	private class AvailabilityInfoSwaggerResponse extends JSONResponse<TimeSlots> {
 	}
 
 	private class ReviewScheduledSwaggerResponse extends JSONResponse<Boolean> {
@@ -49,25 +51,27 @@ public class ScheduleReviewController {
 	@ApiOperation(value = "Get Available Review Timeslots", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = AvailabilityInfoSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<ReviewTimeAvailabilityInfo>> availableTimeSlotsGet(
+	public ResponseEntity<JSONResponse<TimeSlots>> availableTimeSlotsGet(
 			@PathVariable(value = "noticeTypeCd", required = true) String noticeTypeCd,
 			@PathVariable(value = "reviewTypeCd", required = true) String reviewTypeCd,
 			@PathVariable(value = "reviewDate", required = true) String reviewDate,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
-		
+
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "availableTimeSlotsGet");
 		logger.info("Get available time slots request received [{}]", correlationId);
 
-		try {
-			ReviewTimeAvailabilityInfo data = service.getAvailableTimeSlots(noticeTypeCd, reviewTypeCd, reviewDate);
-			// TODO Update based on ORDS response
-			JSONResponse<ReviewTimeAvailabilityInfo> resp = new JSONResponse<>(data);
-			return new ResponseEntity<>(resp, HttpStatus.OK);
-		} finally {
-			MDC.clear();
-		}
+		TimeSlotResponse data = service.getAvailableTimeSlots(noticeTypeCd, reviewTypeCd, reviewDate, correlationId);
 
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<TimeSlots> resp = new JSONResponse<>(data.getTimeslots());
+			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			MDC.clear();
+			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
+					HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@PostMapping(value = { "**/review/schedule/**",
@@ -78,7 +82,7 @@ public class ScheduleReviewController {
 	public ResponseEntity<JSONResponse<Boolean>> selectedReviewTimePost(
 			@PathVariable(value = "noticeNo", required = true) String noticeNo,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) ReviewTimeSlot timeSlot) {
+			@RequestBody(required = true) TimeSlot timeSlot) {
 		
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "selectedReviewTimePost");

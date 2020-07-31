@@ -16,6 +16,7 @@ public class ConfigProperties {
 	private String basicAuthPassword;
 	private String serviceApiVersion; 
 	private boolean serviceSwaggerEnabled;
+	private String ordsUserGuid; 
 
 	public String getBasicAuthUser() {
 		return basicAuthUser;
@@ -47,6 +48,14 @@ public class ConfigProperties {
 
 	public void setServiceSwaggerEnabled(boolean serviceSwaggerEnabled) {
 		this.serviceSwaggerEnabled = serviceSwaggerEnabled;
+	}
+
+	public String getOrdsUserGuid() {
+		return ordsUserGuid;
+	}
+
+	public void setOrdsUserGuid(String ordsUserGuid) {
+		this.ordsUserGuid = ordsUserGuid;
 	}
 	
 }
