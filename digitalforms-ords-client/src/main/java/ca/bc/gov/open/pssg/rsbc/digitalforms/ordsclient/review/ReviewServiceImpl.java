@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.AvailableTimeSlotsApi;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.handler.ApiException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.ReviewTimeSlotRequest;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.ReviewTimeSlotResponse;
 
 /**
  * 
@@ -40,4 +42,27 @@ public class ReviewServiceImpl implements ReviewService {
 			return TimeSlotResponse.errorResponse(ex.getMessage());
 		}
 	}
+
+	@Override
+	public SavedTimeSlotResponse saveTimeSlot(String authGuid, String correlationId, String noticeNo, ReviewTimeSlotRequest request) {
+		
+		try {
+			
+			ReviewTimeSlotResponse response = this.availableTimeSlotsApi
+					.digitalFormProhibitionNoticeNoReviewScheduleAuthGuidCorrelationGuidPost(authGuid, correlationId, noticeNo, request);
+					
+			return SavedTimeSlotResponse.successResponse(response, response.getStatusCode(), response.getStatusMessage());
+
+		} catch (ApiException ex) {
+			logger.error("Review Service threw an exception: " + ex.getMessage(), ex);
+			return SavedTimeSlotResponse.errorResponse(ex.getMessage());
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 }
