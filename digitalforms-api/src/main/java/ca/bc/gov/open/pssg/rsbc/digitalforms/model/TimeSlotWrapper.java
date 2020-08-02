@@ -4,6 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
 
+/**
+ * 
+ * Time slot wrapper object
+ * 
+ * @author sivakaruna
+ *
+ */
 public class TimeSlotWrapper {
 
 	@JsonProperty("timeSlot")
