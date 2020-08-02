@@ -16,6 +16,8 @@ import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.ReviewTimeSlotResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.SavedTimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlots;
@@ -57,8 +59,10 @@ public class ScheduleReviewControllerTests {
 				TimeSlotResponse.successResponse(new AvailableTimeSlotResponse(), SUCCESS_CODE, SUCCESS_STATUS));
 		when(service.getAvailableTimeSlots(NOTICE_TYPE_ERROR, REVIEW_TYPE, REVIEW_DATE, CORRELATION_ID))
 				.thenReturn(TimeSlotResponse.errorResponse(ERROR_STATUS));
-		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_SUCCESS, timeSlot)).thenReturn(Boolean.TRUE);
-		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_ERROR, timeSlot)).thenReturn(Boolean.FALSE);
+		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_SUCCESS, timeSlot, CORRELATION_ID)).thenReturn(
+				SavedTimeSlotResponse.successResponse(new ReviewTimeSlotResponse(), SUCCESS_CODE, SUCCESS_STATUS));
+		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_ERROR, timeSlot, CORRELATION_ID))
+				.thenReturn(SavedTimeSlotResponse.errorResponse(ERROR_STATUS));
 	}
 // TODO update unit tests
 	/*

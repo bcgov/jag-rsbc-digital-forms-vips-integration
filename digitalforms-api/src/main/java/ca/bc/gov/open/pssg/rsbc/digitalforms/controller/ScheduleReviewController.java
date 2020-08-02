@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TimeSlotWrapper;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.SavedTimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlots;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ScheduleReviewService;
@@ -82,19 +83,23 @@ public class ScheduleReviewController {
 	public ResponseEntity<JSONResponse<Boolean>> selectedReviewTimePost(
 			@PathVariable(value = "noticeNo", required = true) String noticeNo,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) TimeSlot timeSlot) {
-		
+			@RequestBody(required = true) TimeSlotWrapper timeSlot) {
+
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "selectedReviewTimePost");
 		logger.info("Post selected review time request received [{}]", correlationId);
 
-		try {
-			Boolean data = service.postSelectedReviewTime(noticeNo, timeSlot);
-			// TODO Update based on ORDS response
-			JSONResponse<Boolean> resp = new JSONResponse<>(data);
-			return new ResponseEntity<>(resp, HttpStatus.OK);
-		} finally {
+		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNo, timeSlot.getTimeSlot(), correlationId);
+
+		if (data.getRespCd() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
 			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			MDC.clear();
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 404),
+					HttpStatus.NOT_FOUND);
 		}
 	}
 
