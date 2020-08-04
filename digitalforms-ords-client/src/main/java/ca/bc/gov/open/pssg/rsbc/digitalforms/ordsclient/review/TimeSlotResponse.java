@@ -45,19 +45,9 @@ public class TimeSlotResponse {
 		return respCode;
 	}
 
-	@JsonProperty("respCode")
-	public void setRespCode(int respCode) {
-		this.respCode = respCode;
-	}
-
 	@JsonProperty("respMsg")
 	public String getRespMsg() {
 		return respMsg;
-	}
-
-	@JsonProperty("respMsg")
-	public void setRespMsg(String respMsg) {
-		this.respMsg = respMsg;
 	}
 
 	public TimeSlotResponse(int respCode, String respMsg) {

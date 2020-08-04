@@ -32,23 +32,13 @@ public class SavedTimeSlotResponse {
 	private String reviewEndDtm;
 
 	@JsonProperty("respCode")
-	public int getRespCd() {
+	public int getRespCode() {
 		return respCode;
 	}
-
-	@JsonProperty("respCode")
-	public void setRespCd(int respCode) {
-		this.respCode = respCode;
-	}
-
+	
 	@JsonProperty("respMsg")
 	public String getRespMsg() {
 		return respMsg;
-	}
-
-	@JsonProperty("respMsg")
-	public void setRespMsg(String respMsg) {
-		this.respMsg = respMsg;
 	}
 
 	@JsonProperty("reviewStartDtm")
