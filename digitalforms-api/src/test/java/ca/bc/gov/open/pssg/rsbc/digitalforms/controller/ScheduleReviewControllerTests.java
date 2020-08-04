@@ -43,7 +43,7 @@ public class ScheduleReviewControllerTests {
 	private final String NOTICE_TYPE_ERROR = "ADP";
 	private final String REVIEW_TYPE = "WRIT";
 	private final String SUCCESS_STATUS = "success";
-	private final String SUCCESS_CODE = "1";
+	private final String SUCCESS_CODE = "0";
 	private final String ERROR_STATUS = "error";
 	private TimeSlot timeSlot = new TimeSlot("startTm", "endTm");
 
