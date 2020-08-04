@@ -18,6 +18,12 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPay
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPaymentPatchResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPaymentStatusResponse;
 
+/**
+ * Payment service tests
+ *
+ * @author sivakaruna
+ *
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PaymentServiceImplTest {
 

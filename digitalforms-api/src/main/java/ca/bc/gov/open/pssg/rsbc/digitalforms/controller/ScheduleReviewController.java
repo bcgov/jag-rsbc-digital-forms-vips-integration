@@ -91,7 +91,7 @@ public class ScheduleReviewController {
 
 		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNo, timeSlot.getTimeSlot(), correlationId);
 
-		if (data.getRespCd() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);

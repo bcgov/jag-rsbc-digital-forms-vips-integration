@@ -59,7 +59,7 @@ class ScheduleReviewServiceImplTests {
 				.thenReturn(SavedTimeSlotResponse.successResponse(new ReviewTimeSlotResponse(), "0", "success"));
 		SavedTimeSlotResponse resp = serviceImpl.postSelectedReviewTime("1", new TimeSlot("startTm", "endTm"),
 				"correlationId");
-		Assertions.assertEquals(0, resp.getRespCd());
+		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Get success - ScheduleReviewService")
@@ -87,7 +87,7 @@ class ScheduleReviewServiceImplTests {
 				.thenReturn(SavedTimeSlotResponse.errorResponse("Post error"));
 		SavedTimeSlotResponse resp = serviceImpl.postSelectedReviewTime("1", new TimeSlot("startTm", "endTm"),
 				"correlationId");
-		Assertions.assertEquals(-1, resp.getRespCd());
+		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Post error", resp.getRespMsg());
 
 	}

@@ -50,7 +50,7 @@ public class QueryServiceController {
 	@GetMapping(value = { "**/status/**", "/{noticeNumber}/status/{correlationId}" }, produces = "application/json")
 	public ResponseEntity<JSONResponse<ProhibitionStatusResponse>> getProhibitionInfo(
 			@PathVariable (value="noticeNumber",required=true) String noticeNumber,
-			@PathVariable(value = "correlationId", required = true) String correlationId) throws Exception  {
+			@PathVariable(value = "correlationId", required = true) String correlationId) {
 		
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "getProhibitionInfo");
