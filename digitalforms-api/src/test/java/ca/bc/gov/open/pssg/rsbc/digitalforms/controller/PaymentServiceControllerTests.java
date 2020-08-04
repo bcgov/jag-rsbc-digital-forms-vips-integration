@@ -37,7 +37,7 @@ public class PaymentServiceControllerTests {
 			new TransactionInfo("MC", "50.01", "12345", "2018-06-29 00:00:00 -07:00"));
 	private final String CORRELATION_ID = "correlationId";
 	private final String SUCCESS_STATUS = "success";
-	private final String SUCCESS_CODE = "1";
+	private final String SUCCESS_CODE = "0";
 	private final String ERROR_STATUS = "error";
 
 	@MockBean

@@ -47,17 +47,17 @@ class PaymentServiceImplTests {
 	@Test
 	void setReviewPaidSuccess() throws DigitalFormsException {
 		when(service.patchPaymentReceipt(any(), any()))
-				.thenReturn(PaymentResponse.successResponse("updatedTime", "1", null));
+				.thenReturn(PaymentResponse.successResponse("updatedTime", "0", null));
 		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(transactionInfoSample));
-		Assertions.assertEquals(1, resp.getRespCode());
+		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Get success - PaymentService")
 	@Test
 	void getReviewPaymentStatusSuccess() throws DigitalFormsException {
-		when(service.getPaymentStatus(any())).thenReturn(PaymentResponse.successStatusResponse(null, "1", "success"));
+		when(service.getPaymentStatus(any())).thenReturn(PaymentResponse.successStatusResponse(null, "0", "success"));
 		PaymentResponse resp = serviceImpl.getReviewPaymentStatus("1");
-		Assertions.assertEquals(1, resp.getRespCode());
+		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Patch error - PaymentService")

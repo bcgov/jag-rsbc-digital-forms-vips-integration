@@ -56,10 +56,10 @@ class ScheduleReviewServiceImplTests {
 	@Test
 	void saveTimeSlotSuccess() {
 		when(service.saveTimeSlot(any(), any(), any(), any()))
-				.thenReturn(SavedTimeSlotResponse.successResponse(new ReviewTimeSlotResponse(), "1", "success"));
+				.thenReturn(SavedTimeSlotResponse.successResponse(new ReviewTimeSlotResponse(), "0", "success"));
 		SavedTimeSlotResponse resp = serviceImpl.postSelectedReviewTime("1", new TimeSlot("startTm", "endTm"),
 				"correlationId");
-		Assertions.assertEquals(1, resp.getRespCd());
+		Assertions.assertEquals(0, resp.getRespCd());
 	}
 
 	@DisplayName("Get success - ScheduleReviewService")
@@ -75,9 +75,9 @@ class ScheduleReviewServiceImplTests {
 		response.setStatusCode("0");
 		response.setStatusMessage("statusMessage");
 		when(service.getAvailableTimeSlots(any(), any(), any(), any(), any()))
-				.thenReturn(TimeSlotResponse.successResponse(response, "1", "success"));
+				.thenReturn(TimeSlotResponse.successResponse(response, "0", "success"));
 		TimeSlotResponse resp = serviceImpl.getAvailableTimeSlots("1", "IRP", "reviewDate", "correlationId");
-		Assertions.assertEquals(1, resp.getRespCode());
+		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Post error - ScheduleReviewService")
