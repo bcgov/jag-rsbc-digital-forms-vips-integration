@@ -38,8 +38,8 @@ public class ScheduleReviewServiceImpl implements ScheduleReviewService {
 	public SavedTimeSlotResponse postSelectedReviewTime(String noticeNumber, TimeSlot timeSlot, String correlationId) {
 
 		ReviewTimeSlotRequest request = new ReviewTimeSlotRequest();
-		request.setReviewEndDtm(timeSlot.getEndTm());
-		request.setReviewStartDtm(timeSlot.getStartTm());
+		request.setReviewEndDtm(timeSlot.getReviewEndDtm());
+		request.setReviewStartDtm(timeSlot.getReviewStartDtm());
 
 		return reviewService.saveTimeSlot(properties.getOrdsUserGuid(), correlationId, noticeNumber, request);
 	}

@@ -10,36 +10,37 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "startTm", "endTm" })
+@JsonPropertyOrder({ "reviewStartDtm", "reviewEndDtm" })
 public class TimeSlot {
 
-	@JsonProperty("startTm")
-	private String startTm;
-	@JsonProperty("endTm")
-	private String endTm;
+	@JsonProperty("reviewStartDtm")
+	private String reviewStartDtm;
 
-	public TimeSlot(String startTm, String endTm) {
-		this.startTm = startTm; 
-		this.endTm = endTm;
+	@JsonProperty("reviewEndDtm")
+	private String reviewEndDtm;
+
+	public TimeSlot(String reviewStartDtm, String reviewEndDtm) {
+		this.reviewStartDtm = reviewStartDtm;
+		this.reviewEndDtm = reviewEndDtm;
 	}
 
-	@JsonProperty("startTm")
-	public String getStartTm() {
-		return startTm;
+	@JsonProperty("reviewStartDtm")
+	public String getReviewStartDtm() {
+		return reviewStartDtm;
 	}
 
-	@JsonProperty("startTm")
-	public void setStartTm(String startTm) {
-		this.startTm = startTm;
+	@JsonProperty("reviewStartDtm")
+	public void setReviewStartDtm(String reviewStartDtm) {
+		this.reviewStartDtm = reviewStartDtm;
 	}
 
-	@JsonProperty("endTm")
-	public String getEndTm() {
-		return endTm;
+	@JsonProperty("reviewEndDtm")
+	public String getReviewEndDtm() {
+		return reviewEndDtm;
 	}
 
-	@JsonProperty("endTm")
-	public void setEndTm(String endTm) {
-		this.endTm = endTm;
+	@JsonProperty("reviewEndDtm")
+	public void setReviewEndDtm(String reviewEndDtm) {
+		this.reviewEndDtm = reviewEndDtm;
 	}
 }
