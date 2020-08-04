@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TimeSlotWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.ReviewTimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.SavedTimeSlotResponse;
@@ -25,7 +26,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ScheduleReviewService;
 
 /**
  * 
- * Payment Service Controller Tests.
+ * Schedule Review Controller Tests.
  * 
  * @author shaunmillargov
  *
@@ -64,41 +65,38 @@ public class ScheduleReviewControllerTests {
 		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_ERROR, timeSlot, CORRELATION_ID))
 				.thenReturn(SavedTimeSlotResponse.errorResponse(ERROR_STATUS));
 	}
-// TODO update unit tests
-	/*
-	 * @DisplayName("availableTimeSlotsGet - Success")
-	 * 
-	 * @Test void availableTimeSlotsGetSuccess() {
-	 * ResponseEntity<JSONResponse<TimeSlots>> resp =
-	 * controller.availableTimeSlotsGet(NOTICE_TYPE_SUCCESS, REVIEW_TYPE,
-	 * REVIEW_DATE, CORRELATION_ID); Assertions.assertEquals(HttpStatus.OK,
-	 * resp.getStatusCode()); }
-	 * 
-	 * @DisplayName("availableTimeSlotsGet - Not found")
-	 * 
-	 * @Test void availableTimeSlotsGetNotFound() {
-	 * ResponseEntity<JSONResponse<TimeSlots>> resp =
-	 * controller.availableTimeSlotsGet(NOTICE_TYPE_ERROR, REVIEW_TYPE, REVIEW_DATE,
-	 * CORRELATION_ID); Assertions.assertEquals(HttpStatus.NOT_FOUND,
-	 * resp.getStatusCode()); }
-	 * 
-	 * @DisplayName("selectedReviewTimePost - Success")
-	 * 
-	 * @Test void selectedReviewTimePostSuccess() {
-	 * ResponseEntity<JSONResponse<Boolean>> resp =
-	 * controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_SUCCESS,
-	 * CORRELATION_ID, timeSlot); Assertions.assertEquals(HttpStatus.OK,
-	 * resp.getStatusCode());
-	 * Assertions.assertTrue(resp.getBody().getData().booleanValue()); }
-	 * 
-	 * @DisplayName("selectedReviewTimePost - Error")
-	 * 
-	 * @Test void selectedReviewTimePostError() {
-	 * ResponseEntity<JSONResponse<Boolean>> resp =
-	 * controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_ERROR,
-	 * CORRELATION_ID, timeSlot); Assertions.assertEquals(HttpStatus.NOT_FOUND,
-	 * resp.getStatusCode());
-	 * Assertions.assertFalse(resp.getBody().getData().booleanValue()); }
-	 */
+
+	@DisplayName("availableTimeSlotsGet - Success")
+	@Test
+	void availableTimeSlotsGetSuccess() {
+		ResponseEntity<JSONResponse<TimeSlots>> resp = controller.availableTimeSlotsGet(NOTICE_TYPE_SUCCESS,
+				REVIEW_TYPE, REVIEW_DATE, CORRELATION_ID);
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
+	}
+
+	@DisplayName("availableTimeSlotsGet - Not found")
+	@Test
+	void availableTimeSlotsGetNotFound() {
+		ResponseEntity<JSONResponse<TimeSlots>> resp = controller.availableTimeSlotsGet(NOTICE_TYPE_ERROR, REVIEW_TYPE,
+				REVIEW_DATE, CORRELATION_ID);
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+	}
+
+	@DisplayName("selectedReviewTimePost - Success")
+	@Test
+	void selectedReviewTimePostSuccess() {
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_SUCCESS,
+				CORRELATION_ID, new TimeSlotWrapper(timeSlot));
+		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
+		Assertions.assertTrue(resp.getBody().getData().booleanValue());
+	}
+
+	@DisplayName("selectedReviewTimePost - Error")
+	@Test
+	void selectedReviewTimePostError() {
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_ERROR,
+				CORRELATION_ID, new TimeSlotWrapper(timeSlot));
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
+	}
 
 }
