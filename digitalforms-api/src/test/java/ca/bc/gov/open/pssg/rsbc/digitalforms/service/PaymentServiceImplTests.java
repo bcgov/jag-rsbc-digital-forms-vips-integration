@@ -46,25 +46,25 @@ class PaymentServiceImplTests {
 	@DisplayName("Patch success - PaymentService")
 	@Test
 	void setReviewPaidSuccess() throws DigitalFormsException {
-		when(service.patchPaymentReceipt(any(), any()))
+		when(service.patchPaymentReceipt(any(), any(), any()))
 				.thenReturn(PaymentResponse.successResponse("updatedTime", "0", null));
-		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(transactionInfoSample));
+		PaymentResponse resp = serviceImpl.setReviewPaid("1", "correlationId", new PaymentTransaction(transactionInfoSample));
 		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Get success - PaymentService")
 	@Test
 	void getReviewPaymentStatusSuccess() throws DigitalFormsException {
-		when(service.getPaymentStatus(any())).thenReturn(PaymentResponse.successStatusResponse(null, "0", "success"));
-		PaymentResponse resp = serviceImpl.getReviewPaymentStatus("1");
+		when(service.getPaymentStatus(any(), any())).thenReturn(PaymentResponse.successStatusResponse(null, "0", "success"));
+		PaymentResponse resp = serviceImpl.getReviewPaymentStatus("1", "correlationId");
 		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Patch error - PaymentService")
 	@Test
 	void setReviewPaidError() throws DigitalFormsException {
-		when(service.patchPaymentReceipt(any(), any())).thenReturn(PaymentResponse.errorResponse("Get error"));
-		PaymentResponse resp = serviceImpl.setReviewPaid("1", new PaymentTransaction(transactionInfoSample));
+		when(service.patchPaymentReceipt(any(), any(), any())).thenReturn(PaymentResponse.errorResponse("Get error"));
+		PaymentResponse resp = serviceImpl.setReviewPaid("1", "correlationId", new PaymentTransaction(transactionInfoSample));
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Get error", resp.getRespMsg());
 
@@ -73,8 +73,8 @@ class PaymentServiceImplTests {
 	@DisplayName("Get error - PaymentService")
 	@Test
 	void getReviewPaymentStatusError() throws DigitalFormsException {
-		when(service.getPaymentStatus(any())).thenReturn(PaymentResponse.errorResponse("Post error"));
-		PaymentResponse resp = serviceImpl.getReviewPaymentStatus("1");
+		when(service.getPaymentStatus(any(), any())).thenReturn(PaymentResponse.errorResponse("Post error"));
+		PaymentResponse resp = serviceImpl.getReviewPaymentStatus("1", "correlationId");
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Post error", resp.getRespMsg());
 	}

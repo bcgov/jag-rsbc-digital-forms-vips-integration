@@ -10,10 +10,10 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPos
  */
 public interface ApplicationService {
 
-	ApplicationResponse getApplication(String formGuid);
+	ApplicationResponse getApplication(String formGuid, String correlationId);
 
-	ApplicationResponse postApplication(DigitalFormPostRequest applicationInfo);
+	ApplicationResponse postApplication(DigitalFormPostRequest applicationInfo, String correlationId);
 
-	ApplicationResponse patchApplication(String formGuid, DigitalFormPatchRequest applicationInfo);
+	ApplicationResponse patchApplication(String formGuid, DigitalFormPatchRequest applicationInfo, String correlationId);
 
 }

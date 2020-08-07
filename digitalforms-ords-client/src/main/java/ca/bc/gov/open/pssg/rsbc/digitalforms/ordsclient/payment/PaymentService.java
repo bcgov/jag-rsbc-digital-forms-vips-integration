@@ -11,8 +11,8 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPay
  */
 public interface PaymentService {
 
-	PaymentResponse getPaymentStatus(String noticeNo);
+	PaymentResponse getPaymentStatus(String noticeNo, String correlationId);
 
-	PaymentResponse patchPaymentReceipt(String noticeNo, DigitalFormPaymentPatchRequest request);
+	PaymentResponse patchPaymentReceipt(String noticeNo, DigitalFormPaymentPatchRequest request, String correlationId);
 
 }

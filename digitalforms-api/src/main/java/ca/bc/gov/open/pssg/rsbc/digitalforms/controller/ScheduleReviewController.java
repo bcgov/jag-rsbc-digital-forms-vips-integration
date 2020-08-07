@@ -44,8 +44,8 @@ public class ScheduleReviewController {
 
 	@Autowired
 	ScheduleReviewService service;
-	
-	Logger logger = LoggerFactory.getLogger(ScheduleReviewController.class);
+
+	private final Logger logger = LoggerFactory.getLogger(ScheduleReviewController.class);
 
 	@GetMapping(value = { "**/review/availableTimeSlot/**",
 			"/{noticeTypeCd}/{reviewTypeCd}/{reviewDate}/review/availableTimeSlot/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
@@ -66,11 +66,14 @@ public class ScheduleReviewController {
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<TimeSlots> resp = new JSONResponse<>(data.getTimeslots());
+			logger.info("Get available time slots request success [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
+			logger.info("Get available time slots data not found [{}]", correlationId);
 			MDC.clear();
-			return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
 					HttpStatus.NOT_FOUND);
 		}
 	}
@@ -93,9 +96,11 @@ public class ScheduleReviewController {
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
+			logger.info("Post selected review time request success [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
+			logger.info("Post selected review time request not processed [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 404),

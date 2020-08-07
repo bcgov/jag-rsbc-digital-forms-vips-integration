@@ -45,16 +45,16 @@ class ApplicationFormServiceImplTests {
 	@DisplayName("Get success - ApplicationService")
 	@Test
 	void getFormSuccess() throws DigitalFormsException {
-		when(service.getApplication(any()))
+		when(service.getApplication(any(), any()))
 				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "0", null));
-		ApplicationResponse resp = serviceImpl.getApplicationForm("guid");
+		ApplicationResponse resp = serviceImpl.getApplicationForm("guid", "correlationId");
 		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Post success - ApplicationService")
 	@Test
 	void postFormSuccess() throws DigitalFormsException {
-		when(service.postApplication(any()))
+		when(service.postApplication(any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "0", null, null));
 		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormData());
 		Assertions.assertEquals(0, resp.getRespCode());
@@ -63,17 +63,17 @@ class ApplicationFormServiceImplTests {
 	@DisplayName("Patch success - ApplicationService")
 	@Test
 	void patchFormSuccess() throws DigitalFormsException {
-		when(service.patchApplication(any(), any()))
+		when(service.patchApplication(any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePatch("guid", "0", null, null));
-		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", new ApplicationFormData());
+		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId", new ApplicationFormData());
 		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
 	@DisplayName("Get error - ApplicationService")
 	@Test
 	void getFormError() throws DigitalFormsException {
-		when(service.getApplication(any())).thenReturn(ApplicationResponse.errorResponse("Get error"));
-		ApplicationResponse resp = serviceImpl.getApplicationForm("guid");
+		when(service.getApplication(any(), any())).thenReturn(ApplicationResponse.errorResponse("Get error"));
+		ApplicationResponse resp = serviceImpl.getApplicationForm("guid", "correlationId");
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Get error", resp.getRespMsg());
 
@@ -82,7 +82,7 @@ class ApplicationFormServiceImplTests {
 	@DisplayName("Post error - ApplicationService")
 	@Test
 	void postFormError() throws DigitalFormsException {
-		when(service.postApplication(any())).thenReturn(ApplicationResponse.errorResponse("Post error"));
+		when(service.postApplication(any(), any())).thenReturn(ApplicationResponse.errorResponse("Post error"));
 		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormData());
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Post error", resp.getRespMsg());
@@ -91,8 +91,8 @@ class ApplicationFormServiceImplTests {
 	@DisplayName("Patch error - ApplicationService")
 	@Test
 	void patchFormError() throws DigitalFormsException {
-		when(service.patchApplication(any(), any())).thenReturn(ApplicationResponse.errorResponse("Patch error"));
-		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", new ApplicationFormData());
+		when(service.patchApplication(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse("Patch error"));
+		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId",  new ApplicationFormData());
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Patch error", resp.getRespMsg());
 	}

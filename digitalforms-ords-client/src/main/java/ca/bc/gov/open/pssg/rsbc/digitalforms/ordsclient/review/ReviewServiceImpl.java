@@ -35,6 +35,9 @@ public class ReviewServiceImpl implements ReviewService {
 					.digitalFormAvailableTimeSlotReviewDateNoticeTypeCdReviewTypeCdAuthGuidCorrelationGuidGet(authGuid,
 							correlationId, noticeTypeCd, reviewDate, reviewTypeCd);
 
+			logger.info("Processed Get Available Time Slots request: [{}] ORDS returned code: {} and message: {} ",
+					correlationId, response.getStatusCode(), response.getStatusMessage());
+
 			return TimeSlotResponse.successResponse(response, response.getStatusCode(), response.getStatusMessage());
 
 		} catch (ApiException ex) {
@@ -44,25 +47,25 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public SavedTimeSlotResponse saveTimeSlot(String authGuid, String correlationId, String noticeNo, ReviewTimeSlotRequest request) {
-		
+	public SavedTimeSlotResponse saveTimeSlot(String authGuid, String correlationId, String noticeNo,
+			ReviewTimeSlotRequest request) {
+
 		try {
-			
+
 			ReviewTimeSlotResponse response = this.availableTimeSlotsApi
-					.digitalFormProhibitionNoticeNoReviewScheduleAuthGuidCorrelationGuidPost(authGuid, correlationId, noticeNo, request);
-					
-			return SavedTimeSlotResponse.successResponse(response, response.getStatusCode(), response.getStatusMessage());
+					.digitalFormProhibitionNoticeNoReviewScheduleAuthGuidCorrelationGuidPost(authGuid, correlationId,
+							noticeNo, request);
+
+			logger.info("Processed Save Time Slot request: [{}] ORDS returned code: {} and message: {} ", correlationId,
+					response.getStatusCode(), response.getStatusMessage());
+
+			return SavedTimeSlotResponse.successResponse(response, response.getStatusCode(),
+					response.getStatusMessage());
 
 		} catch (ApiException ex) {
 			logger.error("Review Service threw an exception: " + ex.getMessage(), ex);
 			return SavedTimeSlotResponse.errorResponse(ex.getMessage());
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

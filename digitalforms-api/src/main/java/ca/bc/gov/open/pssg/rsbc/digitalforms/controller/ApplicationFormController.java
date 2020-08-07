@@ -48,7 +48,7 @@ public class ApplicationFormController {
 	@Autowired
 	ApplicationFormService service;
 
-	Logger logger = LoggerFactory.getLogger(ApplicationFormController.class);
+	private final Logger logger = LoggerFactory.getLogger(ApplicationFormController.class);
 
 	@GetMapping(value = { "**/application/**",
 			"/{GUID}/application/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
@@ -63,13 +63,15 @@ public class ApplicationFormController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormGet");
 		logger.info("Get application form request received [{}]", correlationId);
 
-		ApplicationResponse data = service.getApplicationForm(formGuid);
+		ApplicationResponse data = service.getApplicationForm(formGuid, correlationId);
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>> resp = new JSONResponse<>(
 					new ApplicationInfoWrapper<>(new ApplicationInfoResponse(data.getApplicationInfo())));
+			logger.info("Get application form data request success [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
+			logger.info("Get application form data not found [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
@@ -101,9 +103,11 @@ public class ApplicationFormController {
 			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
 					new ApplicationInfoWrapper<>(
 							new ApplicationIdResponse(data.getApplicationId(), data.getCreatedTime(), null)));
+			logger.info("Post application form data request success [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.CREATED);
 		} else {
+			logger.info("Post application form data not processed [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 400),
@@ -130,14 +134,17 @@ public class ApplicationFormController {
 		logger.info("Patch application form request received [{}]", correlationId);
 
 		DigitalFormsUtils.validateFormType(formType);
-		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, formData.getApplicationInfo());
+		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, correlationId,
+				formData.getApplicationInfo());
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
 					new ApplicationInfoWrapper<>(
 							new ApplicationIdResponse(data.getApplicationId(), null, data.getUpdatedTime())));
+			logger.info("Patch application form data request success [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
+			logger.info("Patch application form data not processed [{}]", correlationId);
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 400),
