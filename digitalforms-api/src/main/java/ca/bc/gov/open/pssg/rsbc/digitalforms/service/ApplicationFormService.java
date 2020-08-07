@@ -12,10 +12,10 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationR
  */
 public interface ApplicationFormService {
 
-	public ApplicationResponse getApplicationForm(String formGuid);
+	public ApplicationResponse getApplicationForm(String formGuid, String correlationId);
 
 	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId, ApplicationFormData formData);
 
-	public ApplicationResponse patchApplicationForm(String formType, String formGuid, ApplicationFormData formData);
+	public ApplicationResponse patchApplicationForm(String formType, String formGuid, String correlationId, ApplicationFormData formData);
 
 }

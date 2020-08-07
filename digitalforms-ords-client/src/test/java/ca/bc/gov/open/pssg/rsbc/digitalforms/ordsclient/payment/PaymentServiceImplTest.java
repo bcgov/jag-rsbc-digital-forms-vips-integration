@@ -76,7 +76,7 @@ public class PaymentServiceImplTest {
 
 	@Test
 	public void patchSuccess() {
-		PaymentResponse response = service.patchPaymentReceipt("1", new DigitalFormPaymentPatchRequest());
+		PaymentResponse response = service.patchPaymentReceipt("1", new DigitalFormPaymentPatchRequest(), "correlationId");
 
 		Assertions.assertEquals(DigitalFormsOrdsClientConstants.SERVICE_SUCCESS_CD, response.getRespCode());
 		Assertions.assertEquals(SUCCESS_RESPONSE, response.getRespMsg());
@@ -84,7 +84,7 @@ public class PaymentServiceImplTest {
 
 	@Test
 	public void patchException() {
-		PaymentResponse response = service.patchPaymentReceipt("2", new DigitalFormPaymentPatchRequest());
+		PaymentResponse response = service.patchPaymentReceipt("2", new DigitalFormPaymentPatchRequest(), "correlationId");
 
 		Assertions.assertEquals(DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD, response.getRespCode());
 		Assertions.assertEquals(ERROR_RESPONSE, response.getRespMsg());
@@ -92,7 +92,7 @@ public class PaymentServiceImplTest {
 
 	@Test
 	public void getSuccess() {
-		PaymentResponse response = service.getPaymentStatus("1");
+		PaymentResponse response = service.getPaymentStatus("1", "correlationId");
 
 		Assertions.assertEquals(DigitalFormsOrdsClientConstants.SERVICE_SUCCESS_CD, response.getRespCode());
 		Assertions.assertEquals(SUCCESS_RESPONSE, response.getRespMsg());
@@ -100,7 +100,7 @@ public class PaymentServiceImplTest {
 
 	@Test
 	public void getException() {
-		PaymentResponse response = service.getPaymentStatus("2");
+		PaymentResponse response = service.getPaymentStatus("2", "correlationId");
 
 		Assertions.assertEquals(DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD, response.getRespCode());
 		Assertions.assertEquals(ERROR_RESPONSE, response.getRespMsg());

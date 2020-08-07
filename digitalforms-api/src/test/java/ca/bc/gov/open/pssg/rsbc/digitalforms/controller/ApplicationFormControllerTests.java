@@ -50,7 +50,7 @@ class ApplicationFormControllerTests {
 	@DisplayName("Get success - ApplicationFormController")
 	@Test
 	void getFormSuccess() throws DigitalFormsException {
-		when(service.getApplicationForm(any()))
+		when(service.getApplicationForm(any(), any()))
 				.thenReturn(ApplicationResponse.successResponseGet(new DigitalFormGetResponse(), "0", null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>>> resp = controller.applicationFormGet("guid", "correlationId");
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
@@ -69,7 +69,7 @@ class ApplicationFormControllerTests {
 	@DisplayName("Patch success - ApplicationFormController")
 	@Test
 	void patchFormSuccess() throws DigitalFormsException {
-		when(service.patchApplicationForm(any(), any(), any()))
+		when(service.patchApplicationForm(any(), any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePatch("guid", "0", null, null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> resp = controller.applicationFormPatch("IRP", "guid", "correlationId",
 				new ApplicationInfoWrapper<>(new ApplicationFormData()));
@@ -79,7 +79,7 @@ class ApplicationFormControllerTests {
 	@DisplayName("Get error - ApplicationFormController")
 	@Test
 	void getFormError() throws DigitalFormsException {
-		when(service.getApplicationForm(any())).thenReturn(ApplicationResponse.errorResponse(null));
+		when(service.getApplicationForm(any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>>> resp = controller.applicationFormGet("guid", "correlationId");
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
@@ -106,7 +106,7 @@ class ApplicationFormControllerTests {
 	@DisplayName("Patch error - ApplicationFormController")
 	@Test
 	void patchFormError() throws DigitalFormsException {
-		when(service.patchApplicationForm(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
+		when(service.patchApplicationForm(any(), any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> resp = controller.applicationFormPatch("IRP", "guid", "correlationId",
 				new ApplicationInfoWrapper<>(new ApplicationFormData()));
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());

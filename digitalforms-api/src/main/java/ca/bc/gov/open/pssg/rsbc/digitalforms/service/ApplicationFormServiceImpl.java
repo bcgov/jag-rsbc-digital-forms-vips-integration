@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +22,21 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 @Service
 public class ApplicationFormServiceImpl implements ApplicationFormService {
 
+	private final Logger logger = LoggerFactory.getLogger(ApplicationFormServiceImpl.class);
+
 	@Autowired
 	private ApplicationService applicationService;
 
 	@Override
-	public ApplicationResponse getApplicationForm(String formGuid) {
-		return applicationService.getApplication(formGuid);
+	public ApplicationResponse getApplicationForm(String formGuid, String correlationId) {
+		logger.info("Processing get application form request");
+		return applicationService.getApplication(formGuid, correlationId);
 	}
 
 	@Override
-	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId, ApplicationFormData formData) {
+	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId,
+			ApplicationFormData formData) {
+		logger.info("Processing post application form request");
 		DigitalFormPostRequest request = new DigitalFormPostRequest();
 
 		request.setCorrelationGuid(correlationId);
@@ -49,11 +56,13 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 		request.setSurnameNm(formData.getSurnameNm());
 		request.setUserId(DigitalFormsConstants.ORDS_USER_ID);
 
-		return applicationService.postApplication(request);
+		return applicationService.postApplication(request, correlationId);
 	}
 
 	@Override
-	public ApplicationResponse patchApplicationForm(String formType, String formGuid, ApplicationFormData formData) {
+	public ApplicationResponse patchApplicationForm(String formType, String formGuid, String correlationId,
+			ApplicationFormData formData) {
+		logger.info("Processing patch application form request");
 		DigitalFormPatchRequest request = new DigitalFormPatchRequest();
 
 		request.setElectronicAddressTxt(formData.getEmail());
@@ -71,6 +80,6 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 		request.setSurnameNm(formData.getSurnameNm());
 		request.setUserId(DigitalFormsConstants.ORDS_USER_ID);
 
-		return applicationService.patchApplication(formGuid, request);
+		return applicationService.patchApplication(formGuid, request, correlationId);
 	}
 }

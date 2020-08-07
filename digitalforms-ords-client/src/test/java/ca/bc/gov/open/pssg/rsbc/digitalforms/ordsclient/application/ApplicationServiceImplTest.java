@@ -30,7 +30,7 @@ import org.mockito.MockitoAnnotations;
 public class ApplicationServiceImplTest {
 
 	public static final String API_EXCEPTION = "api exception";
-	
+
 	@Mock
 	private ApplicationApi applicationApiMock;
 
@@ -55,7 +55,7 @@ public class ApplicationServiceImplTest {
 
 		Mockito.when(applicationApiMock.digitalFormGuidGet("guid")).thenReturn(response);
 
-		ApplicationResponse resp = service.getApplication("guid");
+		ApplicationResponse resp = service.getApplication("guid", "correlationId");
 
 		Assertions.assertEquals("IRP", resp.getApplicationInfo().getNoticeSubjectCd());
 		Assertions.assertEquals("John", resp.getApplicationInfo().getFirstGivenNm());
@@ -74,7 +74,7 @@ public class ApplicationServiceImplTest {
 
 		Mockito.when(applicationApiMock.digitalFormPost(any(DigitalFormPostRequest.class))).thenReturn(response);
 
-		ApplicationResponse resp = service.postApplication(new DigitalFormPostRequest());
+		ApplicationResponse resp = service.postApplication(new DigitalFormPostRequest(), "correlationId");
 
 		Assertions.assertEquals("guid", resp.getApplicationId());
 		Assertions.assertEquals("123", resp.getCreatedTime());
@@ -93,7 +93,7 @@ public class ApplicationServiceImplTest {
 		Mockito.when(applicationApiMock.digitalFormGuidPatch(any(), (any(DigitalFormPatchRequest.class))))
 				.thenReturn(response);
 
-		ApplicationResponse resp = service.patchApplication("guid", new DigitalFormPatchRequest());
+		ApplicationResponse resp = service.patchApplication("guid", new DigitalFormPatchRequest(), "correlationId");
 
 		Assertions.assertEquals("guid", resp.getApplicationId());
 		Assertions.assertEquals("123", resp.getUpdatedTime());
@@ -106,7 +106,7 @@ public class ApplicationServiceImplTest {
 
 		Mockito.when(applicationApiMock.digitalFormGuidGet("error")).thenThrow(new ApiException(API_EXCEPTION));
 
-		ApplicationResponse resp = service.getApplication("error");
+		ApplicationResponse resp = service.getApplication("error", "correlationId");
 
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals(API_EXCEPTION, resp.getRespMsg());
@@ -119,7 +119,7 @@ public class ApplicationServiceImplTest {
 		Mockito.when(applicationApiMock.digitalFormPost(any(DigitalFormPostRequest.class)))
 				.thenThrow(new ApiException(API_EXCEPTION));
 
-		ApplicationResponse resp = service.postApplication(new DigitalFormPostRequest());
+		ApplicationResponse resp = service.postApplication(new DigitalFormPostRequest(), "correlationId");
 
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals(API_EXCEPTION, resp.getRespMsg());
@@ -132,7 +132,7 @@ public class ApplicationServiceImplTest {
 		Mockito.when(applicationApiMock.digitalFormGuidPatch(any(), (any(DigitalFormPatchRequest.class))))
 				.thenThrow(new ApiException(API_EXCEPTION));
 
-		ApplicationResponse resp = service.patchApplication("guid", new DigitalFormPatchRequest());
+		ApplicationResponse resp = service.patchApplication("guid", new DigitalFormPatchRequest(), "correlationId");
 
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals(API_EXCEPTION, resp.getRespMsg());

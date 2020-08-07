@@ -27,10 +27,13 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public PaymentResponse getPaymentStatus(String noticeNo) {
+	public PaymentResponse getPaymentStatus(String noticeNo, String correlationId) {
 		try {
 			DigitalFormPaymentStatusResponse response = this.paymentApi
 					.digitalFormProhibitionNoticeNoPaymentStatusGet(noticeNo);
+
+			logger.info("Processed Get Payment Status request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return PaymentResponse.successStatusResponse(response, response.getStatusCode(),
 					response.getStatusMessage());
@@ -42,10 +45,14 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public PaymentResponse patchPaymentReceipt(String noticeNo, DigitalFormPaymentPatchRequest request) {
+	public PaymentResponse patchPaymentReceipt(String noticeNo, DigitalFormPaymentPatchRequest request,
+			String correlationId) {
 		try {
 			DigitalFormPaymentPatchResponse response = this.paymentApi
 					.digitalFormProhibitionNoticeNoPaymentPatch(noticeNo, request);
+
+			logger.info("Processed Patch Payment Receipt request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return PaymentResponse.successResponse(response.getUpdDtm(), response.getStatusCode(),
 					response.getStatusMessage());

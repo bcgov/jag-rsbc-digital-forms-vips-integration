@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * 
- * Payment Controller. 
+ * Payment Controller.
  * 
  * @author shaunmillargov
  *
@@ -34,21 +34,24 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @Api(value = "Payment", tags = { "Payment" })
 public class PaymentServiceController {
-	
-	// Provides generic type class defs for Swagger 2. 
-	private class ReviewPaidSwaggerResponse extends JSONResponse<Boolean>{}
-	private class PaymentStatusSwaggerResponse extends JSONResponse<PaymentTransaction> {}
-	
-	@Autowired 
-	private PaymentService paymentService; 
-	
-	Logger logger = LoggerFactory.getLogger(PaymentServiceController.class);
-	
+
+	// Provides generic type class defs for Swagger 2.
+	private class ReviewPaidSwaggerResponse extends JSONResponse<Boolean> {
+	}
+
+	private class PaymentStatusSwaggerResponse extends JSONResponse<PaymentTransaction> {
+	}
+
+	@Autowired
+	private PaymentService paymentService;
+
+	private final Logger logger = LoggerFactory.getLogger(PaymentServiceController.class);
+
 	public PaymentServiceController(PaymentService paymentService) {
 		this.paymentService = paymentService;
 	}
-	
-	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class) 
+
+	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class) })
 	@PatchMapping(path = { "**/payment/**",
 			"/{noticeNumber}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
@@ -59,16 +62,17 @@ public class PaymentServiceController {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "setReviewPaid");
-		logger.info("Set review paid request received [{}]", correlationId);
+		logger.info("Set review paid request received");
 
-		PaymentResponse data = paymentService.setReviewPaid(noticeNumber, paymentInfo);
+		PaymentResponse data = paymentService.setReviewPaid(noticeNumber, correlationId, paymentInfo);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
+			logger.info("Set review paid request success");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
-
+			logger.info("Set review paid request not processed");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 404),
@@ -87,14 +91,16 @@ public class PaymentServiceController {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "paymentStatusGet");
-		logger.info("Get payment status request received [{}]", correlationId);
+		logger.info("Get payment status request received");
 
-		PaymentResponse data = paymentService.getReviewPaymentStatus(noticeNumber);
+		PaymentResponse data = paymentService.getReviewPaymentStatus(noticeNumber, correlationId);
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<PaymentTransaction> resp = new JSONResponse<>(new PaymentTransaction(data.getPaymentStatus()));
+			logger.info("Get payment status request success");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
+			logger.info("Get payment status data not found");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),

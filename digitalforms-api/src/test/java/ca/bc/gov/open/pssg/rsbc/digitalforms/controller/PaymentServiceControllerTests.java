@@ -48,13 +48,14 @@ public class PaymentServiceControllerTests {
 	@BeforeEach
 	public void init() throws DigitalFormsException {
 		controller = new PaymentServiceController(paymentService);
-		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS, GOOD_TRANSACTION_REQUEST))
+		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, GOOD_TRANSACTION_REQUEST))
 				.thenReturn(PaymentResponse.successResponse("updatedTime", SUCCESS_CODE, SUCCESS_STATUS));
-		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_ERROR, GOOD_TRANSACTION_REQUEST))
+		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID, GOOD_TRANSACTION_REQUEST))
 				.thenReturn(PaymentResponse.errorResponse(ERROR_STATUS));
-		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_SUCCESS)).thenReturn(PaymentResponse
-				.successStatusResponse(new DigitalFormPaymentStatusResponse(), SUCCESS_CODE, SUCCESS_STATUS));
-		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_ERROR))
+		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID))
+				.thenReturn(PaymentResponse.successStatusResponse(new DigitalFormPaymentStatusResponse(), SUCCESS_CODE,
+						SUCCESS_STATUS));
+		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID))
 				.thenReturn(PaymentResponse.errorResponse(ERROR_STATUS));
 	}
 

@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * 
- * Query Controller. 
+ * Query Controller.
  * 
  * @author shaunmillargov
  *
@@ -32,31 +32,32 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @Api(value = "Query", tags = { "Query" })
 public class QueryServiceController {
-	
-	@Autowired 
-	private QueryService service; 
-	
-	// Provides generic type class defs for Swagger 2. 
-	private class QuerySwaggerResponse extends JSONResponse<ProhibitionStatusResponse>{}
-	
+
+	@Autowired
+	private QueryService service;
+
+	// Provides generic type class defs for Swagger 2.
+	private class QuerySwaggerResponse extends JSONResponse<ProhibitionStatusResponse> {
+	}
+
 	public QueryServiceController(QueryServiceImpl irpService) {
 		this.service = irpService;
 	}
-	
-	Logger logger = LoggerFactory.getLogger(QueryServiceController.class);
 
-	@ApiOperation(value = "Get Prohibition status", response = QuerySwaggerResponse.class) 
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = QuerySwaggerResponse.class)})
+	private final Logger logger = LoggerFactory.getLogger(QueryServiceController.class);
+
+	@ApiOperation(value = "Get Prohibition status", response = QuerySwaggerResponse.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = QuerySwaggerResponse.class) })
 	@GetMapping(value = { "**/status/**", "/{noticeNumber}/status/{correlationId}" }, produces = "application/json")
 	public ResponseEntity<JSONResponse<ProhibitionStatusResponse>> getProhibitionInfo(
-			@PathVariable (value="noticeNumber",required=true) String noticeNumber,
+			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
-		
+
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "getProhibitionInfo");
-		logger.info("Get prohibition info request received [{}]", correlationId);
+		logger.info("Get prohibition info request received");
 
-		VipsProhibitionStatusResponse ordsResp = service.getProhibitionStatus(noticeNumber);
+		VipsProhibitionStatusResponse ordsResp = service.getProhibitionStatus(noticeNumber, correlationId);
 
 		// Map the response to an interim object to rid the response of the respCd and
 		// respMsg.
@@ -66,15 +67,16 @@ public class QueryServiceController {
 		// DigitalFormsControllerExceptionHandler.
 		if (ordsResp.getRespCode() == DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(resp);
+			logger.info("Get prohibition info request success");
 			MDC.clear();
 			return new ResponseEntity<>(r, HttpStatus.OK);
 
 		} else {
 			JSONResponse<ProhibitionStatusResponse> r = new JSONResponse<>(null);
 			r.setError(new JSONError(ordsResp.getRespMsg(), HttpStatus.NOT_FOUND.value()));
+			logger.info("Get prohibition info not found");
 			MDC.clear();
 			return new ResponseEntity<>(r, HttpStatus.NOT_FOUND);
 		}
 	}
 }
-

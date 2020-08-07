@@ -23,7 +23,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
 @ControllerAdvice
 public class DigitalFormsControllerExceptionHandler {
 	
-	Logger logger = LoggerFactory.getLogger(DigitalFormsControllerExceptionHandler.class);
+	private final Logger logger = LoggerFactory.getLogger(DigitalFormsControllerExceptionHandler.class);
 
 	@ExceptionHandler(DigitalFormsException.class)
 	public ResponseEntity<JSONResponse<String>> handleDigitalFormsException(DigitalFormsException e,

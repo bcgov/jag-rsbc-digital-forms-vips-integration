@@ -56,16 +56,15 @@ class QueryServiceControllerTests {
 		status.setReviewStartDtm("2018-06-25 00:00:00 -07:00");
 		status.setReviewFormSubmittedYn("Y");
 		status.setSurnameNm("Smith"); 
-		
+
 		// good
-		when(service.getProhibitionStatus(NOTICE_NUMBER)).thenReturn(
-				new VipsProhibitionStatusResponse(status, DigitalFormsConstants.ORDS_SUCCESS_CD, DigitalFormsConstants.JSON_RESPONSE_SUCCESS));
-		
+		when(service.getProhibitionStatus(NOTICE_NUMBER, CORRELATION_ID)).thenReturn(new VipsProhibitionStatusResponse(
+				status, DigitalFormsConstants.ORDS_SUCCESS_CD, DigitalFormsConstants.JSON_RESPONSE_SUCCESS));
+
 		// not found
-		when(service.getProhibitionStatus(NOTICE_NUMBER_NOT_FOUND)).thenReturn(
-				new VipsProhibitionStatusResponse(status, DigitalFormsConstants.ORDS_FAILURE_CD, DigitalFormsConstants.JSON_RESPONSE_FAIL));
-		
-		
+		when(service.getProhibitionStatus(NOTICE_NUMBER_NOT_FOUND, CORRELATION_ID))
+				.thenReturn(new VipsProhibitionStatusResponse(status, DigitalFormsConstants.ORDS_FAILURE_CD,
+						DigitalFormsConstants.JSON_RESPONSE_FAIL));
 	}
 
 	@DisplayName("Get success status code - QueryServiceController")
