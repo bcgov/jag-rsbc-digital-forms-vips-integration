@@ -24,7 +24,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public VipsProhibitionStatusResponse getProhibitionStatus(String noticeNumber, String correlationId) {
 		
-		logger.info("Processing get prohibition info request [{}]", correlationId);
+		logger.info("Processing get prohibition info request");
 		return prohibService.getVipsProhibitionStatus(noticeNumber, correlationId);
 		
 	}

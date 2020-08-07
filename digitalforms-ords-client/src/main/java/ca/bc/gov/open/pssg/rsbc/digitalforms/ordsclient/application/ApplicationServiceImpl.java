@@ -30,8 +30,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 		try {
 			DigitalFormGetResponse response = this.applicationApi.digitalFormGuidGet(formGuid);
 
-			logger.info("Processed Get Application request: [{}] ORDS returned code: {} and message: {} ",
-					correlationId, response.getStatusCode(), response.getStatusMessage());
+			logger.info("Processed Get Application request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return ApplicationResponse.successResponseGet(response, response.getStatusCode(),
 					response.getStatusMessage());
@@ -47,8 +47,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 		try {
 			DigitalFormPatchResponse response = this.applicationApi.digitalFormGuidPatch(formGuid, request);
 
-			logger.info("Processed Patch Application request: [{}] ORDS returned code: {} and message: {} ",
-					correlationId, response.getStatusCode(), response.getStatusMessage());
+			logger.info("Processed Patch Application request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return ApplicationResponse.successResponsePatch(response.getFormObjectGuid(), response.getStatusCode(),
 					response.getStatusMessage(), response.getUpdDtm());
@@ -63,8 +63,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 		try {
 			DigitalFormCreateResponse response = this.applicationApi.digitalFormPost(request);
 
-			logger.info("Processed Post Application request: [{}] ORDS returned code: {} and message: {} ",
-					correlationId, response.getStatusCode(), response.getStatusMessage());
+			logger.info("Processed Post Application request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return ApplicationResponse.successResponsePost(response.getFormObjectGuid(), response.getStatusCode(),
 					response.getStatusMessage(), response.getEntDtm());

@@ -35,8 +35,8 @@ public class ReviewServiceImpl implements ReviewService {
 					.digitalFormAvailableTimeSlotReviewDateNoticeTypeCdReviewTypeCdAuthGuidCorrelationGuidGet(authGuid,
 							correlationId, noticeTypeCd, reviewDate, reviewTypeCd);
 
-			logger.info("Processed Get Available Time Slots request: [{}] ORDS returned code: {} and message: {} ",
-					correlationId, response.getStatusCode(), response.getStatusMessage());
+			logger.info("Processed Get Available Time Slots request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return TimeSlotResponse.successResponse(response, response.getStatusCode(), response.getStatusMessage());
 
@@ -56,7 +56,7 @@ public class ReviewServiceImpl implements ReviewService {
 					.digitalFormProhibitionNoticeNoReviewScheduleAuthGuidCorrelationGuidPost(authGuid, correlationId,
 							noticeNo, request);
 
-			logger.info("Processed Save Time Slot request: [{}] ORDS returned code: {} and message: {} ", correlationId,
+			logger.info("Processed Save Time Slot request: ORDS returned code: {} and message: {} ",
 					response.getStatusCode(), response.getStatusMessage());
 
 			return SavedTimeSlotResponse.successResponse(response, response.getStatusCode(),

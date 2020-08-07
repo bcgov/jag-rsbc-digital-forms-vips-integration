@@ -62,17 +62,17 @@ public class PaymentServiceController {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "setReviewPaid");
-		logger.info("Set review paid request received [{}]", correlationId);
+		logger.info("Set review paid request received");
 
 		PaymentResponse data = paymentService.setReviewPaid(noticeNumber, correlationId, paymentInfo);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
-			logger.info("Set review paid request success [{}]", correlationId);
+			logger.info("Set review paid request success");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
-			logger.info("Set review paid request not processed [{}]", correlationId);
+			logger.info("Set review paid request not processed");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 404),
@@ -91,16 +91,16 @@ public class PaymentServiceController {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "paymentStatusGet");
-		logger.info("Get payment status request received [{}]", correlationId);
+		logger.info("Get payment status request received");
 
 		PaymentResponse data = paymentService.getReviewPaymentStatus(noticeNumber, correlationId);
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<PaymentTransaction> resp = new JSONResponse<>(new PaymentTransaction(data.getPaymentStatus()));
-			logger.info("Get payment status request success [{}]", correlationId);
+			logger.info("Get payment status request success");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
-			logger.info("Get payment status data not found [{}]", correlationId);
+			logger.info("Get payment status data not found");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),

@@ -29,14 +29,14 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 
 	@Override
 	public ApplicationResponse getApplicationForm(String formGuid, String correlationId) {
-		logger.info("Processing get application form request [{}]", correlationId);
+		logger.info("Processing get application form request");
 		return applicationService.getApplication(formGuid, correlationId);
 	}
 
 	@Override
 	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId,
 			ApplicationFormData formData) {
-		logger.info("Processing post application form request [{}]", correlationId);
+		logger.info("Processing post application form request");
 		DigitalFormPostRequest request = new DigitalFormPostRequest();
 
 		request.setCorrelationGuid(correlationId);
@@ -62,7 +62,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	@Override
 	public ApplicationResponse patchApplicationForm(String formType, String formGuid, String correlationId,
 			ApplicationFormData formData) {
-		logger.info("Processing patch application form request [{}]", correlationId);
+		logger.info("Processing patch application form request");
 		DigitalFormPatchRequest request = new DigitalFormPatchRequest();
 
 		request.setElectronicAddressTxt(formData.getEmail());

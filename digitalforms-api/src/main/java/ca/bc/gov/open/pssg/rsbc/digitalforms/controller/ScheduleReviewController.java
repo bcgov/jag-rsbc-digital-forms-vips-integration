@@ -60,17 +60,17 @@ public class ScheduleReviewController {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "availableTimeSlotsGet");
-		logger.info("Get available time slots request received [{}]", correlationId);
+		logger.info("Get available time slots request received");
 
 		TimeSlotResponse data = service.getAvailableTimeSlots(noticeTypeCd, reviewTypeCd, reviewDate, correlationId);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<TimeSlots> resp = new JSONResponse<>(data.getTimeslots());
-			logger.info("Get available time slots request success [{}]", correlationId);
+			logger.info("Get available time slots request success");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
-			logger.info("Get available time slots data not found [{}]", correlationId);
+			logger.info("Get available time slots data not found");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
@@ -90,17 +90,17 @@ public class ScheduleReviewController {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "selectedReviewTimePost");
-		logger.info("Post selected review time request received [{}]", correlationId);
+		logger.info("Post selected review time request received");
 
 		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNo, timeSlot.getTimeSlot(), correlationId);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
-			logger.info("Post selected review time request success [{}]", correlationId);
+			logger.info("Post selected review time request success");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
-			logger.info("Post selected review time request not processed [{}]", correlationId);
+			logger.info("Post selected review time request not processed");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 404),

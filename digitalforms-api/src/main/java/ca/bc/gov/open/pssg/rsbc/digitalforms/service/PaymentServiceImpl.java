@@ -28,7 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public PaymentResponse setReviewPaid(String irpNoticeNumber, String correlationId, PaymentTransaction request)
 			throws DigitalFormsException {
-		logger.info("Processing set review paid request [{}]", correlationId);
+		logger.info("Processing set review paid request");
 
 		DigitalFormPaymentPatchRequest ordsRequest = new DigitalFormPaymentPatchRequest();
 		ordsRequest.setPaymentAmt(request.getTransactionInfo().getPaymentAmount());
@@ -42,7 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public PaymentResponse getReviewPaymentStatus(String noticeNumber, String correlationId) {
-		logger.info("Processing get payment status request [{}]", correlationId);
+		logger.info("Processing get payment status request");
 
 		return paymentService.getPaymentStatus(noticeNumber, correlationId);
 	}

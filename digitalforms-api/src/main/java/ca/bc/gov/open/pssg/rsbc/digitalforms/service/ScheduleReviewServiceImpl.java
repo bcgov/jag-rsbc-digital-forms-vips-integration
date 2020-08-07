@@ -33,7 +33,7 @@ public class ScheduleReviewServiceImpl implements ScheduleReviewService {
 	@Override
 	public TimeSlotResponse getAvailableTimeSlots(String noticeTypeCd, String reviewTypeCd, String reviewDate,
 			String correlationId) {
-		logger.info("Processing get available time slots request [{}]", correlationId);
+		logger.info("Processing get available time slots request");
 
 		return reviewService.getAvailableTimeSlots(properties.getOrdsUserGuid(), correlationId, noticeTypeCd,
 				reviewDate, reviewTypeCd);
@@ -41,7 +41,7 @@ public class ScheduleReviewServiceImpl implements ScheduleReviewService {
 
 	@Override
 	public SavedTimeSlotResponse postSelectedReviewTime(String noticeNumber, TimeSlot timeSlot, String correlationId) {
-		logger.info("Processing post selected review time request [{}]", correlationId);
+		logger.info("Processing post selected review time request");
 
 		ReviewTimeSlotRequest request = new ReviewTimeSlotRequest();
 		request.setReviewEndDtm(timeSlot.getReviewEndDtm());

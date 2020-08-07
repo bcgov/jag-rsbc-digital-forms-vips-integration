@@ -32,8 +32,8 @@ public class PaymentServiceImpl implements PaymentService {
 			DigitalFormPaymentStatusResponse response = this.paymentApi
 					.digitalFormProhibitionNoticeNoPaymentStatusGet(noticeNo);
 
-			logger.info("Processed Get Payment Status request: [{}] ORDS returned code: {} and message: {} ",
-					correlationId, response.getStatusCode(), response.getStatusMessage());
+			logger.info("Processed Get Payment Status request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return PaymentResponse.successStatusResponse(response, response.getStatusCode(),
 					response.getStatusMessage());
@@ -51,8 +51,8 @@ public class PaymentServiceImpl implements PaymentService {
 			DigitalFormPaymentPatchResponse response = this.paymentApi
 					.digitalFormProhibitionNoticeNoPaymentPatch(noticeNo, request);
 
-			logger.info("Processed Patch Payment Receipt request: [{}] ORDS returned code: {} and message: {} ",
-					correlationId, response.getStatusCode(), response.getStatusMessage());
+			logger.info("Processed Patch Payment Receipt request: ORDS returned code: {} and message: {} ",
+					response.getStatusCode(), response.getStatusMessage());
 
 			return PaymentResponse.successResponse(response.getUpdDtm(), response.getStatusCode(),
 					response.getStatusMessage());
