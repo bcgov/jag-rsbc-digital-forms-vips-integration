@@ -41,4 +41,3 @@ public class DisclosureServiceImpl implements DisclosureService {
 	}
 
 }
- 
