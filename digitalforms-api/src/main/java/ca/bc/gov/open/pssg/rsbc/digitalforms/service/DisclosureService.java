@@ -15,6 +15,6 @@ public interface DisclosureService {
 
 	public JSONResponse<DocumentWrapper> getDisclosureDocument(String documentId, String correlationId); 
 
-	public JSONResponse<Boolean> patchDisclosureSent(String noticeNumber, String correlationId, DocumentDisclosureInfo disclosureInfo);
+	public JSONResponse<Boolean> setDisclosureSent(String noticeNumber, String correlationId, DocumentDisclosureInfo disclosureInfo);
 
 }

@@ -50,7 +50,7 @@ public class DisclosureController {
 	@ApiOperation(value = "Get disclosure document", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = DisclosureDocumentSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<DocumentWrapper>> disclosureDocumentGet(
+	public ResponseEntity<JSONResponse<DocumentWrapper>> getDisclosureDocument(
 			@PathVariable(value = "documentId", required = true) String documentId,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
 
@@ -78,23 +78,23 @@ public class DisclosureController {
 	@ApiOperation(value = "Set Disclosure Document Sent", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = DocumentDisclosedSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<Boolean>> disclosureDocumentPatch(
+	public ResponseEntity<JSONResponse<Boolean>> setDisclosureSent(
 			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) DisclosureWrapper disclosureInfo) {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "disclosureDocumentPatch");
-		logger.info("Patch disclosure document as sent request received");
+		logger.info("Set disclosure document as sent request received");
 
 		// TODO Update based on ORDS service
-		JSONResponse<Boolean> data = service.patchDisclosureSent(noticeNumber, correlationId, disclosureInfo.getDisclosure());
+		JSONResponse<Boolean> data = service.setDisclosureSent(noticeNumber, correlationId, disclosureInfo.getDisclosure());
 		if (data != null) {
-			logger.info("Patch disclosure document as sent request success");
+			logger.info("Set disclosure document as sent request success");
 			MDC.clear();
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} else {
-			logger.info("Patch disclosure document as sent data not processed");
+			logger.info("Set disclosure document as sent request not processed");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_PROCESSED_ERROR, 400),

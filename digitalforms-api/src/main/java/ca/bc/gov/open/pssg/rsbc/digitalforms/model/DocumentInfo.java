@@ -12,27 +12,27 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "mime", "document" })
+@JsonPropertyOrder({ "mimeType", "document" })
 public class DocumentInfo {
 
-	@JsonProperty("mime")
-	private String mime;
+	@JsonProperty("mimeType")
+	private String mimeType;
 	@JsonProperty("document")
 	private String document;
 	
-	public DocumentInfo(String mime, String document) {
-		this.mime = mime;
+	public DocumentInfo(String mimeType, String document) {
+		this.mimeType = mimeType;
 		this.document = document;
 	}
 
-	@JsonProperty("mime")
-	public String getMime() {
-		return mime;
+	@JsonProperty("mimeType")
+	public String getMimeType() {
+		return mimeType;
 	}
 
-	@JsonProperty("mime")
-	public void setMime(String mime) {
-		this.mime = mime;
+	@JsonProperty("mimeType")
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 
 	@JsonProperty("document")

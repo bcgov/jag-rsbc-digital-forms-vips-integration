@@ -32,11 +32,11 @@ public class DisclosureServiceImpl implements DisclosureService {
 	}
 
 	@Override
-	public JSONResponse<Boolean> patchDisclosureSent(String noticeNumber, String correlationId,
+	public JSONResponse<Boolean> setDisclosureSent(String noticeNumber, String correlationId,
 			DocumentDisclosureInfo disclosureInfo) {
 		// TODO update service method 
 		// Notice no, dtm, authguid, docId
-		logger.info("Processing patch disclosure document as sent request");
+		logger.info("Processing set disclosure document as sent request");
 		return new JSONResponse<>(true);
 	}
 
