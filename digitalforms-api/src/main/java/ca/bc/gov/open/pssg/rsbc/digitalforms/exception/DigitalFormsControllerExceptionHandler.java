@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,7 +23,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
  */
 @ControllerAdvice
 public class DigitalFormsControllerExceptionHandler {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(DigitalFormsControllerExceptionHandler.class);
 
 	@ExceptionHandler(DigitalFormsException.class)
@@ -48,9 +49,17 @@ public class DigitalFormsControllerExceptionHandler {
 			WebRequest request) {
 		logger.error("No Handler Found Exception occurred", e);
 		MDC.clear();
-		return new ResponseEntity<>(
-				DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NO_HANDLER_ERROR, HttpStatus.NOT_FOUND.value()),
-				HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NO_HANDLER_ERROR,
+				HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<JSONResponse<String>> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+			WebRequest request) {
+		logger.error("Http Message Not Readable Exception occurred", e);
+		MDC.clear();
+		return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(
+				DigitalFormsConstants.MISSING_REQUEST_BODY_ERROR, HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(Exception.class)
