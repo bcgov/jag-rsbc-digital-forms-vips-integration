@@ -56,6 +56,7 @@ class QueryServiceControllerTests {
 		status.setReviewStartDtm("2018-06-25 00:00:00 -07:00");
 		status.setReviewFormSubmittedYn("Y");
 		status.setSurnameNm("Smith"); 
+		status.setDriverLicenceSeized("N");
 
 		// good
 		when(service.getProhibitionStatus(NOTICE_NUMBER, CORRELATION_ID)).thenReturn(new VipsProhibitionStatusResponse(

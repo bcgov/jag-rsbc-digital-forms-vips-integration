@@ -27,6 +27,7 @@ public class ProhibitionStatusTests {
 		status.setReviewStartDtm("2018-06-25 00:00:00 -07:00");
 		status.setReviewFormSubmittedYn("Y");
 		status.setSurnameNm("Smith"); 
+		status.setDriverLicenceSeized("N");
 
 		Assertions.assertEquals("2018-06-20 00:00:00 -07:00", status.getEffectiveDt());
 		Assertions.assertEquals("IRP", status.getNoticeTypeCd());
@@ -37,6 +38,7 @@ public class ProhibitionStatusTests {
 		Assertions.assertEquals("2018-06-25 00:00:00 -07:00", status.getReviewStartDtm());
 		Assertions.assertEquals("Y", status.getReviewFormSubmittedYn());
 		Assertions.assertEquals("Smith", status.getSurnameNm());
+		Assertions.assertEquals("N", status.getDriverLicenceSeized());
 		
 	}
 
