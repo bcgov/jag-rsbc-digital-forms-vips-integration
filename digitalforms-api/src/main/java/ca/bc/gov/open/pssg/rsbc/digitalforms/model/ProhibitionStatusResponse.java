@@ -33,6 +33,7 @@ public class ProhibitionStatusResponse {
 			status.setReviewFormSubmittedYn(ordsResp.getStatus().getReviewFormSubmittedYn());
 			status.setReviewStartDtm(ordsResp.getStatus().getReviewStartDtm());
 			status.setSurnameNm(ordsResp.getStatus().getSurnameNm());
+			status.setDisclosure(ordsResp.getStatus().getDisclosure());
 		}
 	}
 
