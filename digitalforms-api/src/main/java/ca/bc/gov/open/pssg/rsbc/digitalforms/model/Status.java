@@ -1,8 +1,13 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import ca.bc.gov.open.jagvipsclient.prohibition.DocumentDisclosureInfo;
 
 /**
  * 
@@ -21,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 "driverLicenceSeizedYn",
 "reviewStartDtm",
 "reviewEndDtm",
-"receiptNumberTxt"
+"receiptNumberTxt",
+"disclosure"
 })
 public class Status {
 
@@ -45,6 +51,8 @@ private String reviewStartDtm;
 private String reviewEndDtm;
 @JsonProperty("receiptNumberTxt")
 private String receiptNumberTxt;
+@JsonProperty("disclosure")
+private List<DocumentDisclosureInfo> disclosure = null;
 
 @JsonProperty("noticeTypeCd")
 public String getNoticeTypeCd() {
@@ -144,6 +152,18 @@ return receiptNumberTxt;
 @JsonProperty("receiptNumberTxt")
 public void setReceiptNumberTxt(String receiptNumberTxt) {
 this.receiptNumberTxt = receiptNumberTxt;
+}
+
+@JsonProperty("disclosure")
+public List<DocumentDisclosureInfo> getDisclosure() {
+	if (null == this.disclosure) 
+		this.disclosure = new ArrayList<>();
+	return disclosure;
+}
+
+@JsonProperty("disclosure")
+public void setDisclosure(List<DocumentDisclosureInfo> disclosure) {
+	this.disclosure = disclosure;
 }
 
 }
