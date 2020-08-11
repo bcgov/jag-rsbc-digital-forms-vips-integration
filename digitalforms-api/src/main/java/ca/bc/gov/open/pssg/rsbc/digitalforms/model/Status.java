@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 "reviewCreatedYn",
 "originalCause",
 "surnameNm",
+"driverLicenceSeizedYn",
 "reviewStartDtm",
 "reviewEndDtm",
 "receiptNumberTxt"
@@ -36,6 +37,8 @@ private String reviewCreatedYn;
 private String originalCause;
 @JsonProperty("surnameNm")
 private String surnameNm;
+@JsonProperty("driverLicenceSeizedYn")
+private String driverLicenceSeizedYn;
 @JsonProperty("reviewStartDtm")
 private String reviewStartDtm;
 @JsonProperty("reviewEndDtm")
@@ -101,6 +104,16 @@ return surnameNm;
 @JsonProperty("surnameNm")
 public void setSurnameNm(String surnameNm) {
 this.surnameNm = surnameNm;
+}
+
+@JsonProperty("driverLicenceSeizedYn")
+public String getDriverLicenceSeizedYn() {
+	return driverLicenceSeizedYn;
+}
+
+@JsonProperty("driverLicenceSeizedYn")
+public void setDriverLicenceSeizedYn(String driverLicenceSeizedYn) {
+	this.driverLicenceSeizedYn = driverLicenceSeizedYn;
 }
 
 @JsonProperty("reviewStartDtm")
