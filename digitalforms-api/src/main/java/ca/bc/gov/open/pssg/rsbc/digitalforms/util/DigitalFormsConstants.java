@@ -46,7 +46,7 @@ public final class DigitalFormsConstants {
 	
 	public static final String MISSING_PARAMS_ERROR = "Missing request params";
 	
-	public static final String MISSING_REQUEST_BODY_ERROR = "Missing request body";
+	public static final String MISSING_REQUEST_BODY_ERROR = "Required data not found in the request body";
 	
 	public static final String PAYMENT_FORMAT_ERROR = "Invalid payment amount format";
 	
