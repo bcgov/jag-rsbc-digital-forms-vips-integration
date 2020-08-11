@@ -41,10 +41,27 @@ class ApplicationFormControllerTests {
 
 	@InjectMocks
 	private ApplicationFormController controller = new ApplicationFormController();
+	
+	private ApplicationFormData formRequest;
 
 	@BeforeEach
 	public void init() {
 		MockitoAnnotations.initMocks(this);
+		
+		formRequest = new ApplicationFormData();
+
+		formRequest.setFirstGivenNm("firstGivenNm");
+		formRequest.setEmail("email");
+		formRequest.setFaxNo("faxNo");
+		formRequest.setManualEntryYN("manualEntryYN");
+		formRequest.setNoticeSubjectCd("noticeSubjectCd");
+		formRequest.setPhoneNo("phoneNo");
+		formRequest.setPresentationTypeCd("presentationTypeCd");
+		formRequest.setReviewRoleTypeCd("reviewRoleTypeCd");
+		formRequest.setSecondGivenNm("secondGivenNm");
+		formRequest.setSurnameNm("surnameNm");
+
+		formRequest.setFormData("formData");
 	}
 
 	@DisplayName("Get success - ApplicationFormController")
@@ -62,7 +79,7 @@ class ApplicationFormControllerTests {
 		when(service.postApplicationForm(any(), any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "0", null, null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> resp = controller.applicationFormPost("IRP", "noticeNo", "correlationId",
-				new ApplicationInfoWrapper<>(new ApplicationFormData()));
+				new ApplicationInfoWrapper<>(formRequest));
 		Assertions.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
 
@@ -93,13 +110,23 @@ class ApplicationFormControllerTests {
 			controller.applicationFormPost("invalid", "noticeNo", "correlationId", new ApplicationInfoWrapper<>(new ApplicationFormData()));
 		});
 	}
+	
+	@DisplayName("Post validation error - ApplicationFormController")
+	@Test
+	void postValidationError() throws DigitalFormsException {
+		when(service.postApplicationForm(any(), any(), any(), any()))
+				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
+		Assertions.assertThrows(DigitalFormsException.class, () -> {
+			controller.applicationFormPost("IRP", "noticeNo", "correlationId", new ApplicationInfoWrapper<>(new ApplicationFormData()));
+		});
+	}
 
 	@DisplayName("Post error - ApplicationFormController")
 	@Test
 	void postFormError() throws DigitalFormsException {
 		when(service.postApplicationForm(any(), any(), any(), any())).thenReturn(ApplicationResponse.errorResponse(null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> resp = controller.applicationFormPost("IRP", "guid", "correlationId",
-				new ApplicationInfoWrapper<>(new ApplicationFormData()));
+				new ApplicationInfoWrapper<>(formRequest));
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
 
