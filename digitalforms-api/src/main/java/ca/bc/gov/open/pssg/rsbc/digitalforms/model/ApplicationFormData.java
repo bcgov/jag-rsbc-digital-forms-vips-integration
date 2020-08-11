@@ -1,8 +1,14 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
+import org.springframework.http.HttpStatus;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.common.base.Strings;
+
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
  * 
@@ -150,4 +156,16 @@ public class ApplicationFormData {
 		this.formData = formData;
 	}
 
+	/**
+	 * Method to validate application form data
+	 * @throws DigitalFormsException
+	 */
+	public void validate() throws DigitalFormsException {
+		if (Strings.isNullOrEmpty(this.noticeSubjectCd) || Strings.isNullOrEmpty(this.presentationTypeCd)
+				|| Strings.isNullOrEmpty(this.reviewRoleTypeCd) || Strings.isNullOrEmpty(this.firstGivenNm)
+				|| Strings.isNullOrEmpty(this.surnameNm) || Strings.isNullOrEmpty(this.phoneNo)
+				|| Strings.isNullOrEmpty(this.manualEntryYN) || Strings.isNullOrEmpty(this.formData)) {
+			throw new DigitalFormsException(DigitalFormsConstants.MISSING_REQUEST_BODY_ERROR, HttpStatus.NOT_FOUND);
+		}
+	}
 }
