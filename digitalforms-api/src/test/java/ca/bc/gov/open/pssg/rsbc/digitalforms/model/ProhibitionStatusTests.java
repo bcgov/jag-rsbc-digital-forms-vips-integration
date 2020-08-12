@@ -1,9 +1,12 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import ca.bc.gov.open.jagvipsclient.prohibition.ProhibitionStatus;
+import ca.bc.gov.open.jagvipsclient.prohibition.DocumentDisclosureInfo;
 
 /**
  * 
@@ -17,7 +20,7 @@ public class ProhibitionStatusTests {
 	@Test
 	public void testObj() {
 
-		ProhibitionStatus status = new ProhibitionStatus();
+		Status status = new Status();
 		status.setEffectiveDt("2018-06-20 00:00:00 -07:00");
 		status.setNoticeTypeCd("IRP");
 		status.setOriginalCause("IRP3");
@@ -27,7 +30,13 @@ public class ProhibitionStatusTests {
 		status.setReviewStartDtm("2018-06-25 00:00:00 -07:00");
 		status.setReviewFormSubmittedYn("Y");
 		status.setSurnameNm("Smith"); 
-		status.setDriverLicenceSeized("N");
+		status.setDriverLicenceSeizedYn("N");
+		
+		Assertions.assertTrue(status.getDisclosure().isEmpty());
+		
+		List<DocumentDisclosureInfo> disclosure = new ArrayList<>();
+		disclosure.add(new DocumentDisclosureInfo("123", "2018-06-20 00:00:00 -07:00"));
+		status.setDisclosure(disclosure);
 
 		Assertions.assertEquals("2018-06-20 00:00:00 -07:00", status.getEffectiveDt());
 		Assertions.assertEquals("IRP", status.getNoticeTypeCd());
@@ -38,8 +47,10 @@ public class ProhibitionStatusTests {
 		Assertions.assertEquals("2018-06-25 00:00:00 -07:00", status.getReviewStartDtm());
 		Assertions.assertEquals("Y", status.getReviewFormSubmittedYn());
 		Assertions.assertEquals("Smith", status.getSurnameNm());
-		Assertions.assertEquals("N", status.getDriverLicenceSeized());
-		
+		Assertions.assertEquals("N", status.getDriverLicenceSeizedYn());
+		Assertions.assertEquals("123", status.getDisclosure().get(0).getDocumentId());
+		Assertions.assertEquals("2018-06-20 00:00:00 -07:00", status.getDisclosure().get(0).getDisclosedDtm());
+
 	}
 
 }
