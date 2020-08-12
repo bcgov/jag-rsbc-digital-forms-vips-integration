@@ -63,19 +63,19 @@ class PaymentServiceImplTests {
 	@DisplayName("Patch error - PaymentService")
 	@Test
 	void setReviewPaidError() throws DigitalFormsException {
-		when(service.patchPaymentReceipt(any(), any(), any())).thenReturn(PaymentResponse.errorResponse("Get error"));
+		when(service.patchPaymentReceipt(any(), any(), any())).thenReturn(PaymentResponse.errorResponse("Patch error"));
 		PaymentResponse resp = serviceImpl.setReviewPaid("1", "correlationId", new PaymentTransaction(transactionInfoSample));
 		Assertions.assertEquals(-1, resp.getRespCode());
-		Assertions.assertEquals("Get error", resp.getRespMsg());
+		Assertions.assertEquals("Patch error", resp.getRespMsg());
 
 	}
 
 	@DisplayName("Get error - PaymentService")
 	@Test
 	void getReviewPaymentStatusError() throws DigitalFormsException {
-		when(service.getPaymentStatus(any(), any())).thenReturn(PaymentResponse.errorResponse("Post error"));
+		when(service.getPaymentStatus(any(), any())).thenReturn(PaymentResponse.errorResponse("Get error"));
 		PaymentResponse resp = serviceImpl.getReviewPaymentStatus("1", "correlationId");
 		Assertions.assertEquals(-1, resp.getRespCode());
-		Assertions.assertEquals("Post error", resp.getRespMsg());
+		Assertions.assertEquals("Get error", resp.getRespMsg());
 	}
 }
