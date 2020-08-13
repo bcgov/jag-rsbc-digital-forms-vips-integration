@@ -1,8 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.DocumentDisclosureInfo;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.DocumentWrapper;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.jagvipsclient.disclosure.DisclosureResponse;
+import ca.bc.gov.open.jagvipsclient.prohibition.DocumentDisclosureInfo;
 
 /**
  * 
@@ -13,8 +12,9 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
  */
 public interface DisclosureService {
 
-	public JSONResponse<DocumentWrapper> getDisclosureDocument(String documentId, String correlationId); 
+	public DisclosureResponse getDisclosureDocument(String documentId, String correlationId);
 
-	public JSONResponse<Boolean> setDisclosureSent(String noticeNumber, String correlationId, DocumentDisclosureInfo disclosureInfo);
+	public DisclosureResponse setDisclosureSent(String noticeNumber, String correlationId,
+			DocumentDisclosureInfo disclosureInfo);
 
 }

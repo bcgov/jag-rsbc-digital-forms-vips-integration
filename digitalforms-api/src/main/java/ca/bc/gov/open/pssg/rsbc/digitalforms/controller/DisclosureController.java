@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.jagvipsclient.disclosure.DisclosureResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.DisclosureWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.DocumentWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.DisclosureService;
@@ -58,12 +59,12 @@ public class DisclosureController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "disclosureDocumentGet");
 		logger.info("Get disclosure document request received");
 
-		// TODO Update based on ORDS service
-		JSONResponse<DocumentWrapper> data = service.getDisclosureDocument(documentId, correlationId);
-		if (data != null) {
+		DisclosureResponse data = service.getDisclosureDocument(documentId, correlationId);
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<DocumentWrapper> resp = new JSONResponse<>(new DocumentWrapper(data.getDocumentInfo()));
 			logger.info("Get disclosure document request success");
 			MDC.clear();
-			return new ResponseEntity<>(data, HttpStatus.OK);
+			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
 			logger.info("Get disclosure document data not found");
 			MDC.clear();
@@ -87,12 +88,13 @@ public class DisclosureController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "disclosureDocumentPatch");
 		logger.info("Set disclosure document as sent request received");
 
-		// TODO Update based on ORDS service
-		JSONResponse<Boolean> data = service.setDisclosureSent(noticeNumber, correlationId, disclosureInfo.getDisclosure());
-		if (data != null) {
+		DisclosureResponse data = service.setDisclosureSent(noticeNumber, correlationId,
+				disclosureInfo.getDisclosure());
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
 			logger.info("Set disclosure document as sent request success");
 			MDC.clear();
-			return new ResponseEntity<>(data, HttpStatus.OK);
+			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
 			logger.info("Set disclosure document as sent request not processed");
 			MDC.clear();

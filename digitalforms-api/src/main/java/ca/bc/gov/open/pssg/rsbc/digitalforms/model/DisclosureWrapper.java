@@ -3,6 +3,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import ca.bc.gov.open.jagvipsclient.prohibition.DocumentDisclosureInfo;
 
 /**
  * 
@@ -17,7 +18,7 @@ public class DisclosureWrapper {
 
 	public DisclosureWrapper() {
 	}
-	
+
 	public DisclosureWrapper(DocumentDisclosureInfo disclosure) {
 		this.disclosure = disclosure;
 	}
@@ -34,5 +35,5 @@ public class DisclosureWrapper {
 	public void setDisclosure(DocumentDisclosureInfo disclosure) {
 		this.disclosure = disclosure;
 	}
-	
+
 }
