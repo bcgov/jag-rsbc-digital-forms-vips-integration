@@ -37,6 +37,7 @@ public class SwaggerAPIConfig {
 	 *                    
 	 * @param swaggerPath The path on which the swagger specs are served
 	 */
+	@SuppressWarnings("el-syntax")
 	@Autowired
 	public void addSpringfoxContentNegotiation(ContentNegotiationManager manager,
 			@Value("${springfox.documentation.swagger.v2.path:" + Swagger2Controller.DEFAULT_URL

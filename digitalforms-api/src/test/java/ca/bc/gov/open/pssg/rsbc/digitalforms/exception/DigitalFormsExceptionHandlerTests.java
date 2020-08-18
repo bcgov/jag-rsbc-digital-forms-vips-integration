@@ -3,6 +3,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.exception;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,7 +28,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
  * 
- * Authentication failure handler Tests.
+ * Authentication failure and Controller advice exception handler Tests.
  * 
  * @author sivakaruna
  *
@@ -42,37 +43,59 @@ class DigitalFormsExceptionHandlerTests {
 	@DisplayName("unauthorizedEntryTest")
 	@Test
 	public void unauthorizedEntryTest() throws Exception {
-		this.mockMvc.perform(get("/digitalforms/IRP/guid/application")).andDo(print())
-				.andExpect(status().isUnauthorized())
+		this.mockMvc.perform(get("/guid/application/123")).andDo(print()).andExpect(status().isUnauthorized())
 				.andExpect(content().string(containsString(DigitalFormsConstants.UNAUTHORIZED_ERROR)));
 	}
 
-	@DisplayName("authorizedEntryTest")
+	@DisplayName("authorizedEntryTest - invalid form type")
 	@WithMockUser(username = "user", password = "password", authorities = "USER")
 	@Test
 	public void authorizedEntryTest() throws Exception {
-		this.mockMvc.perform(get("/digitalforms/invalid")).andDo(print())
-				.andExpect(status().isNotFound());
-	}
-
-	@DisplayName("invalidRequestErrorTest")
-	@WithMockUser(username = "user", password = "password", authorities = "USER")
-	@Test
-	public void invalidRequestErrorTest() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
 		String requestJson = ow.writeValueAsString(new ApplicationInfoWrapper<>(new ApplicationFormData()));
-		this.mockMvc.perform(patch("/digitalforms/ABC/abc/application/123").contentType(MediaType.APPLICATION_JSON)
-				.content(requestJson)).andDo(print()).andExpect(status().isBadRequest());
+		this.mockMvc
+				.perform(patch("/ABC/abc/application/123").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+				.andDo(print()).andExpect(status().isNotFound())
+				.andExpect(content().string(containsString(DigitalFormsConstants.INVALID_FORM_TYPE_ERROR)));
+	}
+
+	@DisplayName("noHandlerErrorTest")
+	@WithMockUser(username = "user", password = "password", authorities = "USER")
+	@Test
+	public void noHandlerErrorTest() throws Exception {
+		this.mockMvc.perform(get("/invalid")).andDo(print()).andExpect(status().isNotFound())
+				.andExpect(content().string(containsString(DigitalFormsConstants.NO_HANDLER_ERROR)));
+	}
+
+	@DisplayName("unexpectedErrorTest")
+	@WithMockUser(username = "user", password = "password", authorities = "USER")
+	@Test
+	public void unexpectedErrorTest() throws Exception {
+		this.mockMvc.perform(get("/guid/application/123")).andDo(print()).andExpect(status().isInternalServerError())
+				.andExpect(content().string(containsString(DigitalFormsConstants.UNKNOWN_ERROR)));
 	}
 
 	@DisplayName("missingRequestBodyErrorTest")
 	@WithMockUser(username = "user", password = "password", authorities = "USER")
 	@Test
 	public void missingRequestBodyErrorTest() throws Exception {
-		this.mockMvc.perform(patch("/digitalforms/ABC/abc/application/123")).andDo(print())
-				.andExpect(status().isInternalServerError());
+		this.mockMvc.perform(post("/IRP/abc/application/123").contentType(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(status().isNotFound())
+				.andExpect(content().string(containsString(DigitalFormsConstants.MISSING_REQUEST_BODY_ERROR)));
 	}
 
+	@DisplayName("missingPathVariableErrorTest")
+	@WithMockUser(username = "user", password = "password", authorities = "USER")
+	@Test
+	public void missingPathVariableErrorTest() throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+		String requestJson = ow.writeValueAsString(new ApplicationInfoWrapper<>(new ApplicationFormData()));
+		this.mockMvc.perform(patch("/application/123").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+				.andDo(print()).andExpect(status().isBadRequest())
+				.andExpect(content().string(containsString(DigitalFormsConstants.MISSING_PARAMS_ERROR)));
+	}
 }
