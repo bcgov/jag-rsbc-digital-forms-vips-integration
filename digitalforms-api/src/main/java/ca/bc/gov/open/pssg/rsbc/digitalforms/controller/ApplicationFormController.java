@@ -98,7 +98,8 @@ public class ApplicationFormController {
 
 		// Validate request fields
 		DigitalFormsUtils.validateFormType(formType);
-		formData.getApplicationInfo().validate();
+		formData.getApplicationInfo().validateRequiredFields();
+		DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
 		
 		ApplicationResponse data = service.postApplicationForm(formType, noticeNo, correlationId,
 				formData.getApplicationInfo());
@@ -136,7 +137,10 @@ public class ApplicationFormController {
 		MDC.put(DigitalFormsConstants.REQUEST_FORMTYPE, formType);
 		logger.info("Patch application form request received");
 
+		// Validate request fields
 		DigitalFormsUtils.validateFormType(formType);
+		DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
+		
 		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, correlationId,
 				formData.getApplicationInfo());
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {

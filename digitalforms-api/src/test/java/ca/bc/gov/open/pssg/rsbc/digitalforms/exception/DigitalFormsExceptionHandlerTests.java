@@ -57,8 +57,8 @@ class DigitalFormsExceptionHandlerTests {
 		String requestJson = ow.writeValueAsString(new ApplicationInfoWrapper<>(new ApplicationFormData()));
 		this.mockMvc
 				.perform(patch("/ABC/abc/application/123").contentType(MediaType.APPLICATION_JSON).content(requestJson))
-				.andDo(print()).andExpect(status().isNotFound())
-				.andExpect(content().string(containsString(DigitalFormsConstants.INVALID_FORM_TYPE_ERROR)));
+				.andDo(print()).andExpect(status().isNotFound()).andExpect(content().string(containsString(String
+						.format(DigitalFormsConstants.INVALID_ATTRIBUTE_ERROR, DigitalFormsConstants.FORM_TYPE_TEXT))));
 	}
 
 	@DisplayName("noHandlerErrorTest")

@@ -160,7 +160,7 @@ public class ApplicationFormData {
 	 * Method to validate application form data
 	 * @throws DigitalFormsException
 	 */
-	public void validate() throws DigitalFormsException {
+	public void validateRequiredFields() throws DigitalFormsException {
 		if (Strings.isNullOrEmpty(this.noticeSubjectCd) || Strings.isNullOrEmpty(this.presentationTypeCd)
 				|| Strings.isNullOrEmpty(this.reviewRoleTypeCd) || Strings.isNullOrEmpty(this.firstGivenNm)
 				|| Strings.isNullOrEmpty(this.surnameNm) || Strings.isNullOrEmpty(this.phoneNo)
