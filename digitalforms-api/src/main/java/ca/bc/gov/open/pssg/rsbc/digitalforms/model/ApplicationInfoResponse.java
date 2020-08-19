@@ -41,6 +41,7 @@ public class ApplicationInfoResponse {
 		applicationFormData.setReviewRoleTypeCd(response.getReviewRoleTypeCd());
 		applicationFormData.setSecondGivenNm(response.getSecondGivenNm());
 		applicationFormData.setSurnameNm(response.getSurnameNm());
+		applicationFormData.setFormData(response.getFormXml());
 		this.setFormData(applicationFormData);
 		this.setNoticeTypeCd(response.getNoticeTypeCd());
 		this.setProhibitionNoticeNo(response.getProhibitionNoticeNo());
