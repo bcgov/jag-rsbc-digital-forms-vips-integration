@@ -4,7 +4,6 @@ import base.BaseUtil;
 import config.GetConfiguration;
 import config.GlobalVariables;
 import database.DatabaseConnection;
-import database.DatabaseSetup;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
@@ -13,8 +12,7 @@ import io.cucumber.java.BeforeStep;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class Hooks extends BaseUtil
-{
+public class Hooks extends BaseUtil {
     GetConfiguration configuration;
     DatabaseConnection databaseConnection;
     private BaseUtil baseUtil;
@@ -25,10 +23,12 @@ public class Hooks extends BaseUtil
     }
 
     @Before
-    public void beforeScenario(){
+    public void beforeScenario() {
         GlobalVariables.apiUsername = configuration.getApiUsername();
         GlobalVariables.apiPassword = configuration.getApiPassword();
         GlobalVariables.apiBaseUrl = configuration.getDigitalFormsUrl();
+        GlobalVariables.ordsApiUsername = configuration.getOrdsApiUsername();
+        GlobalVariables.ordsApiPassword = configuration.getOrdsApiPassword();
     }
 
     @Before(value = "@database")
@@ -38,12 +38,13 @@ public class Hooks extends BaseUtil
         GlobalVariables.testEnvironment = configuration.getTestEnvironment();
         databaseConnection = new DatabaseConnection(GlobalVariables.testEnvironment);
         baseUtil.databaseConnection = databaseConnection;
-        String connectionString = DatabaseSetup.createConnectionString(GlobalVariables.testEnvironment);
-        databaseConnection.openDBConnection(connectionString,GlobalVariables.dbUsername,GlobalVariables.dbPassword);
+        String connectionString = configuration.getConnectionString();
+        databaseConnection.openDBConnection(connectionString, GlobalVariables.dbUsername, GlobalVariables.dbPassword);
     }
 
     @After
-    public void afterScenario(){}
+    public void afterScenario() {
+    }
 
     @After(value = "@database")
     public void afterAllDatabaseScenario() throws SQLException {
@@ -51,9 +52,11 @@ public class Hooks extends BaseUtil
     }
 
     @BeforeStep
-    public void beforeEachScenarioSteps(){}
+    public void beforeEachScenarioSteps() {
+    }
 
     @AfterStep
-    public void afterEachScenarioSteps(){}
+    public void afterEachScenarioSteps() {
+    }
 
 }

@@ -14,28 +14,38 @@ public class GetConfiguration {
         properties.load(inputStream);
     }
 
-    public String getApiUsername()
-    {
-        return properties.getProperty("apiUsername");
-    }
-    public String getApiPassword()
-    {
-        return properties.getProperty("apiPassword");
-    }
-    public String getDbUsername()
-    {
-        return properties.getProperty("dbUsername");
-    }
-    public String getDbPassword()
-    {
-        return properties.getProperty("dbPassword");
-    }
-    public String getTestEnvironment()
-    {
-        return properties.getProperty("environment");
-    }
     public String getDigitalFormsUrl()
     {
         return properties.getProperty("digitalFormsBaseUrl");
     }
+    public String getApiUsername()
+    {
+        return System.getenv("digitalFormsApi-username");
+    }
+    public String getApiPassword()
+    {
+        return System.getenv("digitalFormsApi-password");
+    }
+    public String getDbUsername()
+    {
+        return System.getenv("db-dev-username");
+    }
+    public String getDbPassword()
+    {
+        return System.getenv("db-dev-password");
+    }
+    public String getTestEnvironment()
+    {
+        return System.getenv("automation-env");
+    }
+    public String getConnectionString(){ return System.getenv("db-dev-connectionString");}
+    public String getOrdsApiUsername()
+    {
+        return System.getenv("OrdsApi-username");
+    }
+    public String getOrdsApiPassword()
+    {
+        return System.getenv("OrdsApi-password");
+    }
+
 }

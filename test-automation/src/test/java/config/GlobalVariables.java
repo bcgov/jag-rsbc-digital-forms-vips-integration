@@ -7,5 +7,6 @@ public class GlobalVariables {
     public static String dbPassword;
     public static String apiBaseUrl;
     public static String testEnvironment;
-
+    public static String ordsApiUsername;
+    public static String ordsApiPassword;
 }

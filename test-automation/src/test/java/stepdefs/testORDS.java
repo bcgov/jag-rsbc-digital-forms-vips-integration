@@ -1,6 +1,7 @@
 package stepdefs;
 
 import api.ApiUtil;
+import config.GlobalVariables;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,7 +19,7 @@ public class testORDS {
 
     @When("the user hits the api")
     public void theUserHitsTheApi() {
-        status = apiUtil.getResponseStatusCodeUsingBasicAuthentication("rsdfrm_dev","Welc0me!");
+        status = apiUtil.getResponseStatusCodeUsingBasicAuthentication(GlobalVariables.ordsApiUsername,GlobalVariables.ordsApiPassword);
     }
 
     @Then("the user gets success")
