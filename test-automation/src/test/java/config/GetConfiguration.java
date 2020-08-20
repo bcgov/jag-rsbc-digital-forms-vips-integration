@@ -16,7 +16,7 @@ public class GetConfiguration {
 
     public String getDigitalFormsUrl()
     {
-        return properties.getProperty("digitalFormsBaseUrl");
+        return System.getenv("digitalFormsDevBaseUrl");
     }
     public String getApiUsername()
     {
