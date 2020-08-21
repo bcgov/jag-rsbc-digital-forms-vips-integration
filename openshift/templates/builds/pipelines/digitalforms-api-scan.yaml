@@ -100,6 +100,69 @@ objects:
 
             def ZAP_ENABLED = "false"
             def SONAR_ENABLED = "false"
+            def BDT_ENABLED = "true"
+
+            // BDT/Cucumber testing framwork
+            if ("${BDT_ENABLED}"!="false") {
+              node("maven35") {
+                stage('Behavior Driven Testing') {
+                  timeout(time: 60, unit: 'MINUTES') {
+                    dir('bdt') {
+                      git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}", credentialsId: "${GIT_CREDENTIALS_ID}"
+                      withCredentials([usernamePassword(credentialsId: 'totdho-tools-nexus-config', usernameVariable: 'NEXUS_ADMIN_USER', passwordVariable: 'NEXUS_ADMIN_PASSWORD')]) {
+                        withCredentials([file(credentialsId: 'totdho-tools-cucumber-maven-config', variable: 'CONFIG_PROPERTIES')]) {
+                          def retVal = sh (
+                            returnStatus: true,
+                            script: """
+                              # Nexus repository
+                              export NEXUS_URL=http://nexus:8081
+
+                              . \$CONFIG_PROPERTIES
+
+                              cd test-automation
+                              mvn -Popenshift -s ../configuration/settings.xml clean
+                              mvn -Popenshift -s ../configuration/settings.xml compile
+                              mvn -Popenshift -s ../configuration/settings.xml test || echo "continuing..."
+                            """
+                          )
+                        }
+                      }
+
+                      // Copy the report into the Jenkins working directory so the Jenkins tools can access it.
+                      sh (
+                        returnStdout: true,
+                        script: "mkdir -p ./wrk/ && cp ./test-automation/test-output/htmlReport/ExtentHtml.html ./wrk/"
+                      )
+                    }
+                  }
+                  // Stash the report for publishing in a different stage (which will run on a different pod).
+                  echo "Stash the report for the publishing stage ..."
+                  stash name: "BDT_REPORTS", includes: "bdt/wrk/*.html"
+                }
+              }
+              node("base") {
+                stage('Publish reports') {
+                  timeout(time: 60, unit: 'MINUTES') {
+                    echo "Preparing the report for the publishing ..."
+                    unstash name: "BDT_REPORTS"
+
+                    def retVal = sh (
+                      returnStatus: true,
+                      script: """
+                        # find
+                        export DATE_STAMP=\$(date +%Y-%m-%d-%H-%M-%S)
+                        sed -ri "s/http:/https:/g" bdt/wrk/ExtentHtml.html
+                        [ -d "/var/www/html/reports/bdt/" ] || mkdir -p /var/www/html/reports/cucumber
+                        mv bdt/wrk/ExtentHtml.html /var/www/html/reports/cucumber/\${DATE_STAMP}-ExtentHtml.html
+                        cd /var/www/html/reports/cucumber/
+                        rm -f 0000-00-00-00-00-00-ExtentHtml.html
+                        ln -s \${DATE_STAMP}-ExtentHtml.html 0000-00-00-00-00-00-ExtentHtml.html
+                      """
+                    )
+                  }
+                }
+              }
+            }
 
             if ("${ZAP_ENABLED}"!="false") {
               node("zap") {
@@ -121,6 +184,7 @@ objects:
                             -f openapi \
                             -d \
                             -x ${ZAP_REPORT_NAME} \
+                            -r ${APP_NAME}-zap-report.html \
                             -z "-configfile /zap/wrk/options.conf -d /var/lib/jenkins" \
                             -n /zap/wrk/default.context
                         """
@@ -137,6 +201,28 @@ objects:
                     // Stash the ZAP report for publishing in a different stage (which will run on a different pod).
                     echo "Stash the report for the publishing stage ..."
                     stash name: "${ZAP_REPORT_STASH}", includes: "zap/wrk/*.xml"
+                  }
+                }
+              }
+              node("base") {
+                stage('Publish reports') {
+                  timeout(time: 60, unit: 'MINUTES') {
+                    echo "Preparing the report for the publishing ..."
+                    unstash name: "ZAP_REPORTS"
+
+                    def retVal = sh (
+                      returnStatus: true,
+                      script: """
+                        # find
+                        export DATE_STAMP=\$(date +%Y-%m-%d-%H-%M-%S)
+                        sed -ri "s/http:/https:/g" zap/wrk/${APP_NAME}-zap-report.html
+                        [ -d "/var/www/html/reports/zap/" ] || mkdir -p /var/www/html/reports/zap
+                        mv zap/wrk/${APP_NAME}-zap-report.html /var/www/html/reports/zap/\${DATE_STAMP}-${APP_NAME}-zap-report.html
+                        cd /var/www/html/reports/zap/
+                        rm -f 0000-00-00-00-00-00-${APP_NAME}-zap-report.html
+                        ln -s \${DATE_STAMP}-${APP_NAME}-zap-report.html 0000-00-00-00-00-00-${APP_NAME}-zap-report.html
+                      """
+                    )
                   }
                 }
               }
