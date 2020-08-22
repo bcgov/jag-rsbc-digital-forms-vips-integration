@@ -87,6 +87,21 @@ Plugins to add:
 
 Change the admin password. Use password from .../resources/secrets
 # Deploy Applications
+## Static web server (for reports)
+Need access to create service account and role binding in target namespace
+```shell script
+export NAMESPACE_PREFIX=
+export NAMESPACE_SUFFIX=
+export TARGET_NAMESPACE=${NAMESPACE_PREFIX}-${NAMESPACE_SUFFIX}
+export GIT_REPO="bcgov/jag-rsbc-digital-forms-vips-integration"
+export GIT_BRANCH="master"
+export GIT_URL="https://raw.githubusercontent.com/${GIT_REPO}/${GIT_BRANCH}"
+
+oc process -o=yaml \
+  -f ${GIT_URL}/openshift/templates/static-web-server.dc.yaml \
+  -p namespacePrefix=${NAMESPACE_PREFIX} \
+  | oc apply -f - ${TARGET_NAMESPACE} -n ${TARGET_NAMESPACE}
+```
 ## DigitalForms-API
 ### Deployment Pipeline
 ```shell script
@@ -99,6 +114,22 @@ export GIT_BRANCH="master"
 export GIT_URL="https://raw.githubusercontent.com/${GIT_REPO}/${GIT_BRANCH}"
 
 # Configuration evn/secrets
+## Create secrets synchronized with Jenkins
+## Option 1:
+### Pass base64 value of env file.
+### enter values for variables in: ./test-automation/env.template
+cat ./test-automation/env.template | sed -r "s/^([a-zA-Z]+)/export \1/g" | base64 | tr -d '\n'
+### Copy the output and pass as argument for file
+oc process -o=yaml \
+  -f ${GIT_URL}/openshift/templates/resources/secrets/cucumber-maven-config.yaml \
+  -p file=  \
+  | oc apply -f - -n ${TOOLS_NAMESPACE}
+
+## Option 2:
+cat ./test-automation/env.template | sed -r "s/^([a-zA-Z]+)/export \1/g" > env.cucumber
+oc create secret generic cucumber-maven-config --from-file=filename=env.cucumber
+oc label secret cucumber-maven-config credential.sync.jenkins.openshift.io=true
+
 oc process -o=yaml \
   -f ${GIT_URL}/openshift/templates/resources/secrets/digitalforms-api.yaml \
   -p DIGITALFORMS_BASICAUTH_PASSWORD=  \
