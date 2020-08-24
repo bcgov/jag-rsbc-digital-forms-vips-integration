@@ -79,12 +79,12 @@ public class ScheduleReviewController {
 	}
 
 	@PostMapping(value = { "**/review/schedule/**",
-			"/{noticeNo}/review/schedule/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+			"/{noticeNumber}/review/schedule/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Selected Review Timeslot", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ReviewScheduledSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<Boolean>> selectedReviewTimePost(
-			@PathVariable(value = "noticeNo", required = true) String noticeNo,
+			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) TimeSlotWrapper timeSlot) {
 
@@ -92,7 +92,7 @@ public class ScheduleReviewController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "selectedReviewTimePost");
 		logger.info("Post selected review time request received");
 
-		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNo, timeSlot.getTimeSlot(), correlationId);
+		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNumber, timeSlot.getTimeSlot(), correlationId);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
