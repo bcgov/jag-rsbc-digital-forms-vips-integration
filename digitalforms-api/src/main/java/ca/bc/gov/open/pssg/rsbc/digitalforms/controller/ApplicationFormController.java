@@ -80,13 +80,13 @@ public class ApplicationFormController {
 	}
 
 	@PostMapping(value = { "**/application/**",
-			"/{formType}/{noticeNo}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+			"/{formType}/{noticeNumber}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ApplicationIdSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> applicationFormPost(
 			@PathVariable(value = "formType", required = true) String formType,
-			@PathVariable(value = "noticeNo", required = true) String noticeNo,
+			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData)
 			throws DigitalFormsException {
@@ -101,7 +101,7 @@ public class ApplicationFormController {
 		formData.getApplicationInfo().validateRequiredFields();
 		DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
 		
-		ApplicationResponse data = service.postApplicationForm(formType, noticeNo, correlationId,
+		ApplicationResponse data = service.postApplicationForm(formType, noticeNumber, correlationId,
 				formData.getApplicationInfo());
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
