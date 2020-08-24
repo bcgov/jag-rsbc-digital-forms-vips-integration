@@ -52,15 +52,15 @@ Refer to **Actuator** section of https://github.com/bcgov/jag-rsbc-digital-forms
 ```
 digitalforms-api
     └── src/../
-	     └── digitalforms
-				├── config 		# Contains API Configuration files
-				├── controller 	# Contains API controller files
-				├── exception 	# Contains API Exception files
-				├── model 		# Contains API Model files
-				├── security 	# Contains API Security files
-				├── service 	# Contains API Service files
-				├── swagger2 	# Contains API Swagger files
-				└── util 		# Contains API Util files
+	 └── digitalforms
+		├── config 	# Contains API Configuration files
+		├── controller 	# Contains API controller files
+		├── exception 	# Contains API Exception files
+		├── model 	# Contains API Model files
+		├── security 	# Contains API Security files
+		├── service 	# Contains API Service files
+		├── swagger2 	# Contains API Swagger files
+		└── util 	# Contains API Util files
 ```
 
 ### API Operations categories.

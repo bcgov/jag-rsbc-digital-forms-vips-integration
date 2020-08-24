@@ -85,16 +85,16 @@ To monitor and manage the application
 
 ```
 .
-├── .github                             # Contains GitHub Related sources
-├── configuration						# Contains Nexus configuration
-├── digitalforms-api					# Digital forms API
+├── .github                       # Contains GitHub Related sources
+├── configuration						      # Contains Nexus configuration
+├── digitalforms-api					    # Digital forms API
 ├── digitalforms-ords-client			# Digital forms ORDS client library
-├── nexus								# Contains Nexus setup files
-├── openshift							# Contains Openshift configuration templates
-├── sonarqube							# Contains SonarQube setup files
-├── splunk								# Contains Splunk setup files
-├── test-automation						# Contains Digital forms automation tests
-├── docker-compose.yml					# Digital forms API build file
+├── nexus								          # Contains Nexus setup files
+├── openshift							        # Contains Openshift configuration templates
+├── sonarqube							        # Contains SonarQube setup files
+├── splunk								        # Contains Splunk setup files
+├── test-automation						    # Contains Digital forms automation tests
+├── docker-compose.yml					  # Digital forms API build file
 └── nexus-docker-compose.yml			# Nexus build file
 ```
 
