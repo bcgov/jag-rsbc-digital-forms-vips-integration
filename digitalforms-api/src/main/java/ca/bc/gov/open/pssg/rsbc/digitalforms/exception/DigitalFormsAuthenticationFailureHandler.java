@@ -28,7 +28,7 @@ public class DigitalFormsAuthenticationFailureHandler extends BasicAuthenticatio
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException {
 		
-		logger.error("API basic authentication failed");
+		logger.debug("API basic authentication failed");
 		response.setContentType(DigitalFormsConstants.JSON_CONTENT);
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.getOutputStream()
