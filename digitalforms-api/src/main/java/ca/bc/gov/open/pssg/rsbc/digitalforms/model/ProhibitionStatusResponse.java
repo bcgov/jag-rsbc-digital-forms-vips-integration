@@ -35,6 +35,7 @@ public class ProhibitionStatusResponse {
 			status.setSurnameNm(ordsResp.getStatus().getSurnameNm());
 			status.setDisclosure(ordsResp.getStatus().getDisclosure());
 			status.setDriverLicenceSeizedYn(ordsResp.getStatus().getDriverLicenceSeized());
+			status.setApplicationId(ordsResp.getStatus().getApplicationId());
 		}
 	}
 
