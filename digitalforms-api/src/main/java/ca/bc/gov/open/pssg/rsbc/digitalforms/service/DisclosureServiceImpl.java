@@ -35,12 +35,11 @@ public class DisclosureServiceImpl implements DisclosureService {
 	}
 
 	@Override
-	public DisclosureResponse setDisclosureSent(String noticeNumber, String correlationId,
-			DocumentDisclosureInfo disclosureInfo) {
+	public DisclosureResponse setDisclosureSent(String correlationId, DocumentDisclosureInfo disclosureInfo) {
 		logger.info("Processing set disclosure document as sent request");
 
-		return disclosureService.setDisclosureSent(noticeNumber, disclosureInfo.getDocumentId(),
-				disclosureInfo.getDisclosedDtm(), properties.getOrdsUserGuid(), correlationId);
+		return disclosureService.setDisclosureSent(disclosureInfo.getDocumentId(), disclosureInfo.getDisclosedDtm(),
+				properties.getOrdsUserGuid(), correlationId);
 	}
 
 }
