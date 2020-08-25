@@ -34,8 +34,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.DisclosureServiceImpl;
 @TestPropertySource("classpath:application-test.properties")
 public class DisclosureControllerTests {
 
-	private final String IRP_TEST_NOTICE_NUMBER_SUCCESS = "1";
-	private final String IRP_TEST_NOTICE_NUMBER_ERROR = "2";
 	private final String DOCUMENT_ID_SUCCESS = "1";
 	private final String DOCUMENT_ID_ERROR = "2";
 	private final DocumentDisclosureInfo DISCLOSURE = new DocumentDisclosureInfo("123", "2018-06-29 00:00:00 -07:00");
@@ -59,9 +57,9 @@ public class DisclosureControllerTests {
 		when(disclosureService.getDisclosureDocument(DOCUMENT_ID_ERROR, CORRELATION_ID))
 				.thenReturn(DisclosureResponse.errorResponse(ERROR_STATUS));
 
-		when(disclosureService.setDisclosureSent(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, DISCLOSURE))
+		when(disclosureService.setDisclosureSent("123", DISCLOSURE))
 				.thenReturn(DisclosureResponse.successResponse("updatedTime", SUCCESS_CODE, SUCCESS_STATUS));
-		when(disclosureService.setDisclosureSent(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID, DISCLOSURE))
+		when(disclosureService.setDisclosureSent("234", DISCLOSURE))
 				.thenReturn(DisclosureResponse.errorResponse(ERROR_STATUS));
 	}
 
@@ -84,8 +82,8 @@ public class DisclosureControllerTests {
 	@DisplayName("setDisclosureSent - Patch success")
 	@Test
 	void setDisclosureSentSuccess() throws DigitalFormsException {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setDisclosureSent(IRP_TEST_NOTICE_NUMBER_SUCCESS,
-				CORRELATION_ID, new DisclosureWrapper(DISCLOSURE));
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setDisclosureSent("123",
+				new DisclosureWrapper(DISCLOSURE));
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 		Assertions.assertTrue(resp.getBody().getData().booleanValue());
 	}
@@ -93,8 +91,8 @@ public class DisclosureControllerTests {
 	@DisplayName("setDisclosureSent - Patch error")
 	@Test
 	void setDisclosureSentError() throws DigitalFormsException {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setDisclosureSent(IRP_TEST_NOTICE_NUMBER_ERROR,
-				CORRELATION_ID, new DisclosureWrapper(DISCLOSURE));
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setDisclosureSent("234",
+				new DisclosureWrapper(DISCLOSURE));
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
 

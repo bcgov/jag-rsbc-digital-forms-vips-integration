@@ -32,6 +32,9 @@ public class TransactionInfo {
 	@JsonProperty("paymentDate")
 	private String paymentDate;
 	
+	public TransactionInfo() {
+	}
+	
 	public TransactionInfo(String paymentCardType, String paymentAmount, String receiptNumberTxt, String paymentDate) {
 		this.paymentCardType = paymentCardType; 
 		this.paymentAmount = paymentAmount;
@@ -51,11 +54,15 @@ public class TransactionInfo {
 
 	@JsonProperty("paymentAmount")
 	public String getPaymentAmount() throws DigitalFormsException {
-		try {
-			// Format payment amount to 2 decimal places
-			return String.format("%.2f", Double.valueOf(paymentAmount));
-		} catch (NumberFormatException e) {
-			throw new DigitalFormsException(DigitalFormsConstants.PAYMENT_FORMAT_ERROR, HttpStatus.BAD_REQUEST);
+		if (null != paymentAmount) {
+			try {
+				// Format payment amount to 2 decimal places
+				return String.format("%.2f", Double.valueOf(paymentAmount));
+			} catch (NumberFormatException e) {
+				throw new DigitalFormsException(DigitalFormsConstants.PAYMENT_FORMAT_ERROR, HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return paymentAmount;
 		}
 	}
 
