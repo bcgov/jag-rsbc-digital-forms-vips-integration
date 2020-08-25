@@ -80,7 +80,6 @@ public class DisclosureController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = DocumentDisclosedSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<Boolean>> setDisclosureSent(
-			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) DisclosureWrapper disclosureInfo) {
 
@@ -88,8 +87,7 @@ public class DisclosureController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "disclosureDocumentPatch");
 		logger.info("Set disclosure document as sent request received");
 
-		DisclosureResponse data = service.setDisclosureSent(noticeNumber, correlationId,
-				disclosureInfo.getDisclosure());
+		DisclosureResponse data = service.setDisclosureSent(correlationId, disclosureInfo.getDisclosure());
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
 			logger.info("Set disclosure document as sent request success");

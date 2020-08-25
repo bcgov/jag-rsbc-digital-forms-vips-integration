@@ -14,7 +14,6 @@ public interface DisclosureService {
 
 	public DisclosureResponse getDisclosureDocument(String documentId, String correlationId);
 
-	public DisclosureResponse setDisclosureSent(String noticeNumber, String correlationId,
-			DocumentDisclosureInfo disclosureInfo);
+	public DisclosureResponse setDisclosureSent(String correlationId, DocumentDisclosureInfo disclosureInfo);
 
 }
