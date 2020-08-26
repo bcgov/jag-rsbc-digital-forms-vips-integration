@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewInfo;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewInfoWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TimeSlotWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.SavedTimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlotResponse;
@@ -39,7 +41,7 @@ public class ScheduleReviewController {
 	private class AvailabilityInfoSwaggerResponse extends JSONResponse<TimeSlots> {
 	}
 
-	private class ReviewScheduledSwaggerResponse extends JSONResponse<Boolean> {
+	private class ReviewScheduledSwaggerResponse extends JSONResponse<ReviewInfoWrapper> {
 	}
 
 	@Autowired
@@ -83,7 +85,7 @@ public class ScheduleReviewController {
 	@ApiOperation(value = "Post Selected Review Timeslot", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ReviewScheduledSwaggerResponse.class) })
-	public ResponseEntity<JSONResponse<Boolean>> selectedReviewTimePost(
+	public ResponseEntity<JSONResponse<ReviewInfoWrapper>> selectedReviewTimePost(
 			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) TimeSlotWrapper timeSlot) {
@@ -92,10 +94,11 @@ public class ScheduleReviewController {
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "selectedReviewTimePost");
 		logger.info("Post selected review time request received");
 
-		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNumber, timeSlot.getTimeSlot(), correlationId);
+		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNumber, timeSlot.getTimeSlot(),
+				correlationId);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
-			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
+			JSONResponse<ReviewInfoWrapper> resp = new JSONResponse<>(new ReviewInfoWrapper(new ReviewInfo(data)));
 			logger.info("Post selected review time request success");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.OK);
