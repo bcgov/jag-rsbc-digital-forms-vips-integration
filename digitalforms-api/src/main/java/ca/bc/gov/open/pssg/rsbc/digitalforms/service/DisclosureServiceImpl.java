@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ca.bc.gov.open.jagvipsclient.disclosure.DisclosureResponse;
 import ca.bc.gov.open.jagvipsclient.prohibition.DocumentDisclosureInfo;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.config.ConfigProperties;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
  * 
@@ -39,7 +40,7 @@ public class DisclosureServiceImpl implements DisclosureService {
 		logger.info("Processing set disclosure document as sent request");
 
 		return disclosureService.setDisclosureSent(disclosureInfo.getDocumentId(), disclosureInfo.getDisclosedDtm(),
-				properties.getOrdsUserGuid(), correlationId);
+				properties.getOrdsUserGuid(), DigitalFormsConstants.ORDS_USER_ID, correlationId);
 	}
 
 }
