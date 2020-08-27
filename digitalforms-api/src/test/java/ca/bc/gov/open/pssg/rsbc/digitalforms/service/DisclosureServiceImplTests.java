@@ -53,9 +53,9 @@ class DisclosureServiceImplTests {
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 
-		when(disclosureService.setDisclosureSent(any(), any(), any(), eq("123")))
+		when(disclosureService.setDisclosureSent(any(), any(), any(), any(), eq("123")))
 				.thenReturn(DisclosureResponse.successResponse("updatedTime", SUCCESS_CODE, SUCCESS_STATUS));
-		when(disclosureService.setDisclosureSent(any(), any(), any(), eq("234")))
+		when(disclosureService.setDisclosureSent(any(), any(), any(), any(), eq("234")))
 				.thenReturn(DisclosureResponse.errorResponse(ERROR_STATUS));
 		when(disclosureService.getDisclosureDocument(eq(DOCUMENT_ID_SUCCESS), any(), eq(CORRELATION_ID)))
 				.thenReturn(DisclosureResponse.successDocumentResponse(new DocumentInfo("mimeType", "document"),
