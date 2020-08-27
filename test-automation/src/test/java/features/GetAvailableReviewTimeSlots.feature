@@ -1,6 +1,6 @@
 Feature: GET Review Scheduling
 
-  @regression
+  @dev
   Scenario Outline: Test the GET endpoint of Review Scheduling
     Given the user has access to the Review Scheduling GET endpoint
     When the user submits a GET Review Scheduling Request for noticeType "<noticeType>" ReviewType "<reviewType>" ReviewDate "<reviewDate>" CorrelationId "<correlationId>"
