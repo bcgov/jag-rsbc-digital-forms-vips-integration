@@ -6,7 +6,7 @@ public class ErrorMessages
     {
         switch (statusCode)
         {
-            case(200):
+            case(500):
                 return "Internal Server Error.";
 
             case(204):
@@ -17,6 +17,9 @@ public class ErrorMessages
 
             case(403):
                 return "Forbidden.";
+
+            case(400):
+                return "Bad Request.";
 
             default:
                 return "";

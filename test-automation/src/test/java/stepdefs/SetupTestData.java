@@ -2,17 +2,12 @@ package stepdefs;
 
 import api.GenerateEndpoint;
 import api.VerbType;
-import base.BaseUtil;
 import config.GlobalVariables;
-import database.DatabaseConnection;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
-
-import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
