@@ -36,6 +36,7 @@ public class GetApplicationFormData {
         endpointUrl = generateEndpoint.ApplicationForm(VerbType.GET, null, guid, null, correlationId);
         apiUtil = new ApiUtil(endpointUrl);
         responseStatusCode = apiUtil.getResponseStatusCodeUsingBasicAuthentication(GlobalVariables.apiUsername, GlobalVariables.apiPassword);
+
     }
 
 

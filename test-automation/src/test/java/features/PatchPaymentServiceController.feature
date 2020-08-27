@@ -1,8 +1,8 @@
 Feature: PATCH Payment
 
-  @database
+  @dev
   Scenario Outline: Test the PATCH endpoint of Payment
-    Given the database has a record for FormType "<formType>" GUID "<guid>" CorrelationId "<correlationId>"
+    Given the database has a record for NoticeNumber "<noticeNo>" and CorrelationId "<correlationId>"
     When the user submits a PATCH Payment request with parameters NoticeNumber "<noticeNo>" Correlation ID "<correlationId>"
     And  PATCH form data having PaymentAmount "<paymentAmount>" PaymentCardType "<paymentCardType>" PaymentDate "<paymentDate>" ReceiptNumberTxt "<receiptNumberTxt>"
     Then the user should get a successful response from PATCH Payment request and the record should be updated in the database

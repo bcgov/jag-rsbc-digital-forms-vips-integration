@@ -1,8 +1,8 @@
 Feature: PATCH Application Form Data
 
-  @database
+  @dev
   Scenario Outline: Test the PATCH endpoint of Application Form Data
-    Given the database has a record for FormType "<formType>" GUID "<guid>" FirstName "<fName>" SecondName "<sName>" Surname "<surname>" CorrelationId "<correlationId>"
+    Given the database has a record for GUID "<guid>" and CorrelationId "<correlationId>"
     When the user submits a PATCH Application Form Data request with parameters FormType "<formType>" GUID "<guid>" Correlation ID "<correlationId>"
     And  PATCH form data having EMail "<email>" Fax "<fax>" FirstName "<fName>" FormData "<formData>" ManualEntry "<entry>" NoticeSubject "<noticeSubject>" Phone "<phone>" PresentationType "<presentationType>" ReviewRoleType "<rvwRoleType>" SecondName "<sName>" Surname "<surname>"
     Then the user should get a successful response from PATCH request and the record should be updated in the database

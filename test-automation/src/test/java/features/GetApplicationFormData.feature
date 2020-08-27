@@ -1,6 +1,6 @@
 Feature: GET Application Form Data
 
-  @regression
+  @dev
   Scenario Outline: Test the GET endpoint of Application Form Data
     Given the user has access to GET Application Form Data
     When the user submits a GET Application Form Data request with parameters GUID "<GUID>" Correlation ID "<correlationId>"
