@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewInfoWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TimeSlotWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.ReviewTimeSlotResponse;
@@ -56,12 +57,14 @@ public class ScheduleReviewControllerTests {
 	@BeforeEach
 	public void init() {
 		MockitoAnnotations.initMocks(this);
+		ReviewTimeSlotResponse response = new ReviewTimeSlotResponse();
+		response.setReviewId("123");
 		when(service.getAvailableTimeSlots(NOTICE_TYPE_SUCCESS, REVIEW_TYPE, REVIEW_DATE, CORRELATION_ID)).thenReturn(
 				TimeSlotResponse.successResponse(new AvailableTimeSlotResponse(), SUCCESS_CODE, SUCCESS_STATUS));
 		when(service.getAvailableTimeSlots(NOTICE_TYPE_ERROR, REVIEW_TYPE, REVIEW_DATE, CORRELATION_ID))
 				.thenReturn(TimeSlotResponse.errorResponse(ERROR_STATUS));
-		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_SUCCESS, timeSlot, CORRELATION_ID)).thenReturn(
-				SavedTimeSlotResponse.successResponse(new ReviewTimeSlotResponse(), SUCCESS_CODE, SUCCESS_STATUS));
+		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_SUCCESS, timeSlot, CORRELATION_ID))
+				.thenReturn(SavedTimeSlotResponse.successResponse(response, SUCCESS_CODE, SUCCESS_STATUS));
 		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_ERROR, timeSlot, CORRELATION_ID))
 				.thenReturn(SavedTimeSlotResponse.errorResponse(ERROR_STATUS));
 	}
@@ -85,17 +88,17 @@ public class ScheduleReviewControllerTests {
 	@DisplayName("selectedReviewTimePost - Success")
 	@Test
 	void selectedReviewTimePostSuccess() {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_SUCCESS,
-				CORRELATION_ID, new TimeSlotWrapper(timeSlot));
+		ResponseEntity<JSONResponse<ReviewInfoWrapper>> resp = controller
+				.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
-		Assertions.assertTrue(resp.getBody().getData().booleanValue());
+		Assertions.assertEquals("123", resp.getBody().getData().getReviewInfo().getReviewId());
 	}
 
 	@DisplayName("selectedReviewTimePost - Error")
 	@Test
 	void selectedReviewTimePostError() {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_ERROR,
-				CORRELATION_ID, new TimeSlotWrapper(timeSlot));
+		ResponseEntity<JSONResponse<ReviewInfoWrapper>> resp = controller
+				.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
 

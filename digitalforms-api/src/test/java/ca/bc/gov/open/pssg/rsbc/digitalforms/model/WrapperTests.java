@@ -56,5 +56,18 @@ public class WrapperTests {
 
 		Assertions.assertEquals("reviewStartDtm", wrapper.getTimeSlot().getReviewStartDtm());
 	}
+	
+	@Test
+	public void testReviewInfoWrapper() {
+
+		ReviewInfoWrapper wrapper = new ReviewInfoWrapper();
+
+		TimeSlot timeSlot = new TimeSlot("reviewStartDtm", "reviewEndDtm");
+		ReviewInfo reviewInfo = new ReviewInfo("123", timeSlot);
+		wrapper.setReviewInfo(reviewInfo);
+
+		Assertions.assertEquals("reviewStartDtm", wrapper.getReviewInfo().getTimeSlot().getReviewStartDtm());
+		Assertions.assertEquals("123", wrapper.getReviewInfo().getReviewId());
+	}
 
 }

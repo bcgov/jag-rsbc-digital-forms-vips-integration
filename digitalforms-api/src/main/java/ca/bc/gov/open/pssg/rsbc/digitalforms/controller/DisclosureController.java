@@ -75,7 +75,7 @@ public class DisclosureController {
 	}
 
 	@PatchMapping(value = { "**/disclosure/**",
-			"/{noticeNumber}/disclosure/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+			"/disclosure/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Set Disclosure Document Sent", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = DocumentDisclosedSwaggerResponse.class) })
