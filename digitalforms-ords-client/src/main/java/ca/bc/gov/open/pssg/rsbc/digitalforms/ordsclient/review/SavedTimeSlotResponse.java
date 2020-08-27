@@ -16,7 +16,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.ReviewTimeSlot
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "respCode", "respMsg", "reviewStartDtm", "reviewEndDtm" })
+@JsonPropertyOrder({ "respCode", "respMsg", "reviewId", "reviewStartDtm", "reviewEndDtm" })
 public class SavedTimeSlotResponse {
 
 	@JsonProperty("respCode")
@@ -24,6 +24,9 @@ public class SavedTimeSlotResponse {
 	
 	@JsonProperty("respMsg")
 	private String respMsg;
+	
+	@JsonProperty("reviewId")
+	private String reviewId;
 	
 	@JsonProperty("reviewStartDtm")
 	private String reviewStartDtm;
@@ -61,6 +64,16 @@ public class SavedTimeSlotResponse {
 		this.reviewEndDtm = reviewEndDtm;
 	}
 	
+	@JsonProperty("reviewId")
+	public String getReviewId() {
+		return reviewId;
+	}
+
+	@JsonProperty("reviewId")
+	public void setReviewId(String reviewId) {
+		this.reviewId = reviewId;
+	}
+
 	public SavedTimeSlotResponse(int respCode, String respMsg) {
 		this.respCode = respCode;
 		this.respMsg = respMsg;
@@ -73,6 +86,7 @@ public class SavedTimeSlotResponse {
 		
 		this.reviewStartDtm = response.getReviewStartDtm();
 		this.reviewEndDtm = response.getReviewEndDtm();
+		this.reviewId = response.getReviewId();
 	}
 	
 	public static SavedTimeSlotResponse successResponse(ReviewTimeSlotResponse response, String statusCode, String statusMessage) {
