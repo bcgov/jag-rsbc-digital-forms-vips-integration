@@ -1,6 +1,6 @@
 Feature: GET Payment Status
 
-  @regression
+  @dev
   Scenario Outline: Test the GET endpoint of Payment
     Given the user has access to the Payment Status GET endpoint
     When the user submits a GET Payment Request for notice number "<noticeNumber>" CorrelationId "<correlationId>"

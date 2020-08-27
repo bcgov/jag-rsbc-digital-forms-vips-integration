@@ -1,49 +1,38 @@
 package stepdefs;
 
+import api.ErrorMessages;
 import api.GenerateEndpoint;
 import api.VerbType;
-import base.BaseUtil;
 import config.GlobalVariables;
-import database.DatabaseConnection;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.testng.Assert;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
-public class PostApplicationFormData extends BaseUtil {
+public class PostApplicationFormData {
     GenerateEndpoint generateEndpoint;
-    DatabaseConnection databaseConnection;
-    BaseUtil baseUtil;
-    String selectQuery, deleteQuery, endpointUrl;
+    Response response;
+    String endpointUrl;
     int responseStatusCode;
 
 
-    public PostApplicationFormData(BaseUtil baseUtil) {
+    public PostApplicationFormData() {
         generateEndpoint = new GenerateEndpoint(GlobalVariables.apiBaseUrl);
-        this.baseUtil = baseUtil;
-        this.databaseConnection = baseUtil.databaseConnection;
     }
 
 
-    @Given("the database doesn't have any record for FormType {string} FirstName {string} SecondName {string} LastName {string} CorrelationId {string}")
-    public void theDatabaseDoesnTHaveAnyRecordForFormTypeFirstNameSecondNameLastNameCorrelationId(String formType, String fName, String sName, String surname, String correlationId) throws Exception {
-        // Verify there is no record in the DB, if there is, delete it.
-        selectQuery = "select * from rsdfrm_digital_forms where notice_type_cd='" + formType + "' and first_given_nm='" + fName + "' and second_given_nm='" + sName + "' and surname_nm='" + surname + "' and correlation_guid='" + correlationId + "'";
-        deleteQuery = "delete from rsdfrm_digital_forms where notice_type_cd='" + formType + "' and first_given_nm='" + fName + "' and second_given_nm='" + sName + "' and surname_nm='" + surname + "' and correlation_guid='" + correlationId + "'";
-
-        int rowCount = databaseConnection.getRowCount(selectQuery);
-
-        if (rowCount > 0) {
-            databaseConnection.executeDeleteQuery(deleteQuery);
-            rowCount = databaseConnection.getRowCount(selectQuery);
-        }
-
-        Assert.assertEquals(rowCount, 0, "There should be no record in the database for SQL Query " + selectQuery);
-
+    @Given("the database doesn't have any record for ProhibitionId {string}")
+    public void theDatabaseDoesnTHaveAnyRecordForProhibitionId(String prohibitionId) {
+        RestAssured.baseURI = GlobalVariables.ordsBaseUrl;
+        Response response = given().auth().preemptive().basic(GlobalVariables.ordsApiUsername,GlobalVariables.ordsApiPassword).header("Content-Type", "application/json").delete("digitalForm/prohibition/" + prohibitionId + "/123");
+        responseStatusCode = response.getStatusCode();
+        Assert.assertEquals(responseStatusCode,200, ErrorMessages.apiErrorMessage(responseStatusCode));
     }
 
 
@@ -70,7 +59,8 @@ public class PostApplicationFormData extends BaseUtil {
                 "    }\n" +
                 "}";
 
-        responseStatusCode = given().auth().preemptive().basic(GlobalVariables.apiUsername,GlobalVariables.apiPassword).contentType(JSON).body(jsonBody).when().post(endpointUrl).getStatusCode();
+        response = given().auth().preemptive().basic(GlobalVariables.apiUsername,GlobalVariables.apiPassword).contentType(JSON).body(jsonBody).when().post(endpointUrl);
+        responseStatusCode = response.getStatusCode();
     }
 
     @Then("the user should get a successful response")
@@ -78,11 +68,5 @@ public class PostApplicationFormData extends BaseUtil {
         Assert.assertEquals(responseStatusCode, 201, "The response status should be Created:201");
     }
 
-    @And("the record should exist in the database")
-    public void theRecordShouldExistInTheDatabase() throws Exception {
-        int rowCount = databaseConnection.getRowCount(selectQuery);
-
-        Assert.assertEquals(rowCount, 1, "There should be one record in the database for SQL Query " + selectQuery);
-    }
 
 }

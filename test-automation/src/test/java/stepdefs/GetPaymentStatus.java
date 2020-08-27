@@ -44,7 +44,6 @@ public class GetPaymentStatus {
     public void theUserShouldGetAResponseHavingAttributesPaymentCardTypePaymentAmountReceiptNumberPaymentDate(String paymentCardType, String paymentAmount, String receiptNumber, String paymentDate) {
         Assert.assertEquals(responseStatusCode, 200, apiErrorMessage(responseStatusCode));
 
-
         jsonData = apiUtil.getAttributeValuesInNestedHashMap("data");
         data = jsonData.get("transactionInfo");
 
