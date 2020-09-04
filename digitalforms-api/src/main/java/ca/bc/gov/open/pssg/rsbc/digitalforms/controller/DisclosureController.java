@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.jagvipsclient.disclosure.DisclosureResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.DisclosureWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.DocumentWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.DisclosureService;
@@ -81,11 +82,14 @@ public class DisclosureController {
 			@ApiResponse(code = 200, message = "Success", response = DocumentDisclosedSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<Boolean>> setDisclosureSent(
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) DisclosureWrapper disclosureInfo) {
+			@RequestBody(required = true) DisclosureWrapper disclosureInfo) throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "disclosureDocumentPatch");
 		logger.info("Set disclosure document as sent request received");
+		
+		// Validate disclosedDtm format 
+		DigitalFormsUtils.validateTimeDate(disclosureInfo.getDisclosure().getDisclosedDtm());
 
 		DisclosureResponse data = service.setDisclosureSent(correlationId, disclosureInfo.getDisclosure());
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {

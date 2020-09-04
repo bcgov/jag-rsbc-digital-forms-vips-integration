@@ -24,6 +24,9 @@ public final class DigitalFormsConstants {
 	// specific ORDS response codes. 
 	public static final int VIPS_ORDS_IRP_NOT_FOUND = 2;
 	
+	// DFAPI ISO 8601 time/date format regex
+	public static final String DF_ISO8601_DATE_TIME_REGEX = "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|\\s([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$";
+	
 	// user id for ORDS request
 	public static final String ORDS_USER_ID = "DigitalFormsApi";
 	
@@ -75,6 +78,8 @@ public final class DigitalFormsConstants {
 	public static final String REVIEW_ROLE_TYPE_TEXT = "Review role type code";
 	
 	public static final String MANUAL_ENTRY_TEXT = "Manual entry code";
+	
+	public static final String TIME_DATE_FORMAT_ERROR = "Invalid time date format";
 	
 	// rest response media type
 	public static final String JSON_CONTENT = "application/json";
