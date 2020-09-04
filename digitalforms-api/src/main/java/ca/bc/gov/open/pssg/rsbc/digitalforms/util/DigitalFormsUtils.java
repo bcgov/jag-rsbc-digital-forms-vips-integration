@@ -3,6 +3,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.util;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.http.HttpStatus;
@@ -112,6 +113,20 @@ public class DigitalFormsUtils {
 				.contains(Enums.getIfPresent(MANUAL_ENTRY_CD.class, formData.getManualEntryYN()).orNull())) {
 			throw new DigitalFormsException(String.format(DigitalFormsConstants.INVALID_ATTRIBUTE_ERROR,
 					DigitalFormsConstants.MANUAL_ENTRY_TEXT), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	/**
+	 * 
+	 * Validate time/date formatted values
+	 * 
+	 * @param timeDate
+	 * @throws DigitalFormsException
+	 */
+	public static void validateTimeDate(String timeDate) throws DigitalFormsException {
+		if (!Strings.isNullOrEmpty(timeDate)
+				&& Pattern.matches(DigitalFormsConstants.DF_ISO8601_DATE_TIME_REGEX, timeDate) == false) {
+			throw new DigitalFormsException(DigitalFormsConstants.TIME_DATE_FORMAT_ERROR, HttpStatus.NOT_FOUND); 
 		}
 	}
 

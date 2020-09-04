@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewInfoWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.TimeSlotWrapper;
@@ -46,7 +47,7 @@ public class ScheduleReviewControllerTests {
 	private final String SUCCESS_STATUS = "success";
 	private final String SUCCESS_CODE = "0";
 	private final String ERROR_STATUS = "error";
-	private TimeSlot timeSlot = new TimeSlot("startTm", "endTm");
+	private TimeSlot timeSlot = new TimeSlot("2018-06-29 09:00:00 -07:00", "2018-06-29 09:30:00 -07:00");
 
 	@Mock
 	private ScheduleReviewService service;
@@ -87,7 +88,7 @@ public class ScheduleReviewControllerTests {
 
 	@DisplayName("selectedReviewTimePost - Success")
 	@Test
-	void selectedReviewTimePostSuccess() {
+	void selectedReviewTimePostSuccess() throws DigitalFormsException {
 		ResponseEntity<JSONResponse<ReviewInfoWrapper>> resp = controller
 				.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
@@ -96,7 +97,7 @@ public class ScheduleReviewControllerTests {
 
 	@DisplayName("selectedReviewTimePost - Error")
 	@Test
-	void selectedReviewTimePostError() {
+	void selectedReviewTimePostError() throws DigitalFormsException {
 		ResponseEntity<JSONResponse<ReviewInfoWrapper>> resp = controller
 				.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
