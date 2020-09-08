@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
 
 /**
  * 
@@ -87,7 +88,7 @@ public class TransactionInfo {
 	}
 
 	@JsonProperty("paymentDate")
-	public void setPaymentDate(String paymentDate) {
+	public void setPaymentDate(String paymentDate) throws DigitalFormsException {
 		this.paymentDate = paymentDate;
 	}
 

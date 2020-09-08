@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewInfo;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ReviewInfoWrapper;
@@ -88,11 +89,15 @@ public class ScheduleReviewController {
 	public ResponseEntity<JSONResponse<ReviewInfoWrapper>> selectedReviewTimePost(
 			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) TimeSlotWrapper timeSlot) {
+			@RequestBody(required = true) TimeSlotWrapper timeSlot) throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "selectedReviewTimePost");
 		logger.info("Post selected review time request received");
+		
+		// Validate start/end date format
+		DigitalFormsUtils.validateTimeDate(timeSlot.getTimeSlot().getReviewStartDtm());
+		DigitalFormsUtils.validateTimeDate(timeSlot.getTimeSlot().getReviewEndDtm());
 
 		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNumber, timeSlot.getTimeSlot(),
 				correlationId);
