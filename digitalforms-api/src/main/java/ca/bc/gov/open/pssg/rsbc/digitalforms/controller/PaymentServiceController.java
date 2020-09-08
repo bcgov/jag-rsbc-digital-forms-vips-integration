@@ -63,7 +63,10 @@ public class PaymentServiceController {
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "setReviewPaid");
 		logger.info("Set review paid request received");
-
+		
+		// Validate payment date format
+		DigitalFormsUtils.validateTimeDate(paymentInfo.getTransactionInfo().getPaymentDate());
+		
 		PaymentResponse data = paymentService.setReviewPaid(noticeNumber, correlationId, paymentInfo);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
