@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -13,13 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPost;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationIdResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoWrapper;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
@@ -88,7 +91,7 @@ public class ApplicationFormController {
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData)
+			@Valid @RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormDataPost> formData)
 			throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
@@ -99,10 +102,18 @@ public class ApplicationFormController {
 		// Validate request fields
 		DigitalFormsUtils.validateFormType(formType);
 		formData.getApplicationInfo().validateRequiredFields();
-		DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
+		
+		//DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
+		DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo().getNoticeSubjectCd(),
+				formData.getApplicationInfo().getPresentationTypeCd(), 
+				formData.getApplicationInfo().getReviewRoleTypeCd(), 
+				formData.getApplicationInfo().getManualEntryYN(), 
+				formType);
 		
 		ApplicationResponse data = service.postApplicationForm(formType, noticeNumber, correlationId,
 				formData.getApplicationInfo());
+		
+		
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
 					new ApplicationInfoWrapper<>(
@@ -129,7 +140,7 @@ public class ApplicationFormController {
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "GUID", required = true) String formGuid,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
-			@RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormData> formData)
+			@Valid @RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormDataPatch> formData)
 			throws DigitalFormsException {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
@@ -139,7 +150,14 @@ public class ApplicationFormController {
 
 		// Validate request fields
 		DigitalFormsUtils.validateFormType(formType);
-		DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
+		
+		//DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
+		DigitalFormsUtils.validateApplicationForm(
+				formData.getApplicationInfo().getNoticeSubjectCd(),
+				formData.getApplicationInfo().getPresentationTypeCd(), 
+				formData.getApplicationInfo().getReviewRoleTypeCd(), 
+				formData.getApplicationInfo().getManualEntryYN(), 
+				formType);
 		
 		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, correlationId,
 				formData.getApplicationInfo());

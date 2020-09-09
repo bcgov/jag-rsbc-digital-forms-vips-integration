@@ -13,12 +13,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPost;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGetResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationService;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 
 /**
  * 
@@ -56,7 +56,7 @@ class ApplicationFormServiceImplTests {
 	void postFormSuccess() throws DigitalFormsException {
 		when(service.postApplication(any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "0", null, null));
-		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormData());
+		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormDataPost());
 		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
@@ -65,7 +65,7 @@ class ApplicationFormServiceImplTests {
 	void patchFormSuccess() throws DigitalFormsException {
 		when(service.patchApplication(any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePatch("guid", "0", null, null));
-		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId", new ApplicationFormData());
+		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId", new ApplicationFormDataPatch());
 		Assertions.assertEquals(0, resp.getRespCode());
 	}
 
@@ -83,7 +83,7 @@ class ApplicationFormServiceImplTests {
 	@Test
 	void postFormError() throws DigitalFormsException {
 		when(service.postApplication(any(), any())).thenReturn(ApplicationResponse.errorResponse("Post error"));
-		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormData());
+		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormDataPost());
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Post error", resp.getRespMsg());
 	}
@@ -92,7 +92,7 @@ class ApplicationFormServiceImplTests {
 	@Test
 	void patchFormError() throws DigitalFormsException {
 		when(service.patchApplication(any(), any(), any())).thenReturn(ApplicationResponse.errorResponse("Patch error"));
-		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId",  new ApplicationFormData());
+		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId",  new ApplicationFormDataPatch());
 		Assertions.assertEquals(-1, resp.getRespCode());
 		Assertions.assertEquals("Patch error", resp.getRespMsg());
 	}

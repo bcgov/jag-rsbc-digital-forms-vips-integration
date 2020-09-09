@@ -5,7 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPost;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPatchRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPostRequest;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
@@ -35,7 +36,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 
 	@Override
 	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId,
-			ApplicationFormData formData) {
+			ApplicationFormDataPost formData) {
 		logger.info("Processing post application form request");
 		DigitalFormPostRequest request = new DigitalFormPostRequest();
 
@@ -61,7 +62,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 
 	@Override
 	public ApplicationResponse patchApplicationForm(String formType, String formGuid, String correlationId,
-			ApplicationFormData formData) {
+			ApplicationFormDataPatch formData) {
 		logger.info("Processing patch application form request");
 		DigitalFormPatchRequest request = new DigitalFormPatchRequest();
 

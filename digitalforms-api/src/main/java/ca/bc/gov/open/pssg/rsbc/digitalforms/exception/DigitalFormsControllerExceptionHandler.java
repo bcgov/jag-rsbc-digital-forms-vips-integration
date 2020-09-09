@@ -1,11 +1,17 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -68,6 +74,30 @@ public class DigitalFormsControllerExceptionHandler {
 		MDC.clear();
 		return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.UNKNOWN_ERROR,
 				HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<JSONResponse<String>> handleValidationExceptions(MethodArgumentNotValidException e) {
+		logger.error("Validation exception(s) occurred", e);
+		
+	    Map<String, String> errors = new HashMap<>();
+	    e.getBindingResult().getAllErrors().forEach((error) -> {
+	        String fieldName = ((FieldError) error).getField();
+	        String errorMessage = error.getDefaultMessage();
+	        errors.put(fieldName, errorMessage);
+	    });
+	    
+	    StringBuffer buffer = new StringBuffer();
+	    int c = 0; 
+	    for (Entry<String, String> entry : errors.entrySet()) {
+	    	if (c > 0 ) buffer.append(", ");
+	        buffer.append((entry.getKey() + ": " + entry.getValue()));
+	        c++;
+	    };
+		
+		MDC.clear();
+		return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(buffer.toString(),
+				HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
 	}
 
 }

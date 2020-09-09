@@ -20,7 +20,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGet
 public class ApplicationInfoResponse {
 
 	@JsonUnwrapped
-	private ApplicationFormData formData;
+	private ApplicationFormDataPost formData;
 
 	@JsonProperty("prohibitionNoticeNo")
 	private String prohibitionNoticeNo;
@@ -30,7 +30,7 @@ public class ApplicationInfoResponse {
 	private String reviewApplnTypeCd;
 
 	public ApplicationInfoResponse(DigitalFormGetResponse response) {
-		ApplicationFormData applicationFormData = new ApplicationFormData();
+		ApplicationFormDataPost applicationFormData = new ApplicationFormDataPost();
 		applicationFormData.setEmail(response.getElectronicAddressTxt());
 		applicationFormData.setFaxNo(response.getFaxNo());
 		applicationFormData.setFirstGivenNm(response.getFirstGivenNm());
@@ -48,11 +48,11 @@ public class ApplicationInfoResponse {
 		this.setReviewApplnTypeCd(response.getReviewApplicationTypeCd());
 	}
 
-	public ApplicationFormData getFormData() {
+	public ApplicationFormDataPost getFormData() {
 		return formData;
 	}
 
-	public void setFormData(ApplicationFormData formData) {
+	public void setFormData(ApplicationFormDataPost formData) {
 		this.formData = formData;
 	}
 
