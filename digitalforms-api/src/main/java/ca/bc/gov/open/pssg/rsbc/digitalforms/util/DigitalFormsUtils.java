@@ -12,7 +12,6 @@ import com.google.common.base.Enums;
 import com.google.common.base.Strings;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONError;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants.FORM_TYPE;
@@ -90,27 +89,33 @@ public class DigitalFormsUtils {
 	 * @param formType
 	 * @throws DigitalFormsException
 	 */
-	public static void validateApplicationForm(ApplicationFormData formData, String formType)
+	//public static void validateApplicationForm(ApplicationFormData formData, String formType)
+	public static void validateApplicationForm(
+			String NoticeSubjectCd,
+			String presentationTypeCd, 
+			String reviewRoleTypeCd, 
+			String manualEntryYN,
+			String formType)
 			throws DigitalFormsException {
-		if (!Strings.isNullOrEmpty(formData.getNoticeSubjectCd()) && !noticeSubjectMap.get(FORM_TYPE.valueOf(formType))
-				.contains(Enums.getIfPresent(NOTICE_SUBJECT_CD.class, formData.getNoticeSubjectCd()).orNull())) {
+		if (!Strings.isNullOrEmpty(NoticeSubjectCd) && !noticeSubjectMap.get(FORM_TYPE.valueOf(formType))
+				.contains(Enums.getIfPresent(NOTICE_SUBJECT_CD.class, NoticeSubjectCd).orNull())) {
 			throw new DigitalFormsException(String.format(DigitalFormsConstants.INVALID_ATTRIBUTE_ERROR,
 					DigitalFormsConstants.NOTICE_SUBJECT_TEXT), HttpStatus.NOT_FOUND);
 		}
-		if (!Strings.isNullOrEmpty(formData.getPresentationTypeCd())
+		if (!Strings.isNullOrEmpty(presentationTypeCd)
 				&& !presentationTypeMap.get(FORM_TYPE.valueOf(formType)).contains(
-						Enums.getIfPresent(PRESENTATION_TYPE_CD.class, formData.getPresentationTypeCd()).orNull())) {
+						Enums.getIfPresent(PRESENTATION_TYPE_CD.class, presentationTypeCd).orNull())) {
 			throw new DigitalFormsException(String.format(DigitalFormsConstants.INVALID_ATTRIBUTE_ERROR,
 					DigitalFormsConstants.PRESENTATION_TYPE_TEXT), HttpStatus.NOT_FOUND);
 		}
-		if (!Strings.isNullOrEmpty(formData.getReviewRoleTypeCd())
+		if (!Strings.isNullOrEmpty(reviewRoleTypeCd)
 				&& !reviewRoleTypeMap.get(FORM_TYPE.valueOf(formType)).contains(
-						Enums.getIfPresent(REVIEW_ROLE_TYPE_CD.class, formData.getReviewRoleTypeCd()).orNull())) {
+						Enums.getIfPresent(REVIEW_ROLE_TYPE_CD.class, reviewRoleTypeCd).orNull())) {
 			throw new DigitalFormsException(String.format(DigitalFormsConstants.INVALID_ATTRIBUTE_ERROR,
 					DigitalFormsConstants.REVIEW_ROLE_TYPE_TEXT), HttpStatus.NOT_FOUND);
 		}
-		if (!Strings.isNullOrEmpty(formData.getManualEntryYN()) && !manualEntryMap.get(FORM_TYPE.valueOf(formType))
-				.contains(Enums.getIfPresent(MANUAL_ENTRY_CD.class, formData.getManualEntryYN()).orNull())) {
+		if (!Strings.isNullOrEmpty(manualEntryYN) && !manualEntryMap.get(FORM_TYPE.valueOf(formType))
+				.contains(Enums.getIfPresent(MANUAL_ENTRY_CD.class, manualEntryYN).orNull())) {
 			throw new DigitalFormsException(String.format(DigitalFormsConstants.INVALID_ATTRIBUTE_ERROR,
 					DigitalFormsConstants.MANUAL_ENTRY_TEXT), HttpStatus.NOT_FOUND);
 		}
