@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
+import javax.validation.constraints.Size;
+
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -21,30 +23,52 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "noticeSubjectCd", "presentationTypeCd", "reviewRoleTypeCd", "firstGivenNm", "secondGivenNm",
 		"surnameNm", "phoneNo", "faxNo", "email", "manualEntryYN", "formData" })
-public class ApplicationFormData {
+public class ApplicationFormDataPatch {
 
+	@Size(min=1)
 	@JsonProperty("noticeSubjectCd")
 	private String noticeSubjectCd;
+
+	@Size(min=1)
 	@JsonProperty("presentationTypeCd")
 	private String presentationTypeCd;
+
+	@Size(min=1)
 	@JsonProperty("reviewRoleTypeCd")
 	private String reviewRoleTypeCd;
+
+	@Size(min=1, max=35)
 	@JsonProperty("firstGivenNm")
 	private String firstGivenNm;
+
+	@Size(min=1, max=35)
 	@JsonProperty("secondGivenNm")
 	private String secondGivenNm;
+
+	@Size(min=1, max=35)
 	@JsonProperty("surnameNm")
 	private String surnameNm;
+	 
+	@Size(min=1, max=10)
 	@JsonProperty("phoneNo")
 	private String phoneNo;
+
+	@Size(min=1, max=10)
 	@JsonProperty("faxNo")
 	private String faxNo;
+
+	@Size(min=1, max=200)
 	@JsonProperty("email")
 	private String email;
+
+	@Size(min=1, max=1)
 	@JsonProperty("manualEntryYN")
 	private String manualEntryYN;
+
+	@Size(min=1)
 	@JsonProperty("formData")
 	private String formData;
+
 
 	@JsonProperty("noticeSubjectCd")
 	public String getNoticeSubjectCd() {

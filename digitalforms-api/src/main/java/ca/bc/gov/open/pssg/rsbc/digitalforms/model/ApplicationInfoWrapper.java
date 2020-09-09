@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
+import javax.validation.Valid;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ApplicationInfoWrapper<T> {
 	
 	@JsonProperty("applicationInfo")
+	@Valid
 	private T applicationInfo;
 	
 	public ApplicationInfoWrapper () {}

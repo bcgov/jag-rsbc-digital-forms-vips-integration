@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoWrapper;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
@@ -54,7 +54,7 @@ class DigitalFormsExceptionHandlerTests {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-		String requestJson = ow.writeValueAsString(new ApplicationInfoWrapper<>(new ApplicationFormData()));
+		String requestJson = ow.writeValueAsString(new ApplicationInfoWrapper<>(new ApplicationFormDataPatch()));
 		this.mockMvc
 				.perform(patch("/ABC/abc/application/123").contentType(MediaType.APPLICATION_JSON).content(requestJson))
 				.andDo(print()).andExpect(status().isNotFound()).andExpect(content().string(containsString(String
@@ -93,7 +93,7 @@ class DigitalFormsExceptionHandlerTests {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-		String requestJson = ow.writeValueAsString(new ApplicationInfoWrapper<>(new ApplicationFormData()));
+		String requestJson = ow.writeValueAsString(new ApplicationInfoWrapper<>(new ApplicationFormDataPatch()));
 		this.mockMvc.perform(patch("/application/123").contentType(MediaType.APPLICATION_JSON).content(requestJson))
 				.andDo(print()).andExpect(status().isBadRequest())
 				.andExpect(content().string(containsString(DigitalFormsConstants.MISSING_PARAMS_ERROR)));
