@@ -15,14 +15,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGetResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormData;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPost;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationIdResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoWrapper;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormGetResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
@@ -43,13 +44,35 @@ class ApplicationFormControllerTests {
 	@InjectMocks
 	private ApplicationFormController controller = new ApplicationFormController();
 
-	private ApplicationFormData formRequest;
+	private ApplicationFormDataPost formRequestPost;
+	
+	private ApplicationFormDataPatch formRequest;
+	
 
 	@BeforeEach
 	public void init() {
 		MockitoAnnotations.initMocks(this);
+		
+		//POST Request
 
-		formRequest = new ApplicationFormData();
+		formRequestPost = new ApplicationFormDataPost();
+
+		formRequestPost.setFirstGivenNm("firstGivenNm");
+		formRequestPost.setEmail("email");
+		formRequestPost.setFaxNo("faxNo");
+		formRequestPost.setManualEntryYN("Y");
+		formRequestPost.setNoticeSubjectCd("PERS");
+		formRequestPost.setPhoneNo("phoneNo");
+		formRequestPost.setPresentationTypeCd("ORAL");
+		formRequestPost.setReviewRoleTypeCd("APPNT");
+		formRequestPost.setSecondGivenNm("secondGivenNm");
+		formRequestPost.setSurnameNm("surnameNm");
+
+		formRequestPost.setFormData("formData");
+		
+		//PATCH request
+		
+		formRequest = new ApplicationFormDataPatch();
 
 		formRequest.setFirstGivenNm("firstGivenNm");
 		formRequest.setEmail("email");
@@ -81,7 +104,7 @@ class ApplicationFormControllerTests {
 		when(service.postApplicationForm(any(), any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "0", null, null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> resp = controller
-				.applicationFormPost("IRP", "noticeNo", "correlationId", new ApplicationInfoWrapper<>(formRequest));
+				.applicationFormPost("IRP", "noticeNo", "correlationId", new ApplicationInfoWrapper<>(formRequestPost));
 		Assertions.assertEquals(HttpStatus.CREATED, resp.getStatusCode());
 	}
 
@@ -111,7 +134,7 @@ class ApplicationFormControllerTests {
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "1", null, null));
 		Assertions.assertThrows(DigitalFormsException.class, () -> {
 			controller.applicationFormPost("invalid", "noticeNo", "correlationId",
-					new ApplicationInfoWrapper<>(new ApplicationFormData()));
+					new ApplicationInfoWrapper<>(new ApplicationFormDataPost()));
 		});
 	}
 
@@ -120,7 +143,7 @@ class ApplicationFormControllerTests {
 	void postNullValidationError() throws DigitalFormsException {
 		DigitalFormsException e = Assertions.assertThrows(DigitalFormsException.class, () -> {
 			controller.applicationFormPost("IRP", "noticeNo", "correlationId",
-					new ApplicationInfoWrapper<>(new ApplicationFormData()));
+					new ApplicationInfoWrapper<>(new ApplicationFormDataPost()));
 		});
 
 		Assertions.assertEquals(DigitalFormsConstants.MISSING_REQUEST_BODY_ERROR, e.getMessage());
@@ -130,7 +153,7 @@ class ApplicationFormControllerTests {
 	@Test
 	void postFieldValidationError() throws DigitalFormsException {
 
-		ApplicationFormData formData = new ApplicationFormData();
+		ApplicationFormDataPost formData = new ApplicationFormDataPost();
 
 		formData.setFirstGivenNm("firstGivenNm");
 		formData.setEmail("email");
@@ -189,7 +212,7 @@ class ApplicationFormControllerTests {
 		when(service.postApplicationForm(any(), any(), any(), any()))
 				.thenReturn(ApplicationResponse.errorResponse(null));
 		ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> resp = controller
-				.applicationFormPost("IRP", "guid", "correlationId", new ApplicationInfoWrapper<>(formRequest));
+				.applicationFormPost("IRP", "guid", "correlationId", new ApplicationInfoWrapper<>(formRequestPost));
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
 	}
 
@@ -197,7 +220,7 @@ class ApplicationFormControllerTests {
 	@Test
 	void patchNullValidationSuccess() throws DigitalFormsException {
 
-		ApplicationFormData formData = new ApplicationFormData();
+		ApplicationFormDataPatch formData = new ApplicationFormDataPatch();
 
 		formData.setFirstGivenNm("firstGivenNm");
 		formData.setEmail("email");
@@ -218,7 +241,7 @@ class ApplicationFormControllerTests {
 	@Test
 	void patchFieldValidationError() throws DigitalFormsException {
 
-		ApplicationFormData formData = new ApplicationFormData();
+		ApplicationFormDataPatch formData = new ApplicationFormDataPatch();
 
 		formData.setFirstGivenNm("firstGivenNm");
 		formData.setEmail("email");

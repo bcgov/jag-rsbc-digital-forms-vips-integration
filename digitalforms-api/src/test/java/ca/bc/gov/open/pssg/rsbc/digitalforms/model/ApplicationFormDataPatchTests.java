@@ -7,16 +7,17 @@ import org.junit.jupiter.api.Test;
 
 /**
  * 
- * Application Form Request Object Tests
+ * Application Form Post Request Object Tests
  * 
  * @author sivakaruna
  *
  */
-public class ApplicationFormDataTests {
+public class ApplicationFormDataPatchTests {
 
 	@Test
 	public void testObj() {
-		ApplicationFormData formRequest = new ApplicationFormData();
+		
+		ApplicationFormDataPatch formRequest = new ApplicationFormDataPatch();
 
 		formRequest.setFirstGivenNm("firstGivenNm");
 		formRequest.setEmail("email");
