@@ -21,7 +21,7 @@ public class ProhibitionStatusTests {
 	public void testObj() {
 
 		Status status = new Status();
-		status.setEffectiveDt("2018-06-20 00:00:00 -07:00");
+		status.setNoticeServedDt("2018-06-20 00:00:00 -07:00");
 		status.setNoticeTypeCd("IRP");
 		status.setOriginalCause("IRP3");
 		status.setReceiptNumberTxt("12345");
@@ -38,7 +38,7 @@ public class ProhibitionStatusTests {
 		disclosure.add(new DocumentDisclosureInfo("123", "2018-06-20 00:00:00 -07:00"));
 		status.setDisclosure(disclosure);
 
-		Assertions.assertEquals("2018-06-20 00:00:00 -07:00", status.getEffectiveDt());
+		Assertions.assertEquals("2018-06-20 00:00:00 -07:00", status.getNoticeServedDt());
 		Assertions.assertEquals("IRP", status.getNoticeTypeCd());
 		Assertions.assertEquals("IRP3",  status.getOriginalCause());
 		Assertions.assertEquals("12345", status.getReceiptNumberTxt());
