@@ -24,7 +24,7 @@ public class ProhibitionStatusResponse {
 		
 		if ( ordsResp.getRespCode() == DigitalFormsConstants.ORDS_SUCCESS_CD ) {
 			status = new Status();
-			status.setEffectiveDt(ordsResp.getStatus().getEffectiveDt());
+			status.setNoticeServedDt(ordsResp.getStatus().getNoticeServedDt());
 			status.setNoticeTypeCd(ordsResp.getStatus().getNoticeTypeCd());
 			status.setOriginalCause(ordsResp.getStatus().getOriginalCause());
 			status.setReceiptNumberTxt(ordsResp.getStatus().getReceiptNumberTxt());
