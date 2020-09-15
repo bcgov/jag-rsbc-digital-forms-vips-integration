@@ -47,7 +47,7 @@ class QueryServiceControllerTests {
 		controller = new QueryServiceController(service);
 		
 		ProhibitionStatus status = new ProhibitionStatus();
-		status.setEffectiveDt("2018-06-20 00:00:00 -07:00");
+		status.setNoticeServedDt("2018-06-20 00:00:00 -07:00");
 		status.setNoticeTypeCd("IRP");
 		status.setOriginalCause("IRP3");
 		status.setReceiptNumberTxt("12345");
