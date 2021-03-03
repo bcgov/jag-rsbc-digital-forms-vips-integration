@@ -47,14 +47,14 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public SavedTimeSlotResponse saveTimeSlot(String authGuid, String correlationId, String noticeNo,
+	public SavedTimeSlotResponse saveTimeSlot(String authGuid, String correlationId, String applicationId,
 			ReviewTimeSlotRequest request) {
 
 		try {
 
 			ReviewTimeSlotResponse response = this.availableTimeSlotsApi
-					.digitalFormProhibitionNoticeNoReviewScheduleAuthGuidCorrelationGuidPost(authGuid, correlationId,
-							noticeNo, request);
+					.digitalFormProhibitionApplicationIdReviewScheduleAuthGuidCorrelationGuidPost(authGuid, correlationId,
+							applicationId, request);
 
 			logger.info("Processed Save Time Slot request: ORDS returned code: {} and message: {} ",
 					response.getStatusCode(), response.getStatusMessage());

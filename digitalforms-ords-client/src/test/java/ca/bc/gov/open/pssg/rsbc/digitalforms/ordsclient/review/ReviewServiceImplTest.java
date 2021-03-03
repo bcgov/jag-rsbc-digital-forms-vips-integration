@@ -68,9 +68,9 @@ public class ReviewServiceImplTest {
 				.digitalFormAvailableTimeSlotReviewDateNoticeTypeCdReviewTypeCdAuthGuidCorrelationGuidGet(any(), any(),
 						eq("ADP"), any(), any()))
 				.thenThrow(new ApiException(ERROR_RESPONSE));
-		Mockito.when(timeSlotApiMock.digitalFormProhibitionNoticeNoReviewScheduleAuthGuidCorrelationGuidPost(any(),
+		Mockito.when(timeSlotApiMock.digitalFormProhibitionApplicationIdReviewScheduleAuthGuidCorrelationGuidPost(any(),
 				any(), eq("1"), any())).thenReturn(reviewTimeSlotResponseSuccess);
-		Mockito.when(timeSlotApiMock.digitalFormProhibitionNoticeNoReviewScheduleAuthGuidCorrelationGuidPost(any(),
+		Mockito.when(timeSlotApiMock.digitalFormProhibitionApplicationIdReviewScheduleAuthGuidCorrelationGuidPost(any(),
 				any(), eq("2"), any())).thenThrow(new ApiException(ERROR_RESPONSE));
 
 		service = new ReviewServiceImpl(timeSlotApiMock);
