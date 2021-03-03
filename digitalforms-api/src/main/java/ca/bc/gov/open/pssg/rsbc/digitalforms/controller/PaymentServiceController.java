@@ -54,9 +54,9 @@ public class PaymentServiceController {
 	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class) })
 	@PatchMapping(path = { "**/payment/**",
-			"/{noticeNumber}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
+			"/{applicationId}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<JSONResponse<Boolean>> setReviewPaid(
-			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
+			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) PaymentTransaction paymentInfo) throws DigitalFormsException {
 
@@ -67,7 +67,7 @@ public class PaymentServiceController {
 		// Validate payment date format
 		DigitalFormsUtils.validateTimeDate(paymentInfo.getTransactionInfo().getPaymentDate());
 		
-		PaymentResponse data = paymentService.setReviewPaid(noticeNumber, correlationId, paymentInfo);
+		PaymentResponse data = paymentService.setReviewPaid(applicationId, correlationId, paymentInfo);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<Boolean> resp = new JSONResponse<>(Boolean.TRUE);
@@ -87,16 +87,16 @@ public class PaymentServiceController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = PaymentStatusSwaggerResponse.class) })
 	@GetMapping(value = { "**/payment/status/**",
-			"{noticeNumber}/payment/status/{correlationId}" }, produces = "application/json")
+			"{applicationId}/payment/status/{correlationId}" }, produces = "application/json")
 	public ResponseEntity<JSONResponse<PaymentTransaction>> paymentStatusGet(
-			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
+			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "paymentStatusGet");
 		logger.info("Get payment status request received");
 
-		PaymentResponse data = paymentService.getReviewPaymentStatus(noticeNumber, correlationId);
+		PaymentResponse data = paymentService.getReviewPaymentStatus(applicationId, correlationId);
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<PaymentTransaction> resp = new JSONResponse<>(new PaymentTransaction(data.getPaymentStatus()));
 			logger.info("Get payment status request success");

@@ -30,7 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
 	public PaymentResponse getPaymentStatus(String noticeNo, String correlationId) {
 		try {
 			DigitalFormPaymentStatusResponse response = this.paymentApi
-					.digitalFormProhibitionNoticeNoPaymentStatusGet(noticeNo);
+					.digitalFormProhibitionApplicationIdPaymentStatusGet(noticeNo);
 
 			logger.info("Processed Get Payment Status request: ORDS returned code: {} and message: {} ",
 					response.getStatusCode(), response.getStatusMessage());
@@ -49,7 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
 			String correlationId) {
 		try {
 			DigitalFormPaymentPatchResponse response = this.paymentApi
-					.digitalFormProhibitionNoticeNoPaymentPatch(noticeNo, request);
+					.digitalFormProhibitionApplicationIdPaymentPatch(noticeNo, request);
 
 			logger.info("Processed Patch Payment Receipt request: ORDS returned code: {} and message: {} ",
 					response.getStatusCode(), response.getStatusMessage());
