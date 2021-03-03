@@ -16,7 +16,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.TimeSlot;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-//@JsonPropertyOrder({ "reviewId", "reviewStartDtm", "reviewEndDtm" })
 @JsonPropertyOrder({
 "applicationId",
 "status",
@@ -49,6 +48,15 @@ public class ReviewInfo {
 	private TimeSlot timeSlot;
 
 	public ReviewInfo() {
+	}
+	
+	public ReviewInfo(String applicationId, String status, String reviewStartDtm, String reviewEndDtm, String receiptNumberTxt, String reviewId) {
+		this.applicationId = applicationId;
+		this.status = status;
+		this.reviewStartDtm = reviewStartDtm;
+		this.reviewEndDtm = reviewEndDtm;
+		this.receiptNumberTxt = receiptNumberTxt;
+		this.reviewId = reviewId;
 	}
 
 	public ReviewInfo(SavedTimeSlotResponse data) {
