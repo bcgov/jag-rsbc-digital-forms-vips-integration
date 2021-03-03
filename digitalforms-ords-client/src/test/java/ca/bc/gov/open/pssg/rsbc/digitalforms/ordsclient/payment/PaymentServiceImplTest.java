@@ -62,13 +62,13 @@ public class PaymentServiceImplTest {
 				.setStatusCode(String.valueOf(DigitalFormsOrdsClientConstants.SERVICE_FAILURE_CD));
 		paymentStatusOrdsResponseError.setStatusMessage(ERROR_RESPONSE);
 
-		Mockito.when(paymentApiMock.digitalFormProhibitionNoticeNoPaymentPatch(eq("1"), any()))
+		Mockito.when(paymentApiMock.digitalFormProhibitionApplicationIdPaymentPatch(eq("1"), any()))
 				.thenReturn(paymentOrdsResponseSuccess);
-		Mockito.when(paymentApiMock.digitalFormProhibitionNoticeNoPaymentPatch(eq("2"), any()))
+		Mockito.when(paymentApiMock.digitalFormProhibitionApplicationIdPaymentPatch(eq("2"), any()))
 				.thenThrow(new ApiException(ERROR_RESPONSE));
-		Mockito.when(paymentApiMock.digitalFormProhibitionNoticeNoPaymentStatusGet(eq("1")))
+		Mockito.when(paymentApiMock.digitalFormProhibitionApplicationIdPaymentStatusGet(eq("1")))
 				.thenReturn(paymentStatusOrdsResponseSuccess);
-		Mockito.when(paymentApiMock.digitalFormProhibitionNoticeNoPaymentStatusGet(eq("2")))
+		Mockito.when(paymentApiMock.digitalFormProhibitionApplicationIdPaymentStatusGet(eq("2")))
 				.thenThrow(new ApiException(ERROR_RESPONSE));
 
 		service = new PaymentServiceImpl(paymentApiMock);

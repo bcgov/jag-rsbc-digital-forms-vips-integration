@@ -31,8 +31,8 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentServiceImpl;
 @TestPropertySource("classpath:application-test.properties")
 public class PaymentServiceControllerTests {
 
-	private final String IRP_TEST_NOTICE_NUMBER_SUCCESS = "1";
-	private final String IRP_TEST_NOTICE_NUMBER_ERROR = "2";
+	private final String TEST_APPLICATION_NOTICE_NUMBER_SUCCESS = "1";
+	private final String TEST_APPLICATION_NUMBER_ERROR = "2";
 	private final PaymentTransaction GOOD_TRANSACTION_REQUEST = new PaymentTransaction(
 			new TransactionInfo("MC", "50.01", "12345", "2018-06-29 00:00:00 -07:00"));
 	private final String CORRELATION_ID = "correlationId";
@@ -48,21 +48,21 @@ public class PaymentServiceControllerTests {
 	@BeforeEach
 	public void init() throws DigitalFormsException {
 		controller = new PaymentServiceController(paymentService);
-		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, GOOD_TRANSACTION_REQUEST))
+		when(paymentService.setReviewPaid(TEST_APPLICATION_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, GOOD_TRANSACTION_REQUEST))
 				.thenReturn(PaymentResponse.successResponse("updatedTime", SUCCESS_CODE, SUCCESS_STATUS));
-		when(paymentService.setReviewPaid(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID, GOOD_TRANSACTION_REQUEST))
+		when(paymentService.setReviewPaid(TEST_APPLICATION_NUMBER_ERROR, CORRELATION_ID, GOOD_TRANSACTION_REQUEST))
 				.thenReturn(PaymentResponse.errorResponse(ERROR_STATUS));
-		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID))
+		when(paymentService.getReviewPaymentStatus(TEST_APPLICATION_NOTICE_NUMBER_SUCCESS, CORRELATION_ID))
 				.thenReturn(PaymentResponse.successStatusResponse(new DigitalFormPaymentStatusResponse(), SUCCESS_CODE,
 						SUCCESS_STATUS));
-		when(paymentService.getReviewPaymentStatus(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID))
+		when(paymentService.getReviewPaymentStatus(TEST_APPLICATION_NUMBER_ERROR, CORRELATION_ID))
 				.thenReturn(PaymentResponse.errorResponse(ERROR_STATUS));
 	}
 
 	@DisplayName("setReviewPaid - Patch HTTP status code - good")
 	@Test
 	void setReviewPaidReturnsSuccess() throws DigitalFormsException {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER_SUCCESS,
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(TEST_APPLICATION_NOTICE_NUMBER_SUCCESS,
 				CORRELATION_ID, GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 		Assertions.assertTrue(resp.getBody().getData().booleanValue());
@@ -71,7 +71,7 @@ public class PaymentServiceControllerTests {
 	@DisplayName("setReviewPaid - Patch Review Prohibition not found")
 	@Test
 	void setReviewPaidNotFound() throws DigitalFormsException {
-		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(IRP_TEST_NOTICE_NUMBER_ERROR,
+		ResponseEntity<JSONResponse<Boolean>> resp = controller.setReviewPaid(TEST_APPLICATION_NUMBER_ERROR,
 				CORRELATION_ID, GOOD_TRANSACTION_REQUEST);
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
@@ -80,7 +80,7 @@ public class PaymentServiceControllerTests {
 	@Test
 	void getPaymentStatusSuccess() {
 		ResponseEntity<JSONResponse<PaymentTransaction>> resp = controller
-				.paymentStatusGet(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID);
+				.paymentStatusGet(TEST_APPLICATION_NOTICE_NUMBER_SUCCESS, CORRELATION_ID);
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 	}
 
@@ -88,7 +88,7 @@ public class PaymentServiceControllerTests {
 	@Test
 	void getPaymentStatusError() {
 		ResponseEntity<JSONResponse<PaymentTransaction>> resp = controller
-				.paymentStatusGet(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID);
+				.paymentStatusGet(TEST_APPLICATION_NUMBER_ERROR, CORRELATION_ID);
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
 

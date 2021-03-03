@@ -26,7 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
 	private ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentService paymentService;
 
 	@Override
-	public PaymentResponse setReviewPaid(String irpNoticeNumber, String correlationId, PaymentTransaction request)
+	public PaymentResponse setReviewPaid(String applicationId, String correlationId, PaymentTransaction request)
 			throws DigitalFormsException {
 		logger.info("Processing set review paid request");
 
@@ -36,15 +36,15 @@ public class PaymentServiceImpl implements PaymentService {
 		ordsRequest.setPaymentDtm(request.getTransactionInfo().getPaymentDate());
 		ordsRequest.setReceiptNumberTxt(request.getTransactionInfo().getReceiptNumberTxt());
 
-		return paymentService.patchPaymentReceipt(irpNoticeNumber, ordsRequest, correlationId);
+		return paymentService.patchPaymentReceipt(applicationId, ordsRequest, correlationId);
 
 	}
 
 	@Override
-	public PaymentResponse getReviewPaymentStatus(String noticeNumber, String correlationId) {
+	public PaymentResponse getReviewPaymentStatus(String applicationId, String correlationId) {
 		logger.info("Processing get payment status request");
 
-		return paymentService.getPaymentStatus(noticeNumber, correlationId);
+		return paymentService.getPaymentStatus(applicationId, correlationId);
 	}
 
 }

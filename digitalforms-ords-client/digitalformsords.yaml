@@ -98,7 +98,7 @@ paths:
         required: true
         schema:
           "$ref": "#/definitions/digitalFormPatchRequest"
-  "/digitalForm/prohibition/{noticeNo}/payment":
+  "/digitalForm/prohibition/{applicationId}/payment":
     patch:
       tags:
       - Payment
@@ -115,7 +115,7 @@ paths:
           schema:
             $ref: '#/definitions/digitalFormErrorResponse'
       parameters:
-      - name: noticeNo
+      - name: applicationId
         in: path
         required: true
         type: string
@@ -126,7 +126,7 @@ paths:
         required: true
         schema:
           "$ref": "#/definitions/digitalFormPaymentPatchRequest"
-  "/digitalForm/prohibition/{noticeNo}/payment/status":
+  "/digitalForm/prohibition/{applicationId}/payment/status":
     get:
       tags:
       - Payment
@@ -143,7 +143,7 @@ paths:
           schema:
             $ref: '#/definitions/digitalFormErrorResponse'
       parameters:
-      - name: noticeNo
+      - name: applicationId
         in: path
         required: true
         type: string
