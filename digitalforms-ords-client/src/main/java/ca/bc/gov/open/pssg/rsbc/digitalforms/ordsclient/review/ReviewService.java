@@ -13,6 +13,6 @@ public interface ReviewService {
 
 	TimeSlotResponse getAvailableTimeSlots(String authGuid, String correlationId, String noticeTypeCd, String reviewDate, String reviewTypeCd);
 	
-	SavedTimeSlotResponse saveTimeSlot(String authGuid, String correlationId, String noticeNo, ReviewTimeSlotRequest request); 
+	SavedTimeSlotResponse saveTimeSlot(String authGuid, String correlationId, String applicationId, ReviewTimeSlotRequest request); 
 	
 }

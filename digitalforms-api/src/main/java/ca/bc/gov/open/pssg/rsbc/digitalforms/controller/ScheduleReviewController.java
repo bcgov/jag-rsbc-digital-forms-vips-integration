@@ -82,12 +82,12 @@ public class ScheduleReviewController {
 	}
 
 	@PostMapping(value = { "**/review/schedule/**",
-			"/{noticeNumber}/review/schedule/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+			"/{applicationId}/review/schedule/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Post Selected Review Timeslot", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Success", response = ReviewScheduledSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ReviewInfoWrapper>> selectedReviewTimePost(
-			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
+			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@RequestBody(required = true) TimeSlotWrapper timeSlot) throws DigitalFormsException {
 
@@ -99,7 +99,7 @@ public class ScheduleReviewController {
 		DigitalFormsUtils.validateTimeDate(timeSlot.getTimeSlot().getReviewStartDtm());
 		DigitalFormsUtils.validateTimeDate(timeSlot.getTimeSlot().getReviewEndDtm());
 
-		SavedTimeSlotResponse data = service.postSelectedReviewTime(noticeNumber, timeSlot.getTimeSlot(),
+		SavedTimeSlotResponse data = service.postSelectedReviewTime(applicationId, timeSlot.getTimeSlot(),
 				correlationId);
 
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {

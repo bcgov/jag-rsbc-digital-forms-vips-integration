@@ -37,8 +37,8 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ScheduleReviewService;
 @TestPropertySource("classpath:application-test.properties")
 public class ScheduleReviewControllerTests {
 
-	private final String IRP_TEST_NOTICE_NUMBER_SUCCESS = "1";
-	private final String IRP_TEST_NOTICE_NUMBER_ERROR = "2";
+	private final String TEST_APPLICATION_NOTICE_NUMBER_SUCCESS = "1";
+	private final String TEST_APPLICATION_NOTICE_NUMBER_ERROR = "2";
 	private final String CORRELATION_ID = "correlationId";
 	private final String REVIEW_DATE = "2018-06-29 00:00:00 -07:00";
 	private final String NOTICE_TYPE_SUCCESS = "IRP";
@@ -64,9 +64,9 @@ public class ScheduleReviewControllerTests {
 				TimeSlotResponse.successResponse(new AvailableTimeSlotResponse(), SUCCESS_CODE, SUCCESS_STATUS));
 		when(service.getAvailableTimeSlots(NOTICE_TYPE_ERROR, REVIEW_TYPE, REVIEW_DATE, CORRELATION_ID))
 				.thenReturn(TimeSlotResponse.errorResponse(ERROR_STATUS));
-		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_SUCCESS, timeSlot, CORRELATION_ID))
+		when(service.postSelectedReviewTime(TEST_APPLICATION_NOTICE_NUMBER_SUCCESS, timeSlot, CORRELATION_ID))
 				.thenReturn(SavedTimeSlotResponse.successResponse(response, SUCCESS_CODE, SUCCESS_STATUS));
-		when(service.postSelectedReviewTime(IRP_TEST_NOTICE_NUMBER_ERROR, timeSlot, CORRELATION_ID))
+		when(service.postSelectedReviewTime(TEST_APPLICATION_NOTICE_NUMBER_ERROR, timeSlot, CORRELATION_ID))
 				.thenReturn(SavedTimeSlotResponse.errorResponse(ERROR_STATUS));
 	}
 
@@ -90,7 +90,7 @@ public class ScheduleReviewControllerTests {
 	@Test
 	void selectedReviewTimePostSuccess() throws DigitalFormsException {
 		ResponseEntity<JSONResponse<ReviewInfoWrapper>> resp = controller
-				.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
+				.selectedReviewTimePost(TEST_APPLICATION_NOTICE_NUMBER_SUCCESS, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
 		Assertions.assertEquals(HttpStatus.OK, resp.getStatusCode());
 		Assertions.assertEquals("123", resp.getBody().getData().getReviewInfo().getReviewId());
 	}
@@ -99,7 +99,7 @@ public class ScheduleReviewControllerTests {
 	@Test
 	void selectedReviewTimePostError() throws DigitalFormsException {
 		ResponseEntity<JSONResponse<ReviewInfoWrapper>> resp = controller
-				.selectedReviewTimePost(IRP_TEST_NOTICE_NUMBER_ERROR, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
+				.selectedReviewTimePost(TEST_APPLICATION_NOTICE_NUMBER_ERROR, CORRELATION_ID, new TimeSlotWrapper(timeSlot));
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
 	}
 

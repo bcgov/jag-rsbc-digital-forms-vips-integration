@@ -192,7 +192,7 @@ paths:
         type: string
         description: implicit
         pattern: "^[^/]+$"
-  "/digitalForm/prohibition/{noticeNo}/review/schedule/{authGuid}/{correlationGuid}":
+  "/digitalForm/prohibition/{applicationId}/review/schedule/{authGuid}/{correlationGuid}":
     post:
       tags:
       - Available Time Slots
@@ -219,7 +219,7 @@ paths:
         type: string
         description: implicit
         pattern: "^[^/]+$"
-      - name: noticeNo
+      - name: applicationId
         in: path
         required: true
         type: string
