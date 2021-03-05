@@ -54,19 +54,19 @@ public class ApplicationFormController {
 	private final Logger logger = LoggerFactory.getLogger(ApplicationFormController.class);
 
 	@GetMapping(value = { "**/application/**",
-			"/{GUID}/application/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
+			"/{applicationId}/application/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>>> applicationFormGet(
-			@PathVariable(value = "GUID", required = true) String formGuid,
+			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
 
 		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
 		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormGet");
 		logger.info("Get application form request received");
 
-		ApplicationResponse data = service.getApplicationForm(formGuid, correlationId);
+		ApplicationResponse data = service.getApplicationForm(applicationId, correlationId);
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>> resp = new JSONResponse<>(
 					new ApplicationInfoWrapper<>(new ApplicationInfoResponse(data.getApplicationInfo())));
@@ -132,13 +132,13 @@ public class ApplicationFormController {
 	}
 
 	@PatchMapping(value = { "**/application/**",
-			"/{formType}/{GUID}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
+			"/{formType}/{applicationId}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
 	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = ApplicationIdSwaggerResponse.class) })
 	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> applicationFormPatch(
 			@PathVariable(value = "formType", required = true) String formType,
-			@PathVariable(value = "GUID", required = true) String formGuid,
+			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
 			@Valid @RequestBody(required = true) ApplicationInfoWrapper<ApplicationFormDataPatch> formData)
 			throws DigitalFormsException {
@@ -159,7 +159,7 @@ public class ApplicationFormController {
 				formData.getApplicationInfo().getManualEntryYN(), 
 				formType);
 		
-		ApplicationResponse data = service.patchApplicationForm(formType, formGuid, correlationId,
+		ApplicationResponse data = service.patchApplicationForm(formType, applicationId, correlationId,
 				formData.getApplicationInfo());
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(

@@ -29,9 +29,9 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	private ApplicationService applicationService;
 
 	@Override
-	public ApplicationResponse getApplicationForm(String formGuid, String correlationId) {
+	public ApplicationResponse getApplicationForm(String applicationId, String correlationId) {
 		logger.info("Processing get application form request");
-		return applicationService.getApplication(formGuid, correlationId);
+		return applicationService.getApplication(applicationId, correlationId);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	}
 
 	@Override
-	public ApplicationResponse patchApplicationForm(String formType, String formGuid, String correlationId,
+	public ApplicationResponse patchApplicationForm(String formType, String applicationId, String correlationId,
 			ApplicationFormDataPatch formData) {
 		logger.info("Processing patch application form request");
 		DigitalFormPatchRequest request = new DigitalFormPatchRequest();
@@ -81,6 +81,6 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 		request.setSurnameNm(formData.getSurnameNm());
 		request.setUserId(DigitalFormsConstants.ORDS_USER_ID);
 
-		return applicationService.patchApplication(formGuid, request, correlationId);
+		return applicationService.patchApplication(applicationId, request, correlationId);
 	}
 }
