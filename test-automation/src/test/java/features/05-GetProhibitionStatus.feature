@@ -12,6 +12,20 @@ Feature: GET Prohibition Status
       | 21900501 | GET_ADP       | ADP        | 2018-04-12 00:00:00 -07:00 | Y                   | N             | BREATHSAMP    | GET_ADP_surname | Y                   | null             | null                       | null                       |
       | 21900499 | GET_UL        | UL         | 2018-10-11 00:00:00 -07:00 | Y                   | N             | IRPINDEF      | GET_UL_surname  | N                   | null             | null                       | null                       |
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   #add disclosure
   #remove effectiveDt?
   #remove reviewFormSubmitted?

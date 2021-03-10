@@ -99,5 +99,21 @@ public class GenerateEndpoint
 
     }
 
+    public String Disclosure(Enum VerbTypes, @Nullable String documentId, String correlationId)
+    {
+        switch (VerbTypes.toString())
+        {
+            case "GET":
+                return digitalFormsBaseUrl + documentId + "/disclosure/" + correlationId;
+
+            case "PATCH":
+                return digitalFormsBaseUrl + "disclosure/" + correlationId;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + VerbTypes);
+        }
+
+    }
+
 
 }

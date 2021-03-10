@@ -21,10 +21,6 @@ public class SetupTestData {
         generateEndpoint = new GenerateEndpoint(GlobalVariables.apiBaseUrl);
     }
 
-    @Given("the database setup is required")
-    public void theDatabaseSetupIsRequired() {
-    }
-
     @When("the user setup the Application form data with attributes FormType {string} NoticeNumber {string} CorrelationId {string} EMail {string} Fax {string} FirstName {string} FormData {string} ManualEntry {string} NoticeSubject {string} Phone {string} PresentationType {string} ReviewRoleType {string} SecondName {string} Surname {string}")
     public void theUserSetupTheApplicationFormDataWithAttributesFormTypeNoticeNumberCorrelationIdEMailFaxFirstNameFormDataManualEntryNoticeSubjectPhonePresentationTypeReviewRoleTypeSecondNameSurname(String formType, String noticeNumber, String correlationId, String email, String fax, String fName, String formData, String manualEntry, String noticeSubject, String phone, String presentationType, String reviewRoleType, String sName, String surname) throws Exception {
         this.formType = formType;
@@ -75,16 +71,16 @@ public class SetupTestData {
 
     @And("the user setup the Review Timeslot data with attributes ReviewStartDateTime {string} ReviewEndDateTime {string}")
     public void theUserSetupTheReviewTimeslotDataWithAttributesReviewStartDateTimeReviewEndDateTime(String reviewStartDateTime, String reviewEndDateTime) throws Exception {
-        String endpointUrl = generateEndpoint.ReviewScheduling(VerbType.POST,noticeNumber,null,null,null,correlationId);
-        String jsonBody = "{\n" +
-                "  \"timeSlot\": {\n" +
-                "    \"reviewEndDtm\": \""+reviewEndDateTime+"\",\n" +
-                "    \"reviewStartDtm\": \""+reviewStartDateTime+"\"\n" +
-                "  }\n" +
-                "}";
-
-        Response response = given().auth().preemptive().basic(GlobalVariables.apiUsername,GlobalVariables.apiPassword).contentType(JSON).body(jsonBody).when().post(endpointUrl);
-        int responseStatusCode = response.getStatusCode();
-        Assert.assertEquals(responseStatusCode,200,"POST Review Timeslots failed.");
+//        String endpointUrl = generateEndpoint.ReviewScheduling(VerbType.POST,noticeNumber,null,null,null,correlationId);
+//        String jsonBody = "{\n" +
+//                "  \"timeSlot\": {\n" +
+//                "    \"reviewEndDtm\": \""+reviewEndDateTime+"\",\n" +
+//                "    \"reviewStartDtm\": \""+reviewStartDateTime+"\"\n" +
+//                "  }\n" +
+//                "}";
+//
+//        Response response = given().auth().preemptive().basic(GlobalVariables.apiUsername,GlobalVariables.apiPassword).contentType(JSON).body(jsonBody).when().post(endpointUrl);
+//        int responseStatusCode = response.getStatusCode();
+//        Assert.assertEquals(responseStatusCode,200,"POST Review Timeslots failed.");
     }
 }
