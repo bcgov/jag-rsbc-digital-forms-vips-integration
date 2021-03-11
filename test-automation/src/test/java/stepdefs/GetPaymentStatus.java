@@ -32,9 +32,10 @@ public class GetPaymentStatus {
     public void theUserHasAccessToThePaymentStatusGETEndpoint() {
     }
 
-    @When("the user submits a GET Payment Request for notice number {string} CorrelationId {string}")
-    public void theUserSubmitsAGETPaymentRequestForNoticeNumberCorrelationId(String noticeNumber, String correlationId) {
-        endpointUrl = generateEndpoint.Payment(VerbType.GET, noticeNumber, correlationId);
+
+    @When("the user submits a GET Payment Request for guid {string} CorrelationId {string}")
+    public void theUserSubmitsAGETPaymentRequestForGuidCorrelationId(String guid, String correlationId) {
+        endpointUrl = generateEndpoint.Payment(VerbType.GET, guid, correlationId);
         apiUtil = new ApiUtil(endpointUrl);
         responseStatusCode = apiUtil.getResponseStatusCodeUsingBasicAuthentication(GlobalVariables.apiUsername, GlobalVariables.apiPassword);
     }
@@ -59,4 +60,6 @@ public class GetPaymentStatus {
 
         softAssert.assertAll();
     }
+
+
 }

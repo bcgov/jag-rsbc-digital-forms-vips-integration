@@ -25,7 +25,7 @@ public class PatchPaymentServiceController {
     SoftAssert softAssert;
     int responseStatusCode;
     String endpointUrl;
-    String noticeNumber, correlationId;
+    String guid, correlationId;
     String paymentAmount, paymentCardType, paymentDate, receiptNumberTxt;
     String paymentAmount_updated, paymentCardType_updated, paymentDate_updated, receiptNumberTxt_updated;
 
@@ -34,20 +34,21 @@ public class PatchPaymentServiceController {
         softAssert = new SoftAssert();
     }
 
-    @Given("the database has a record for NoticeNumber {string} and CorrelationId {string}")
-    public void theDatabaseHasARecordForNoticeNumberAndCorrelationId(String noticeNumber, String correlationId) {
-        endpointUrl = generateEndpoint.Payment(VerbType.GET, noticeNumber, correlationId);
+
+    @Given("the database has a record for guid {string} and CorrelationId {string}")
+    public void theDatabaseHasARecordForGuidAndCorrelationId(String guid, String correlationId) {
+        endpointUrl = generateEndpoint.Payment(VerbType.GET, guid, correlationId);
         apiUtil = new ApiUtil(endpointUrl);
         responseStatusCode = apiUtil.getResponseStatusCodeUsingBasicAuthentication(GlobalVariables.apiUsername, GlobalVariables.apiPassword);
         Assert.assertEquals(responseStatusCode, 200, "The record to be updated doesn't exist in database.");
-        this.noticeNumber = noticeNumber;
+        this.guid = guid;
         this.correlationId = correlationId;
     }
 
 
-    @When("the user submits a PATCH Payment request with parameters NoticeNumber {string} Correlation ID {string}")
-    public void theUserSubmitsAPATCHPaymentRequestWithParametersNoticeNumberCorrelationID(String noticeNumber, String correlationId) {
-        endpointUrl = generateEndpoint.Payment(VerbType.PATCH,noticeNumber,correlationId);
+    @When("the user submits a PATCH Payment request with parameters guid {string} Correlation ID {string}")
+    public void theUserSubmitsAPATCHPaymentRequestWithParametersGuidCorrelationID(String guid, String correlationId) {
+        endpointUrl = generateEndpoint.Payment(VerbType.PATCH,guid,correlationId);
     }
 
     @And("PATCH form data having PaymentAmount {string} PaymentCardType {string} PaymentDate {string} ReceiptNumberTxt {string}")
@@ -79,7 +80,7 @@ public class PatchPaymentServiceController {
     public void theUserShouldGetASuccessfulResponseFromPATCHPaymentRequestAndTheRecordShouldBeUpdatedInTheDatabase() {
         Assert.assertEquals(responseStatusCode, 200, "The response status should be OK:200");
 
-        endpointUrl = generateEndpoint.Payment(VerbType.GET, noticeNumber, correlationId);
+        endpointUrl = generateEndpoint.Payment(VerbType.GET, guid, correlationId);
         apiUtil = new ApiUtil(endpointUrl);
         responseStatusCode = apiUtil.getResponseStatusCodeUsingBasicAuthentication(GlobalVariables.apiUsername, GlobalVariables.apiPassword);
         Assert.assertEquals(responseStatusCode, 200, "Failed to update the database record using PATCH request.");
@@ -96,7 +97,7 @@ public class PatchPaymentServiceController {
 
     @And("the Payment db record should be reverted to the original state")
     public void thePaymentDbRecordShouldBeRevertedToTheOriginalState() {
-        endpointUrl = generateEndpoint.Payment(VerbType.PATCH,noticeNumber,correlationId);
+        endpointUrl = generateEndpoint.Payment(VerbType.PATCH,guid,correlationId);
         String jsonBody = "{\n" +
                 "    \"transactionInfo\": {\n" +
                 "        \"paymentAmount\": \""+paymentAmount+"\",\n" +
@@ -109,5 +110,6 @@ public class PatchPaymentServiceController {
         responseStatusCode = given().auth().preemptive().basic(GlobalVariables.apiUsername,GlobalVariables.apiPassword).contentType(JSON).baseUri(endpointUrl).body(jsonBody).patch().getStatusCode();
         Assert.assertEquals(responseStatusCode, 200, "Failed to revert the database record using PATCH request");
     }
+
 
 }

@@ -35,15 +35,15 @@ public class GenerateEndpoint
     }
 
 
-    public String Payment(Enum VerbTypes, String noticeNumber, String correlationId)
+    public String Payment(Enum VerbTypes, String guid, String correlationId)
     {
         switch (VerbTypes.toString())
         {
             case "GET":
-                return digitalFormsBaseUrl + noticeNumber + "/payment/status/" + correlationId;
+                return digitalFormsBaseUrl + guid + "/payment/status/" + correlationId;
 
             case "PATCH":
-                return digitalFormsBaseUrl + noticeNumber + "/payment/" + correlationId;
+                return digitalFormsBaseUrl + guid + "/payment/" + correlationId;
 
             default:
                 throw new IllegalStateException("Unexpected value: " + VerbTypes);

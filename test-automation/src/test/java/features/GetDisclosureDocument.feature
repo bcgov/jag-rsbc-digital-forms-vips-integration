@@ -9,4 +9,4 @@ Feature: GET Disclosure Document
       | documentId | correlationId | mimeType        | document                                                                                |
       | 14         | test          | application/pdf | AzjAeJoIH7BQCxgDDfHFIuoYwAA1MsEKQplbmRzdHJlYW0KZW5kb2JqCnN0YXJ0eHJlZgoyMjY1NAolJUVPRg== |
       | 15         | test          | application/pdf | GAExI0MjI7cDMQCRscoTDGnpQwAoFIDdQplbmRzdHJlYW0KZW5kb2JqCnN0YXJ0eHJlZgoxNzA2MQolJUVPRg== |
-      | 16         | test          | application/pdf | DADY4UQEM9hIBYwVrzGFKsyYwAAEJYFXwplbmRzdHJlYW0KZW5kb2JqCnN0YXJ0eHJlZgozMTI4NgolJUVPRg== |
+#      | 16         | test          | application/pdf | DADY4UQEM9hIBYwVrzGFKsyYwAAEJYFXwplbmRzdHJlYW0KZW5kb2JqCnN0YXJ0eHJlZgozMTI4NgolJUVPRg== |
