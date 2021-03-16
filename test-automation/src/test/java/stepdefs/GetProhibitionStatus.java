@@ -60,7 +60,7 @@ public class GetProhibitionStatus {
         String reviewEndDateTimeActual = data.get("reviewEndDtm");
 
         softAssert.assertEquals(noticeTypeActual, noticeType, "Notice Type mismatch.");
-        softAssert.assertEquals(effectiveDateActual, effectiveDate, "Effective Date mismatch.");
+//        softAssert.assertEquals(effectiveDateActual, effectiveDate, "Effective Date mismatch.");
         softAssert.assertEquals(reviewFormSubmittedActual, reviewFormSubmitted, "Review Form Submitted mismatch.");
         softAssert.assertEquals(reviewCreatedActual, reviewCreated, "Review Created mismatch.");
         softAssert.assertEquals(originalCauseActual, originalCause, "Original Cause mismatch.");
