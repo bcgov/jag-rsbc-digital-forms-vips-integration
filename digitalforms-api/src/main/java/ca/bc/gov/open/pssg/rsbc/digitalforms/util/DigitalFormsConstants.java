@@ -83,6 +83,7 @@ public final class DigitalFormsConstants {
 	
 	// rest response media type
 	public static final String JSON_CONTENT = "application/json";
+	public static final String TEXT_CONTENT = "text/plain;charset=UTF-8";
    
 	// MDC constants
 	public static final String REQUEST_CORRELATION_ID = "request.correlationid";

@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.security;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.dao.VipswsDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -73,6 +74,11 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean(name="vipswsDao")
+	public VipswsDaoImpl vipswsDao() {
+		return new VipswsDaoImpl();
 	}
 	
 }
