@@ -32,7 +32,7 @@ objects:
       template: meta-service
     name: digitalforms-api
   spec:
-    host: digitalforms-api-${namespacePrefix}-${TAG}.pathfinder.gov.bc.ca
+    host: digitalforms-api-${namespacePrefix}-${TAG}.silver.gov.bc.ca
     port:
       targetPort: web
     tls:

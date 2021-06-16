@@ -176,8 +176,8 @@ Change route spec.host url to private/public as per environment
 
 |  Scope |  Url |
 |----------|----------------------|
-| Public | *.pathfinder.gov.bc.ca |
-| Private | *.pathfinder.bcgov |
+| Public | *.silver.gov.bc.ca |
+| Private | *.silver.bcgov |
 
 ### Scans Pipeline
 ```shell script

@@ -10,7 +10,6 @@ import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +17,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- *
+ * API pass-through for Prohibition & Documents VIPS API calls
  */
 @RestController
 @Api(value = "Prohibition", tags = { "Prohibition" })
 public class ProhibitionController {
+
+    private final VipswsDao vipswsdao;
+
+    private final Logger logger;
+
     @Autowired
-    @Qualifier("vipswsDao")
-    private VipswsDao vipswsdao;
-
-    private final Logger logger = LoggerFactory.getLogger(DisclosureController.class);
-
+    public ProhibitionController(VipswsDao vipswsdao) {
+        this.vipswsdao = vipswsdao;
+        this.logger = LoggerFactory.getLogger(ProhibitionController.class);
+    }
 
     /**
      *  Note that this is a multi-part part process.
@@ -196,8 +199,8 @@ public class ProhibitionController {
      *
      * getDocument
      *
-     * @param preValResp - pre validation response
      * @param documentId of case document
+     * @param documentParams document GET prarms
      * @return
      */
     private ResponseEntity<String> getDocument(Long documentId, GetDocument documentParams) {

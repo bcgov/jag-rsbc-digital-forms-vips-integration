@@ -3,13 +3,15 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.dao;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.*;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.VipswsConstants;
 import org.apache.commons.codec.binary.Base64;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -27,7 +29,7 @@ import java.nio.charset.Charset;
  * @author zacpez
  * TODO: 2021-06-11 update user, guid, etc
  */
-@Repository
+@Service
 public class VipswsDaoImpl implements VipswsDao {
 
     @Value("${vips.api.endpoint:MISSING}")
@@ -42,22 +44,30 @@ public class VipswsDaoImpl implements VipswsDao {
     @Value("${vips.api.carmauser.guid:MISSING}")
     private String carmaGuid;
 
-    private Logger log = Logger.getLogger(this.getClass());
+    private final RestTemplate restTemplate;
+
+    private final Logger logger;
+
+    @Autowired
+    public VipswsDaoImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+        this.logger = LoggerFactory.getLogger(VipswsDaoImpl.class);
+    }
 
     /**
      * Pass-through API call for POST Impoundment
      *
      * @param impoundment in VIPS
-     * @return
+     * @return CreateImpoundmentServiceResponse
      */
     @Override
     public CreateImpoundmentServiceResponse createImpoundment(CreateImpoundment impoundment) {
-        log.info("Invoking createImpoundment impoundmentNoticeNo = " + impoundment.getVipsImpoundmentCreate().getImpoundmentNoticeNo());
+        logger.info("Invoking createImpoundment impoundmentNoticeNo = " + impoundment.getVipsImpoundmentCreate().getImpoundmentNoticeNo());
 
         RestTemplate restTemplate = new RestTemplate();
 
         String finalEndpoint = ensureTrailingSlash(uri) + "cases/impoundments";
-        log.info("POSTing data to VIPS API create impoundment endpoint: " + finalEndpoint);
+        logger.info("POSTing data to VIPS API create impoundment endpoint: " + finalEndpoint);
 
         // Note the body object as first parameter!
         HttpEntity<?> httpEntity = new HttpEntity<Object>(
@@ -80,20 +90,20 @@ public class VipswsDaoImpl implements VipswsDao {
             resp = restTemplate.exchange(finalEndpoint, HttpMethod.POST, httpEntity,
                     CreateImpoundmentServiceResponse.class);
 
-            log.info("RespCd = " + (resp.getBody()).getRespCd()
+            logger.info("RespCd = " + (resp.getBody()).getRespCd()
                     + ", RespMsg = " + (resp.getBody()).getRespMsg());
 
             // 40n type errors
         } catch (HttpClientErrorException ex) {
             String msg = "Call to createImpoundment at VIPS API from Digital Forms resulted in unexpected http status code, "
                     + ex.getRawStatusCode();
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
 
             // 500 Internal server error
         } catch (HttpServerErrorException ex) { // 500
             String msg = "Call to createImpoundment at VIPS API from Digital Forms resulted in unexpected http status code, 500";
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
         }
 
@@ -104,7 +114,7 @@ public class VipswsDaoImpl implements VipswsDao {
      * Pass-through API call for GET Impoundment
      *
      * @param impoundmentId in VIPS
-     * @return
+     * @return ResponseEntity<GetImpoundmentServiceResponse>
      */
     public ResponseEntity<GetImpoundmentServiceResponse> getImpoundment(Long impoundmentId) {
         RestTemplate restTemplate = new RestTemplate();
@@ -128,13 +138,13 @@ public class VipswsDaoImpl implements VipswsDao {
             // 40n type errors
         } catch (HttpClientErrorException ex) {
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, " + ex.getRawStatusCode();
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
 
             // 500 Internal server error
         } catch (HttpServerErrorException ex) { // 500
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, 500";
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
         }
 
@@ -154,12 +164,11 @@ public class VipswsDaoImpl implements VipswsDao {
      */
     @Override
     public CreateProhibitionServiceResponse createProhibition(CreateProhibition prohibition) {
-        log.info("Invoking createProhibition prohibitionNoticeNo = " + prohibition.getVipsProhibitionCreate().getProhibitionNoticeNo());
-
-        RestTemplate restTemplate = new RestTemplate();
+        logger.info("Invoking createProhibition prohibitionNoticeNo = " +
+            prohibition.getVipsProhibitionCreate().getProhibitionNoticeNo());
 
         String finalEndpoint = ensureTrailingSlash(uri) + "cases/prohibitions";
-        log.info("POSTing data to VIPS API create Prohibition endpoint: " + finalEndpoint);
+        logger.info("POSTing data to VIPS API create Prohibition endpoint: " + finalEndpoint);
 
         // Note the body object as first parameter!
         HttpEntity<?> httpEntity = new HttpEntity<Object>(
@@ -182,20 +191,20 @@ public class VipswsDaoImpl implements VipswsDao {
             resp = restTemplate.exchange(finalEndpoint, HttpMethod.POST, httpEntity,
                     CreateProhibitionServiceResponse.class);
 
-            log.info("RespCd = " + (resp.getBody()).getRespCd()
+            logger.info("RespCd = " + (resp.getBody()).getRespCd()
                     + ", RespMsg = " + (resp.getBody()).getRespMsg());
 
             // 40n type errors
         } catch (HttpClientErrorException ex) {
             String msg = "Call to createProhibition at VIPS API from Digital Forms resulted in unexpected http status code, "
                     + ex.getRawStatusCode();
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
 
             // 500 Internal server error
         } catch (HttpServerErrorException ex) { // 500
             String msg = "Call to createProhibition at VIPS API from Digital Forms resulted in unexpected http status code, 500";
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
         }
 
@@ -209,7 +218,6 @@ public class VipswsDaoImpl implements VipswsDao {
      * @return
      */
     public ResponseEntity<GetProhibitionServiceResponse> getProhibition(Long prohibitionId) {
-        RestTemplate restTemplate = new RestTemplate();
         String finalEndpoint = ensureTrailingSlash(uri) + "cases/prohibitions/" + prohibitionId;
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(null,
@@ -230,13 +238,13 @@ public class VipswsDaoImpl implements VipswsDao {
             // 40n type errors
         } catch (HttpClientErrorException ex) {
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, " + ex.getRawStatusCode();
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
 
             // 500 Internal server error
         } catch (HttpServerErrorException ex) { // 500
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, 500";
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
         }
 
@@ -250,7 +258,6 @@ public class VipswsDaoImpl implements VipswsDao {
 
     @Override
     public ResponseEntity<UpdateDocumentAssocServiceResponse> createDocumentAssociation(VipsDocAssocUpdateObj docAssocUpdateObj) {
-        RestTemplate restTemplate = new RestTemplate();
         String finalEndpoint = ensureTrailingSlash(uri) + "document-association/notice";
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(
@@ -272,13 +279,13 @@ public class VipswsDaoImpl implements VipswsDao {
             // 40n type errors
         } catch (HttpClientErrorException ex) {
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, " + ex.getRawStatusCode();
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
 
             // 500 Internal server error
         } catch (HttpServerErrorException ex) { // 500
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, 500";
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
         }
 
@@ -288,12 +295,11 @@ public class VipswsDaoImpl implements VipswsDao {
     /**
      *
      * @param documentId of case document
-     * @param documentParams.b64 get in base 64 encoding
-     * @param documentParams.url get as URL
+     * @param documentParams `b64` get in base 64 encoding
+     * @param documentParams `url` get as URL
      * @return
      */
     public ResponseEntity<String> getDocument(Long documentId, GetDocument documentParams) {
-        RestTemplate restTemplate = new RestTemplate();
         String finalEndpoint = ensureTrailingSlash(uri) + "documents/" + documentId;
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(finalEndpoint)
@@ -319,13 +325,13 @@ public class VipswsDaoImpl implements VipswsDao {
             // 40n type errors
         } catch (HttpClientErrorException ex) {
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, " + ex.getRawStatusCode();
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
 
             // 500 Internal server error
         } catch (HttpServerErrorException ex) { // 500
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, 500";
-            log.fatal(msg);
+            logger.error(msg);
             ex.printStackTrace();
         }
 
@@ -339,24 +345,21 @@ public class VipswsDaoImpl implements VipswsDao {
 
     @Override
     public PingServiceResponse getPing() {
-
-        log.info("Invoking getPing (VIPS connectivity test");
-
-        RestTemplate restTemplate = new RestTemplate();
-
+        logger.info("Invoking getPing (VIPS connectivity test");
         String finalEndpoint = ensureTrailingSlash(uri) + "ping";
 
         PingServiceResponse resp = null;
+
         try {
 
             resp = restTemplate.getForObject(finalEndpoint, PingServiceResponse.class);
 
-            log.info("RespCd = " + resp.getRespCd() + ", RespMsg = " + resp.getRespMsg());
+            logger.info("RespCd = " + resp.getRespCd() + ", RespMsg = " + resp.getRespMsg());
 
             // 40n type errors
         } catch (HttpClientErrorException ex) {
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, " + ex.getRawStatusCode();
-            log.fatal(msg);
+            logger.error(msg);
             resp.setRespCd(VipswsConstants.VIPSWS_GENERAL_FAILURE_CD);
             resp.setRespMsg("Failure");
             ex.printStackTrace();
@@ -364,7 +367,7 @@ public class VipswsDaoImpl implements VipswsDao {
             // 500 Internal server error
         } catch (HttpServerErrorException ex) { // 500
             String msg = "Call to VIPS GET Ping resulted in unexpected http status code, 500";
-            log.fatal(msg);
+            logger.error(msg);
             resp.setRespCd(VipswsConstants.VIPSWS_GENERAL_FAILURE_CD);
             resp.setRespMsg("Failure");
             ex.printStackTrace();

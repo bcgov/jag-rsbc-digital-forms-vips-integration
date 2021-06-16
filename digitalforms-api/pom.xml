@@ -41,12 +41,12 @@
 			<repositories>
 				<repository>
 					<id>digitalforms-group</id>
-					<url>https://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
+					<url>https://nexus-c220ad-tools.apps.silver.devops.gov.bc.ca/repository/digitalforms-group/</url>
 				</repository>
 				<repository>
 					<id>splunk-artifactory</id>
 					<name>Splunk Releases</name>
-					<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
+					<url>https://nexus-c220ad-tools.apps.silver.devops.gov.bc.ca/repository/digitalforms-group/</url>
 				</repository>
 			</repositories>
 			<dependencies>

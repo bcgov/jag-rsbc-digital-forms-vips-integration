@@ -2,6 +2,7 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.dao;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 /**
  * 

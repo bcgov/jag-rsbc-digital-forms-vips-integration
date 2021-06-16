@@ -76,9 +76,4 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean(name="vipswsDao")
-	public VipswsDaoImpl vipswsDao() {
-		return new VipswsDaoImpl();
-	}
-	
 }

@@ -1,8 +1,8 @@
-## Digital Forms API
+# Digital Forms API
 
 This is the root level of this project.
 
-### Built With
+## Built With
 
 - [Maven](https://maven.apache.org/) - Dependency Management
 - [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) - Java Platform, Standard Edition Development Kit
@@ -10,22 +10,22 @@ This is the root level of this project.
 - [git](https://git-scm.com/) - Free and Open-Source distributed version control system
 - [Swagger](https://swagger.io/) - Open-Source software framework backed by a large ecosystem of tools that helps developers design, build, document, and consume RESTful Web services.
 
-### External Tools Used
+## External Tools Used
 
 - [Postman](https://www.getpostman.com/) - API Development Environment (Testing Docmentation)
- 
-## Technical Overview
 
-| Layer              | Technology                |
-| ------------------ | ------------------------- |
-| Service            | Java, SpringFramework     |
-| Test framework     | TestNG, Cucumber, Gherkin |
-| Application Server | Spring Boot / Tomcat      |
-| Runtime            | Pathfinder OpenShift      |
+# Technical Overview
 
-### Running the application
+Layer              | Technology
+------------------ | -------------------------
+Service            | Java, SpringFramework
+Test framework     | TestNG, Cucumber, Gherkin
+Application Server | Spring Boot / Tomcat
+Runtime            | Silver OpenShift
 
-**1. Using Docker**
+## Running the application
+
+**1\. Using Docker**
 
 - Install [Docker](https://www.docker.com/)
 
@@ -38,7 +38,7 @@ docker-compose -f nexus-docker-compose.yml up --build
 docker-compose up --build
 ```
 
-**2. Using Eclipse or Spring Tool Suite 4 (STS4)**
+**2\. Using Eclipse or Spring Tool Suite 4 (STS4)**
 
 - Import as a Maven project from the root level. Dependent API should load automatically.
 
@@ -48,7 +48,7 @@ docker-compose up --build
 
 - Launch the **digitalforms-api** from the Boot Dashboard.
 
-**3. Using command line**
+**3\. Using command line**
 
 - Set environmental variables as defined in `.env.template`.
 
@@ -59,31 +59,31 @@ mvn clean install -Pdefault-profile
 mvn spring-boot:run
 ```
 
-### Security
+## Security
 
 - Basic Authentication has been applied to all API operations.
 - Swagger2 and Actuator endpoints are not protected.
 - Swagger2 may be disabled using the API properties file.
 - VIPS ORDS Client uses basic authentication.
 
-### Swagger2
+## Swagger2
 
-http://localhost:8082/digitalforms/v2/api-docs  
-http://localhost:8082/digitalforms/swagger-ui.html
+<http://localhost:8082/digitalforms/v2/api-docs><br>
+<http://localhost:8082/digitalforms/swagger-ui.html>
 
-### Actuator
+## Actuator
 
 To monitor and manage the application
 
-| URL                                                  | Method |
-| ---------------------------------------------------- | ------ |
-| `http://localhost:8082/digitalforms/actuator/`       | GET    |
-| `http://localhost:8082/digitalforms/actuator/health` | GET    |
-| `http://localhost:8082/digitalforms/actuator/info`   | GET    |
+URL                                                  | Method
+---------------------------------------------------- | ------
+`http://localhost:8082/digitalforms/actuator/`       | GET
+`http://localhost:8082/digitalforms/actuator/health` | GET
+`http://localhost:8082/digitalforms/actuator/info`   | GET
 
-### Files and Directories
+## Files and Directories
 
-```
+```bash
 .
 ├── .github                       # Contains GitHub Related sources
 ├── configuration                 # Contains Nexus configuration
@@ -98,16 +98,17 @@ To monitor and manage the application
 └── nexus-docker-compose.yml      # Nexus build file
 ```
 
-## Splunk
+# Splunk
 
-http://localhost:8000
+<http://localhost:8000>
 
-| Key        | Value     |
-| ---------- | --------- |
-| `Username` | admin     |
-| `Password` | <in .env> |
+Key        | Value
+---------- | ------------------
+`Username` | admin
+`Password` | <in .env="">
+</in>
 
-## Sonarqube
+# Sonarqube
 
 Linux/Unix Settings
 
@@ -118,14 +119,15 @@ ulimit -n 65536
 ulimit -u 4096
 ```
 
-http://localhost:9000
+<http://localhost:9000>
 
-| Key        | Value     |
-| ---------- | --------- |
-| `Username` | admin     |
-| `Password` | <in .env> |
+Key        | Value
+---------- | ------------------
+`Username` | admin
+`Password` | <in .env="">
+</in>
 
-## Authors
+# Authors
 
 - Derek Heidorn
 - Siva Karunakaran
@@ -133,6 +135,6 @@ http://localhost:9000
 - Ebenezer Muthiah
 - Rohit Sirohi
 
-### License
+## License
 
 Apache license 2.0

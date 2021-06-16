@@ -8,7 +8,7 @@ This is the Digital Forms API automation tests.
 | ------------------ | ------------------------- |
 | Test framework     | TestNG, Cucumber, Gherkin |
 | Application Server | Spring Boot / Tomcat      |
-| Runtime            | Pathfinder OpenShift      |
+| Runtime            | Silver OpenShift      |
 
 ### Environmental Variables
 
