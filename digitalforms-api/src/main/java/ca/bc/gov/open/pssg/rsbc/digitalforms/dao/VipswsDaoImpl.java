@@ -35,14 +35,14 @@ public class VipswsDaoImpl implements VipswsDao {
     @Value("${vips.api.endpoint:MISSING}")
     private String uri;
     
-    @Value("${vips.api.carmauser.universalid:MISSING}")
-    private String carmaUniversalId;
+    @Value("${vips.api.user.universalid:MISSING}")
+    private String universalId;
 
-    @Value("${vips.api.carmauser.userdisplayname:MISSING}")
-    private String carmaUserDisplayName;
+    @Value("${vips.api.user.userdisplayname:MISSING}")
+    private String userDisplayName;
 
-    @Value("${vips.api.carmauser.guid:MISSING}")
-    private String carmaGuid;
+    @Value("${vips.api.user.guid:MISSING}")
+    private String guid;
 
     private final RestTemplate restTemplate;
 
@@ -73,9 +73,9 @@ public class VipswsDaoImpl implements VipswsDao {
         HttpEntity<?> httpEntity = new HttpEntity<Object>(
             impoundment,
             createVipsHeaders(
-                carmaUserDisplayName,
-                carmaGuid,
-                carmaUniversalId,
+                userDisplayName,
+                guid,
+                universalId,
                 "", // content type
                 false, // basic auth.
                 null, // user
@@ -122,9 +122,9 @@ public class VipswsDaoImpl implements VipswsDao {
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(null,
             createVipsHeaders(
-                carmaUserDisplayName,
-                carmaGuid,
-                carmaUniversalId,
+                userDisplayName,
+                guid,
+                universalId,
                 "", // content type
                 false, // basic auth.
                 null, // user
@@ -172,16 +172,16 @@ public class VipswsDaoImpl implements VipswsDao {
 
         // Note the body object as first parameter!
         HttpEntity<?> httpEntity = new HttpEntity<Object>(
-                prohibition,
-                createVipsHeaders(
-                        carmaUserDisplayName,
-                        carmaGuid,
-                        carmaUniversalId,
-                        "", // content type
-                        false, // basic auth.
-                        null, // user
-                        null // password
-                )
+            prohibition,
+            createVipsHeaders(
+                userDisplayName,
+                guid,
+                universalId,
+                "", // content type
+                false, // basic auth.
+                null, // user
+                null // password
+            )
         );
 
         ResponseEntity<CreateProhibitionServiceResponse> resp = null;
@@ -221,14 +221,14 @@ public class VipswsDaoImpl implements VipswsDao {
         String finalEndpoint = ensureTrailingSlash(uri) + "cases/prohibitions/" + prohibitionId;
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(null,
-                createVipsHeaders(
-                        carmaUserDisplayName,
-                        carmaGuid,
-                        carmaUniversalId,
-                        "", // content type
-                        false, // basic auth.
-                        null, // user
-                        null));// passwd
+            createVipsHeaders(
+                userDisplayName,
+                guid,
+                universalId,
+                "", // content type
+                false, // basic auth.
+                null, // user
+                null));// passwd
 
         ResponseEntity<GetProhibitionServiceResponse> resp = null;
         try {
@@ -263,9 +263,9 @@ public class VipswsDaoImpl implements VipswsDao {
         HttpEntity<?> httpEntity = new HttpEntity<Object>(
             docAssocUpdateObj,
             createVipsHeaders(
-                carmaUserDisplayName,
-                carmaGuid,
-                carmaUniversalId,
+                userDisplayName,
+                guid,
+                universalId,
                 "", // content type
                 false, // basic auth.
                 null, // user
@@ -308,14 +308,14 @@ public class VipswsDaoImpl implements VipswsDao {
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(
                 null,
-                createVipsHeaders(
-                        carmaUserDisplayName,
-                        carmaGuid,
-                        carmaUniversalId,
-                        "", // content type
-                        false, // basic auth.
-                        null, // user
-                        null));// passwd
+            createVipsHeaders(
+                userDisplayName,
+                guid,
+                universalId,
+                "", // content type
+                false, // basic auth.
+                null, // user
+                null));// passwd
 
         ResponseEntity<String> resp = null;
         try {
