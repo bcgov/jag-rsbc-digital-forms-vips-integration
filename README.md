@@ -23,6 +23,23 @@ This is the root level of this project.
 | Application Server | Spring Boot / Tomcat      |
 | Runtime            | Pathfinder OpenShift      |
 
+### Building the application
+
+1) After clone run ``` git submodule update --init```  
+this will pull the last working version of jag-vips-client
+
+2) Set the compiler version to java 8
+
+3) Run this command to get code to a runnable state ```mvn clean compile ```
+
+4) Run ```mvn clean package``` to package the application to a jar
+
+5) To update the jag-vips-client submodule to the latest commit run ```git pull``` from the jag-vip-client directory or run ```git submodule update --remote jag-vips-client```
+
+6) Make sure to commit if you update the submodules
+
+
+
 ### Running the application
 
 **1. Using Docker**
