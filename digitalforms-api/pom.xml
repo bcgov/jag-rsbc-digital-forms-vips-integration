@@ -32,7 +32,7 @@
 				<dependency>
 					<groupId>com.splunk.logging</groupId>
 					<artifactId>splunk-library-javalogging</artifactId>
-					<version>1.11.1</version>
+					<version>1.11.2</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -53,13 +53,14 @@
 				<dependency>
 					<groupId>com.splunk.logging</groupId>
 					<artifactId>splunk-library-javalogging</artifactId>
-					<version>1.11.1</version>
+					<version>1.11.2</version>
 				</dependency>
 			</dependencies>
 		</profile>
 	</profiles>
 
 	<properties>
+		<log4j2.version>2.17.0</log4j2.version>
 		<java.version>1.8</java.version>
 		<springfox-version>2.9.2</springfox-version>
 	</properties>
