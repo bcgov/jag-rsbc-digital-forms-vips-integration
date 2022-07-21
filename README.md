@@ -26,17 +26,29 @@ This is the root level of this project.
 ### Building the application
 
 1) After clone run ``` git submodule update --init```  
-this will pull the last working version of jag-vips-client
+
+This will pull the last working versions of the shared client ORDS libraries; 
+- jag-vips-client
+- jag-digitalforms-client. 
 
 2) Set the compiler version to java 8
 
-3) Run this command to get code to a runnable state ```mvn clean compile ```
+3) Run this command to get code to a runnable state  
+```mvn clean compile ```  
 
 4) Run ```mvn clean package``` to package the application to a jar
 
-5) To update the jag-vips-client submodule to the latest commit run ```git pull``` from the jag-vip-client directory or run ```git submodule update --remote jag-vips-client```
+5) To update the jag-vips-client submodule to the latest commit run  
+```git pull```   
+from the jag-vip-client directory or run  
+```git submodule update --remote jag-vips-client```  
 
-6) Make sure to commit if you update the submodules
+6) To update the jag-digitalforms-client submodule to the latest commit run  
+```git pull```   
+from the jag-digitalforms-client directory or run  
+```git submodule update --remote jag-digitalforms-client``` 
+
+7) Make sure to commit if you update the submodules
 
 
 
@@ -81,7 +93,7 @@ mvn spring-boot:run
 - Basic Authentication has been applied to all API operations.
 - Swagger2 and Actuator endpoints are not protected.
 - Swagger2 may be disabled using the API properties file.
-- VIPS ORDS Client uses basic authentication.
+- VIPS and DIGITALFORMS ORDS Clients both use basic authentication.
 
 ### Swagger2
 
@@ -105,7 +117,8 @@ To monitor and manage the application
 ├── .github                       # Contains GitHub Related sources
 ├── configuration                 # Contains Nexus configuration
 ├── digitalforms-api              # Digital forms API
-├── digitalforms-ords-client      # Digital forms ORDS client library
+├── jag-vips-client               # VIPS ORDS client library
+├── jag-digitalforms-client       # DIGITAL FORMS ORDS client library
 ├── nexus                         # Contains Nexus setup files
 ├── openshift                     # Contains Openshift configuration templates
 ├── sonarqube                     # Contains SonarQube setup files
