@@ -18,7 +18,7 @@
 
     <modules>
 		<module>jag-vips-client/src/jag-vips-client</module>
-        <module>digitalforms-ords-client</module>
+        <module>jag-digitalforms-client</module>
         <module>digitalforms-api</module>
     </modules>
 
