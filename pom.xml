@@ -38,6 +38,11 @@
 		</profile>
 		<profile>
 			<id>default-profile</id>
+			<modules>
+					<module>jag-vips-client/src/jag-vips-client</module>
+		        	<module>jag-digitalforms-client</module>
+		       		<module>digitalforms-api</module>
+		    </modules>
 			<repositories>
 				<repository>
 					<id>digitalforms-group</id>
