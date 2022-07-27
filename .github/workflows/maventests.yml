@@ -3,7 +3,7 @@ name: Maven Tests
 on: [push]
 
 jobs:
-  test:
+  unit-test:
     env:
       DIGITALFORMS_SWAGGER_ENABLED: true
 
@@ -19,12 +19,6 @@ jobs:
           distribution: 'temurin'
           java-version: 8
           cache: 'maven'
-#       - uses: actions/cache@v1
-#         with:
-#           path: ~/.m2/repository
-#           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-#           restore-keys: |
-#             ${{ runner.os }}-maven-
       - name: Build with Maven
         run: mvn -B test -P default-profile
         
