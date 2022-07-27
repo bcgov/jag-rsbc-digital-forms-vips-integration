@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
-          java-version: ${{ inputs.java_version }}
+          java-version: 8
           cache: 'maven'
 #       - uses: actions/cache@v1
 #         with:
