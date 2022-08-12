@@ -1,12 +1,11 @@
 name: Main - Build Image and Push to Openshift Registry for Dev Deployment
 
 on:
-  workflow_dispatch:
-    inputs:
-      env:
-        description: 'Image Target Env'
-        required: true
-        default: 'dev'
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch: {}
 
 jobs:
   commit-version:
