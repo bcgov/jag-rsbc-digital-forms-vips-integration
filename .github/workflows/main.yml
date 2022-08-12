@@ -1,15 +1,43 @@
 name: Main - Build Image and Push to Openshift Registry for Dev Deployment
 
 on:
-  workflow_dispatch:
-    inputs:
-      env:
-        description: 'Image Target Env'
-        required: true
-        default: 'dev'
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch: {}
 
 jobs:
-  get-github-commitversion:
+  commit-version:
     uses: SierraSystems/reusable-workflows/.github/workflows/get-github-commitversion.yml@main
     with:
       working_directory: .
+
+  build-image:
+    uses: SierraSystems/reusable-workflows/.github/workflows/openshift-source-to-image.yml@main
+    needs:
+      - commit-version
+    with:
+      build_config_name: "digitalforms-api"
+      image_tags: "dev,${{ needs.commit-version.outputs.github-release-version }}"
+    secrets:
+      openshift_namespace: "${{ secrets.OPENSHIFT_LICENSE_PLATE_SILVER }}-tools"
+      openshift_server_url: "${{ secrets.OPENSHIFT_SERVER_URL_SILVER }}"
+      openshift_token: "${{ secrets.OPENSHIFT_SA_PIPELINE_TOKEN_SILVER }}"
+      openshift_external_repository: "${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY_SILVER }}"
+
+  trivy:
+    needs:
+      - commit-version
+      - build-image
+    uses: SierraSystems/reusable-workflows/.github/workflows/trivy-scan-openshift-image.yml@main
+    with:
+      imagestream_name: "digitalforms-api"
+      image_tag: "${{ needs.commit-version.outputs.github-release-version }}"
+    secrets:
+      openshift_namespace: "${{ secrets.OPENSHIFT_LICENSE_PLATE_SILVER }}-tools"
+      openshift_server_url: "${{ secrets.OPENSHIFT_SERVER_URL_SILVER }}"
+      openshift_token: "${{ secrets.OPENSHIFT_SA_PIPELINE_TOKEN_SILVER }}"
+      openshift_external_repository: "${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY_SILVER }}"
+      openshift_sa_name: "${{ secrets.OPENSHIFT_SA_PIPELINE_NAME_SILVER }}"
+      openshift_sa_password: "${{ secrets.OPENSHIFT_SA_PIPELINE_TOKEN_SILVER }}"
