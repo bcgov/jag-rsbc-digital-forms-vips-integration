@@ -9,7 +9,20 @@ on:
         default: 'dev'
 
 jobs:
-  get-github-commitversion:
+  commit-version:
     uses: SierraSystems/reusable-workflows/.github/workflows/get-github-commitversion.yml@main
     with:
       working_directory: .
+
+  build-image:
+    uses: SierraSystems/reusable-workflows/.github/workflows/openshift-source-to-image.yml@main
+    needs:
+      - commit-version
+    with:
+      build_config_name: "digitalforms-api"
+      image_tags: "dev,${{ needs.commit-version.outputs.github-release-version }}"
+    secrets:
+      openshift_namespace: "${{ secrets.OPENSHIFT_LICENSE_PLATE_SILVER }}-tools"
+      openshift_server_url: "${{ secrets.OPENSHIFT_SERVER_URL_SILVER }}"
+      openshift_token: "${{ secrets.OPENSHIFT_SA_PIPELINE_TOKEN_SILVER }}"
+      openshift_external_repository: "${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY_SILVER }}"
