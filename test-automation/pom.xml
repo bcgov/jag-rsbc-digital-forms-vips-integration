@@ -20,7 +20,7 @@
         <cucumber-picocontainer.version>6.2.2</cucumber-picocontainer.version>
         <cucumber-html.version>0.2.7</cucumber-html.version>
         <extentreports-cucumber6-adapter.version>1.0.0</extentreports-cucumber6-adapter.version>
-        <testng.version>7.1.0</testng.version>
+        <testng.version>7.7.0</testng.version>
         <ojdbc10.version>19.7.0.0</ojdbc10.version>
     </properties>
 
