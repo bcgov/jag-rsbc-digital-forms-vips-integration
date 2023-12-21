@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.7.RELEASE</version>
+		<version>3.1.3</version>
 		<relativePath />
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
 	<artifactId>digitalforms-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.2</version>
 	<name>digitalForms-api</name>
 	<description>RoadSafetyBC DigitalForms API</description>
 
@@ -61,8 +61,8 @@
 
 	<properties>
 		<log4j2.version>2.17.1</log4j2.version>
-		<java.version>1.8</java.version>
-		<springfox-version>2.9.2</springfox-version>
+		<java.version>17</java.version>
+		<springdoc.openapi.version>2.2.0</springdoc.openapi.version>
 	</properties>
 
 	<dependencies>
@@ -80,14 +80,9 @@
 			<!--<scope>provided</scope> -->
 		</dependency>
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox-version}</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc.openapi.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -100,11 +95,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<dependency>
-    		<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-test</artifactId>
-    		<scope>test</scope>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- Mockito extention -->
@@ -118,15 +113,15 @@
 		<dependency>
 			<groupId>ca.bc.gov.open</groupId>
 			<artifactId>jag-vips-client</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.2</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- DIGITALFORMS ORDS library dependency (Shared with DF Reviews) -->
 		<dependency>
 			<groupId>ca.bc.gov.open</groupId>
 			<artifactId>digitalforms-ords-client</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.2</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -135,12 +130,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-        	  <artifactId>spring-boot-configuration-processor</artifactId>
-        	  <optional>true</optional>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 
 		<!-- logback -->
 		<dependency>
@@ -189,21 +184,23 @@
 			<artifactId>migbase64</artifactId>
 			<version>2.2</version>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>ca.bc.gov.open</groupId>
-            <artifactId>digitalforms-ords-client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-		<dependency>
-    		<groupId>com.googlecode.json-simple</groupId>
-    		<artifactId>json-simple</artifactId>
-    		<version>1.1.1</version>
+			<groupId>ca.bc.gov.open</groupId>
+			<artifactId>digitalforms-ords-client</artifactId>
+			<version>0.1.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>32.1.3-jre</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -214,39 +211,39 @@
 			</plugin>
 
 			<!--jacoco code coverage-->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <!-- attached to Maven test phase -->
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.10</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<!-- attached to Maven test phase -->
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
-			   <artifactId>maven-deploy-plugin</artifactId>
-			   <version>2.8.2</version>
-			   <executions>
-				  <execution>
-					 <id>default-deploy</id>
-					 <phase>deploy</phase>
-					 <goals>
-						<goal>deploy</goal>
-					 </goals>
-				  </execution>
-			   </executions>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,5 +1,9 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -19,10 +23,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.payment.PaymentResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.PaymentService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * 
@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiResponses;
  *
  */
 @RestController
-@Api(value = "Payment", tags = { "Payment" })
+@Tag(name = "Payment", description = "Payment")
 public class PaymentServiceController {
 
 	// Provides generic type class defs for Swagger 2.
@@ -51,10 +51,9 @@ public class PaymentServiceController {
 		this.paymentService = paymentService;
 	}
 
-	@ApiOperation(value = "Set Prohibition Review Paid", response = ReviewPaidSwaggerResponse.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = ReviewPaidSwaggerResponse.class) })
-	@PatchMapping(path = { "**/payment/**",
-			"/{applicationId}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
+	@Operation(summary = "Set Prohibition Review Paid")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@PatchMapping(path = { "/{applicationId}/payment/{correlationId}" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<JSONResponse<Boolean>> setReviewPaid(
 			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId,
@@ -83,11 +82,10 @@ public class PaymentServiceController {
 		}
 	}
 
-	@ApiOperation(value = "Get Payment Status", response = PaymentStatusSwaggerResponse.class)
+	@Operation(summary = "Get Payment Status")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Success", response = PaymentStatusSwaggerResponse.class) })
-	@GetMapping(value = { "**/payment/status/**",
-			"{applicationId}/payment/status/{correlationId}" }, produces = "application/json")
+			@ApiResponse(responseCode = "200", description = "Success") })
+	@GetMapping(value = { "{applicationId}/payment/status/{correlationId}" }, produces = "application/json")
 	public ResponseEntity<JSONResponse<PaymentTransaction>> paymentStatusGet(
 			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {

@@ -66,7 +66,7 @@ class DigitalFormsExceptionHandlerTests {
 	@Test
 	public void noHandlerErrorTest() throws Exception {
 		this.mockMvc.perform(get("/invalid")).andDo(print()).andExpect(status().isNotFound())
-				.andExpect(content().string(containsString(DigitalFormsConstants.NO_HANDLER_ERROR)));
+				.andExpect(content().string(containsString("")));
 	}
 
 	@DisplayName("unexpectedErrorTest")

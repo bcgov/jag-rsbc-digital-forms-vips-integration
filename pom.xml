@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>ca.bc.gov.open</groupId>
-    <artifactId>digitalforms</artifactId>
-    <version>1.0</version>
-	
+	<groupId>ca.bc.gov.open</groupId>
+	<artifactId>digitalforms</artifactId>
+	<version>1.1</version>
+
 	<name>digitalforms</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/bcgov/jag-rsbc-digital-forms-vips-integration</url>
-	
+
 	<properties>
 		<log4j2.version>2.17.1</log4j2.version>
-        <java.version>1.8</java.version>
-    </properties>
+		<java.version>17</java.version>
+	</properties>
 
-    <modules>
+	<modules>
 		<module>jag-vips-client/src/jag-vips-client</module>
-        <module>jag-digitalforms-client</module>
-        <module>digitalforms-api</module>
-    </modules>
+		<module>jag-digitalforms-client</module>
+		<module>digitalforms-api</module>
+	</modules>
 
-    <profiles>
+	<profiles>
 		<profile>
 			<id>openshift</id>
 			<distributionManagement>
@@ -39,10 +39,10 @@
 		<profile>
 			<id>default-profile</id>
 			<modules>
-					<module>jag-vips-client/src/jag-vips-client</module>
-		        	<module>jag-digitalforms-client</module>
-		       		<module>digitalforms-api</module>
-		    </modules>
+				<module>jag-vips-client/src/jag-vips-client</module>
+				<module>jag-digitalforms-client</module>
+				<module>digitalforms-api</module>
+			</modules>
 			<repositories>
 				<repository>
 					<id>digitalforms-group</id>
@@ -56,5 +56,32 @@
 			</repositories>
 		</profile>
 	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<file>jag-digitalforms-client/target/generated-sources/openapi/src/main/java/ca/bc/gov/open/pssg/rsbc/digitalforms/ordsclient/api/handler/JSON.java</file>
+					<replacements>
+						<replacement>
+							<token>DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true</token>
+							<value>DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false</value>
+						</replacement>
+					</replacements>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

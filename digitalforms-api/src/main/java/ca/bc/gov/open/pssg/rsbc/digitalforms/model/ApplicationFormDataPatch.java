@@ -1,6 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.http.HttpStatus;
 

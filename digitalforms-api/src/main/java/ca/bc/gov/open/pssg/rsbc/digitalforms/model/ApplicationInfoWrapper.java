@@ -1,6 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.model;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

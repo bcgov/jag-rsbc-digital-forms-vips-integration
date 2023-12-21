@@ -1,6 +1,10 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
-import javax.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,20 +30,16 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationR
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
- * 
+ *
  * Application Form submission Controller.
- * 
+ *
  * @author sivakaruna
  *
  */
 @RestController
-@Api(value = "Application Form", tags = { "Application Form" })
+@Tag(name = "Application Form", description = "Application Form" )
 public class ApplicationFormController {
 
 	private class ApplicationInfoSwaggerResponse extends JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>> {
@@ -55,9 +55,9 @@ public class ApplicationFormController {
 
 	@GetMapping(value = { "**/application/**",
 			"/{applicationId}/application/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
-	@ApiOperation(value = "Get Form data", response = JSONResponse.class)
+	@Operation(summary = "Get Form data")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Success", response = ApplicationInfoSwaggerResponse.class) })
+			@ApiResponse(responseCode = "200", description = "Success") })
 	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationInfoResponse>>> applicationFormGet(
 			@PathVariable(value = "applicationId", required = true) String applicationId,
 			@PathVariable(value = "correlationId", required = true) String correlationId) {
@@ -84,9 +84,9 @@ public class ApplicationFormController {
 
 	@PostMapping(value = { "**/application/**",
 			"/{formType}/{noticeNumber}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
-	@ApiOperation(value = "Post Form data", response = JSONResponse.class)
+	@Operation(summary = "Post Form data")
 	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "Success", response = ApplicationIdSwaggerResponse.class) })
+			@ApiResponse(responseCode = "201", description = "Success") })
 	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> applicationFormPost(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,
@@ -102,18 +102,18 @@ public class ApplicationFormController {
 		// Validate request fields
 		DigitalFormsUtils.validateFormType(formType);
 		formData.getApplicationInfo().validateRequiredFields();
-		
+
 		//DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo(), formType);
 		DigitalFormsUtils.validateApplicationForm(formData.getApplicationInfo().getNoticeSubjectCd(),
-				formData.getApplicationInfo().getPresentationTypeCd(), 
-				formData.getApplicationInfo().getReviewRoleTypeCd(), 
-				formData.getApplicationInfo().getManualEntryYN(), 
+				formData.getApplicationInfo().getPresentationTypeCd(),
+				formData.getApplicationInfo().getReviewRoleTypeCd(),
+				formData.getApplicationInfo().getManualEntryYN(),
 				formType);
-		
+
 		ApplicationResponse data = service.postApplicationForm(formType, noticeNumber, correlationId,
 				formData.getApplicationInfo());
-		
-		
+
+
 		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
 			JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> resp = new JSONResponse<>(
 					new ApplicationInfoWrapper<>(
@@ -133,9 +133,9 @@ public class ApplicationFormController {
 
 	@PatchMapping(value = { "**/application/**",
 			"/{formType}/{applicationId}/application/{correlationId}" }, consumes = DigitalFormsConstants.JSON_CONTENT, produces = DigitalFormsConstants.JSON_CONTENT)
-	@ApiOperation(value = "Update Form data", response = JSONResponse.class)
+	@Operation(summary = "Update Form data")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Success", response = ApplicationIdSwaggerResponse.class) })
+			@ApiResponse(responseCode = "200", description = "Success") })
 	public ResponseEntity<JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>>> applicationFormPatch(
 			@PathVariable(value = "formType", required = true) String formType,
 			@PathVariable(value = "applicationId", required = true) String applicationId,
