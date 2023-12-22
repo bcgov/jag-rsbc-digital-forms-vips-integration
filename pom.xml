@@ -57,31 +57,4 @@
 		</profile>
 	</profiles>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.google.code.maven-replacer-plugin</groupId>
-				<artifactId>replacer</artifactId>
-				<version>1.5.3</version>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>replace</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<file>jag-digitalforms-client/target/generated-sources/openapi/src/main/java/ca/bc/gov/open/pssg/rsbc/digitalforms/ordsclient/api/handler/JSON.java</file>
-					<replacements>
-						<replacement>
-							<token>DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true</token>
-							<value>DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false</value>
-						</replacement>
-					</replacements>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
