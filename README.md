@@ -97,18 +97,18 @@ mvn spring-boot:run
 
 ### Swagger2
 
-http://localhost:8082/digitalforms/v2/api-docs  
+http://localhost:8082/digitalforms/v3/api-docs  
 http://localhost:8082/digitalforms/swagger-ui.html
 
 ### Actuator
 
 To monitor and manage the application
 
-| URL                                                  | Method |
-| ---------------------------------------------------- | ------ |
-| `http://localhost:8082/digitalforms/actuator/`       | GET    |
+| URL                                                 | Method |
+| --------------------------------------------------- | ------ |
+| `http://localhost:8082/digitalforms/actuator`       | GET    |
 | `http://localhost:8082/digitalforms/actuator/health` | GET    |
-| `http://localhost:8082/digitalforms/actuator/info`   | GET    |
+| `http://localhost:8082/digitalforms/actuator/info`  | GET    |
 
 ### Files and Directories
 
