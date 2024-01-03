@@ -1,5 +1,9 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -17,10 +21,6 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ProhibitionStatusResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.QueryServiceImpl;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * 
@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponses;
  *
  */
 @RestController
-@Api(value = "Query", tags = { "Query" })
+@Tag(name = "Query", description = "Query")
 public class QueryServiceController {
 
 	@Autowired
@@ -46,8 +46,8 @@ public class QueryServiceController {
 
 	private final Logger logger = LoggerFactory.getLogger(QueryServiceController.class);
 
-	@ApiOperation(value = "Get Prohibition status", response = QuerySwaggerResponse.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = QuerySwaggerResponse.class) })
+	@Operation(summary = "Get Prohibition status")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@GetMapping(value = { "**/status/**", "/{noticeNumber}/status/{correlationId}" }, produces = "application/json")
 	public ResponseEntity<JSONResponse<ProhibitionStatusResponse>> getProhibitionInfo(
 			@PathVariable(value = "noticeNumber", required = true) String noticeNumber,

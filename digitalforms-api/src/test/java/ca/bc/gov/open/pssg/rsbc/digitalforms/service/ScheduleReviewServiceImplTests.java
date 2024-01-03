@@ -18,7 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.config.ConfigProperties;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponseTimeSlots;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.AvailableTimeSlotResponseTimeSlotsInner;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.ReviewTimeSlotResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.ReviewService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.review.SavedTimeSlotResponse;
@@ -66,8 +66,8 @@ class ScheduleReviewServiceImplTests {
 	@Test
 	void getAvailableTimeSlotsSuccess() {
 		AvailableTimeSlotResponse response = new AvailableTimeSlotResponse();
-		List<AvailableTimeSlotResponseTimeSlots> timeSlotList = new ArrayList<>();
-		AvailableTimeSlotResponseTimeSlots timeSlot = new AvailableTimeSlotResponseTimeSlots();
+		List<AvailableTimeSlotResponseTimeSlotsInner> timeSlotList = new ArrayList<>();
+		AvailableTimeSlotResponseTimeSlotsInner timeSlot = new AvailableTimeSlotResponseTimeSlotsInner();
 		timeSlot.setReviewEndDtm("reviewEndDtm");
 		timeSlot.setReviewStartDtm("reviewStartDtm");
 		timeSlotList.add(timeSlot);
