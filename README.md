@@ -107,7 +107,7 @@ To monitor and manage the application
 | URL                                                 | Method |
 | --------------------------------------------------- | ------ |
 | `http://localhost:8082/digitalforms/actuator`       | GET    |
-| `http://localhost:8082/digitalforms/actuator/health` | GET    |
+| `http://localhost:8082/digitalforms/actuator/health`| GET    |
 | `http://localhost:8082/digitalforms/actuator/info`  | GET    |
 
 ### Files and Directories
