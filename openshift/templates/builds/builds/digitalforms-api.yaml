@@ -76,7 +76,7 @@ objects:
                 name: nexus-config
         from:
           kind: ImageStreamTag
-          name: java-s2i:8
+          name: java-s2i:17
           namespace: ${namespacePrefix}-tools
       type: Source
     successfulBuildsHistoryLimit: 5

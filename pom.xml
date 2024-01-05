@@ -25,16 +25,6 @@
 	<profiles>
 		<profile>
 			<id>openshift</id>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>digitalforms-snapshots</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-snapshots/</url>
-				</snapshotRepository>
-				<repository>
-					<id>digitalforms-releases</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
-				</repository>
-			</distributionManagement>
 		</profile>
 		<profile>
 			<id>default-profile</id>
@@ -44,10 +34,6 @@
 				<module>digitalforms-api</module>
 			</modules>
 			<repositories>
-				<repository>
-					<id>digitalforms-group</id>
-					<url>https://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
-				</repository>
 				<repository>
 					<id>splunk-artifactory</id>
 					<name>Splunk Releases</name>
