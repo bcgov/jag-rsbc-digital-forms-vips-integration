@@ -64,14 +64,14 @@
 		<java.version>17</java.version>
 		<springdoc.openapi.version>2.2.0</springdoc.openapi.version>
 		<guava.version>32.1.3-jre</guava.version>
-		<plexus-utils.version>3.0.6</plexus-utils.version>
+		<plexus-utils.version>3.0.24</plexus-utils.version>
 		<maven-core.version>3.8.1</maven-core.version>
 		<maven-shared-utils.version>3.3.3</maven-shared-utils.version>
 		<commons-text.version>1.10.0</commons-text.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
 		<spring-webmvc.version> 6.0.14</spring-webmvc.version>
 		<plexus-archiver.version> 4.4.0</plexus-archiver.version>
-		<tomcat-embed-core.version>10.1.12</tomcat-embed-core.version>
+		<tomcat-embed-core.version>10.1.16</tomcat-embed-core.version>
 		<xercesImpl.version>2.12.0</xercesImpl.version>
 		<logback-core.version>1.4.12</logback-core.version>
 		<ant.version>1.10.9</ant.version>
@@ -258,6 +258,12 @@
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-core</artifactId>
 			<version>${tomcat-embed-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback-core.version}</version>
 		</dependency>
 
 		<dependency>
