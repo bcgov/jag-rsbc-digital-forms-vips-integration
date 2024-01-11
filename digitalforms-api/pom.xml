@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.3</version>
+		<version>3.1.6</version>
 		<relativePath />
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
@@ -18,6 +18,16 @@
 	<profiles>
 		<profile>
 			<id>openshift</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>digitalforms-snapshots</id>
+					<url>${env.NEXUS_URL}/repository/digitalforms-snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>digitalforms-releases</id>
+					<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
+				</repository>
+			</distributionManagement>
 			<dependencies>
 				<dependency>
 					<groupId>com.splunk.logging</groupId>
@@ -29,6 +39,10 @@
 		<profile>
 			<id>default-profile</id>
 			<repositories>
+				<repository>
+					<id>digitalforms-group</id>
+					<url>https://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
+				</repository>
 				<repository>
 					<id>splunk-artifactory</id>
 					<name>Splunk Releases</name>
@@ -49,6 +63,21 @@
 		<log4j2.version>2.17.1</log4j2.version>
 		<java.version>17</java.version>
 		<springdoc.openapi.version>2.2.0</springdoc.openapi.version>
+		<guava.version>32.1.3-jre</guava.version>
+		<plexus-utils.version>3.0.6</plexus-utils.version>
+		<maven-core.version>3.8.1</maven-core.version>
+		<maven-shared-utils.version>3.3.3</maven-shared-utils.version>
+		<commons-text.version>1.10.0</commons-text.version>
+		<snakeyaml.version>2.0</snakeyaml.version>
+		<spring-webmvc.version> 6.0.14</spring-webmvc.version>
+		<plexus-archiver.version> 4.4.0</plexus-archiver.version>
+		<tomcat-embed-core.version>10.1.12</tomcat-embed-core.version>
+		<xercesImpl.version>2.12.0</xercesImpl.version>
+		<logback-core.version>1.4.12</logback-core.version>
+		<ant.version>1.10.9</ant.version>
+		<commons-io.version>2.7</commons-io.version>
+		<okio.version>3.4.0</okio.version>
+		<junit.version>4.13.2</junit.version>
 	</properties>
 
 	<dependencies>
@@ -172,12 +201,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>ca.bc.gov.open</groupId>
-			<artifactId>digitalforms-ords-client</artifactId>
-			<version>0.1.2</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
@@ -185,8 +208,95 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>32.1.3-jre</version>
+			<version>${guava.version}</version>
 		</dependency>
+
+		<!--	misc	-->
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>${plexus-utils.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-core</artifactId>
+			<version>${maven-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.shared</groupId>
+			<artifactId>maven-shared-utils</artifactId>
+			<version>${maven-shared-utils.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>${commons-text.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>${snakeyaml.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring-webmvc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-archiver</artifactId>
+			<version>${plexus-archiver.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>${tomcat-embed-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>${xercesImpl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>${ant.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.squareup.okio</groupId>
+			<artifactId>okio</artifactId>
+			<version>${okio.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -235,3 +345,4 @@
 	</build>
 
 </project>
+
