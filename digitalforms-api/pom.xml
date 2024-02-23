@@ -15,50 +15,6 @@
 	<name>digitalForms-api</name>
 	<description>RoadSafetyBC DigitalForms API</description>
 
-	<profiles>
-		<profile>
-			<id>openshift</id>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>digitalforms-snapshots</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-snapshots/</url>
-				</snapshotRepository>
-				<repository>
-					<id>digitalforms-releases</id>
-					<url>${env.NEXUS_URL}/repository/digitalforms-releases/</url>
-				</repository>
-			</distributionManagement>
-			<dependencies>
-				<dependency>
-					<groupId>com.splunk.logging</groupId>
-					<artifactId>splunk-library-javalogging</artifactId>
-					<version>1.11.2</version>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
-			<id>default-profile</id>
-			<repositories>
-				<repository>
-					<id>digitalforms-group</id>
-					<url>https://nexus-totdho-tools.pathfinder.gov.bc.ca/repository/digitalforms-group/</url>
-				</repository>
-				<repository>
-					<id>splunk-artifactory</id>
-					<name>Splunk Releases</name>
-					<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
-				</repository>
-			</repositories>
-			<dependencies>
-				<dependency>
-					<groupId>com.splunk.logging</groupId>
-					<artifactId>splunk-library-javalogging</artifactId>
-					<version>1.11.2</version>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
-
 	<properties>
 		<log4j2.version>2.17.1</log4j2.version>
 		<java.version>17</java.version>
@@ -70,7 +26,6 @@
 		<commons-text.version>1.10.0</commons-text.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
 		<spring-webmvc.version> 6.0.14</spring-webmvc.version>
-		<plexus-archiver.version> 4.4.0</plexus-archiver.version>
 		<tomcat-embed-core.version>10.1.16</tomcat-embed-core.version>
 		<xercesImpl.version>2.12.0</xercesImpl.version>
 		<logback-core.version>1.4.12</logback-core.version>
@@ -78,7 +33,17 @@
 		<commons-io.version>2.7</commons-io.version>
 		<okio.version>3.4.0</okio.version>
 		<junit.version>4.13.2</junit.version>
+		<spring-security-core.version>6.2.2</spring-security-core.version>
+		<commons-compress.version>1.26.0</commons-compress.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>splunk-artifactory</id>
+			<name>Splunk Releases</name>
+			<url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -89,6 +54,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -150,6 +116,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+
+		<!-- Splunk -->
+		<dependency>
+			<groupId>com.splunk.logging</groupId>
+			<artifactId>splunk-library-javalogging</artifactId>
+			<version>1.11.2</version>
 		</dependency>
 
 		<!-- logback -->
@@ -247,13 +220,6 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring-webmvc.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-archiver</artifactId>
-			<version>${plexus-archiver.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-core</artifactId>
@@ -301,6 +267,18 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>${commons-compress.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -351,4 +329,3 @@
 	</build>
 
 </project>
-

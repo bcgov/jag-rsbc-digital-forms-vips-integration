@@ -1,32 +1,61 @@
-#############################################################################################
-###              Stage where Docker is building spring boot app using maven               ###
-#############################################################################################
-FROM maven:3.8.3-openjdk-17 as build
+##############################################################################################
+#### Stage where the git submodules are updated                                            ###
+##############################################################################################
+
+FROM alpine/git as libraries
+
+WORKDIR /libs
 
 COPY . .
 
-ARG NEXUS_ADMIN_USER
-ARG NEXUS_ADMIN_PASSWORD
-ARG NEXUS_URL
-ARG DIGITALFORMS_SWAGGER_ENABLED
-ARG ENV_PROFILE
+RUN git submodule update --remote --merge
 
-ENV NEXUS_ADMIN_USER ${NEXUS_ADMIN_USER}
-ENV NEXUS_ADMIN_PASSWORD ${NEXUS_ADMIN_PASSWORD}
-ENV NEXUS_URL ${NEXUS_URL}
-ENV DIGITALFORMS_SWAGGER_ENABLED ${DIGITALFORMS_SWAGGER_ENABLED}
-ENV ENV_PROFILE ${ENV_PROFILE}
+##############################################################################################
+#### Stage where the maven dependencies are cached                                         ###
+##############################################################################################
+FROM maven:3.8.2-eclipse-temurin-17 as dependencies-cache
 
-# Build
-RUN if [ "${ENV_PROFILE}" = "openshift" ]; \
-    then mvn -Popenshift -s configuration/settings.xml clean install -Dmaven.test.skip=true; \
-    else mvn -Pdefault-profile clean install -Dmaven.test.skip=true; \
-    fi
+WORKDIR /build
 
-# Deploy
-#RUN if [ "${ENV_PROFILE}" = "openshift" ]; \
-#    then mvn -Popenshift -s configuration/settings.xml deploy -Dmaven.test.skip=true; \
-#    fi
+## for the lack at a COPY --patern */pom.xml, we have to declare all the pom files manually
+COPY pom.xml pom.xml
+COPY digitalforms-api/pom.xml digitalforms-api/pom.xml
 
-CMD ["mvn", "spring-boot:run"]
-#############################################################################################
+COPY --from=libraries /libs/jag-digitalforms-client/pom.xml jag-digitalforms-client/pom.xml
+COPY --from=libraries /libs/jag-vips-client/src/jag-vips-client/pom.xml jag-vips-client/src/jag-vips-client/pom.xml
+
+RUN  mvn dependency:go-offline \
+    -DskipTests \
+    --no-transfer-progress \
+    --batch-mode \
+    --fail-never
+
+##############################################################################################
+#### Stage where the application is built                                                  ###
+##############################################################################################
+FROM dependencies-cache as build
+
+WORKDIR /build
+
+COPY digitalforms-api/src digitalforms-api/src
+
+COPY --from=libraries /libs/jag-digitalforms-client/src jag-digitalforms-client/src
+COPY --from=libraries /libs/jag-digitalforms-client/digitalformsords.yaml jag-digitalforms-client/digitalformsords.yaml
+COPY --from=libraries /libs/jag-vips-client/src/jag-vips-client/src jag-vips-client/src/jag-vips-client/src
+COPY --from=libraries /libs/jag-vips-client/src/jag-vips-client/vipsords.yaml jag-vips-client/src/jag-vips-client/vipsords.yaml
+
+RUN  mvn clean package \
+    -DskipTests \
+    --no-transfer-progress \
+    --batch-mode
+
+##############################################################################################
+#### Stage where Docker is running a java process to run a service built in previous stage ###
+##############################################################################################
+FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
+COPY --from=build /build/digitalforms-api/target/digitalforms-api-*.jar digitalforms-api.jar
+
+CMD ["java", "-jar", "digitalforms-api.jar"]
