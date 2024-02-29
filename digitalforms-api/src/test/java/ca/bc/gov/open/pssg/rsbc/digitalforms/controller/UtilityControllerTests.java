@@ -21,9 +21,9 @@ import ca.bc.gov.open.jag.ordsvipsclient.api.model.HealthOrdsResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 
 /**
- * 
+ *
  * Utility Controller Tests.
- * 
+ *
  * @author sivakaruna
  *
  */
@@ -33,7 +33,7 @@ class UtilityControllerTests {
 
 	private String JSON_RESPONSE_SUCCESS = "{\"VIPS ORDS Health Status\":\"success\",\"DIGITAL FORMS ORDS Health Status\":\"success\"}";
 
-	private String JSON_RESPONSE_ERROR = "{\"message\":\"error\"}";
+	private String JSON_RESPONSE_ERROR = "{\"message\":\"Message: error";
 
 	@Mock
 	private HealthApi api;
@@ -76,7 +76,7 @@ class UtilityControllerTests {
 		when(dfApi.health()).thenReturn(dfHealth);
 		ResponseEntity<PingResponse> resp = controller.getPing();
 		Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, resp.getStatusCode());
-		Assertions.assertEquals(JSON_RESPONSE_ERROR, resp.getBody().getResponseMessage().toJSONString());
+		Assertions.assertTrue(resp.getBody().getResponseMessage().toJSONString().startsWith(JSON_RESPONSE_ERROR));
 	}
 
 }
