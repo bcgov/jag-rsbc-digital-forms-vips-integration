@@ -15,6 +15,8 @@ public interface ApplicationFormService {
 
 	public ApplicationResponse getApplicationForm(String applicationId, String correlationId);
 
+	public ApplicationResponse getApplicationExists(String noticeId, String correlationId);
+
 	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId, ApplicationFormDataPost formData);
 
 	public ApplicationResponse patchApplicationForm(String formType, String applicationId, String correlationId, ApplicationFormDataPatch formData);

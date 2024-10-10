@@ -35,6 +35,12 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 	}
 
 	@Override
+	public ApplicationResponse getApplicationExists(String noticeId, String correlationId) {
+		logger.info("Processing get application exists request");
+		return applicationService.getApplicationExists(noticeId, correlationId);
+	}
+
+	@Override
 	public ApplicationResponse postApplicationForm(String formType, String noticeNo, String correlationId,
 			ApplicationFormDataPost formData) {
 		logger.info("Processing post application form request");
