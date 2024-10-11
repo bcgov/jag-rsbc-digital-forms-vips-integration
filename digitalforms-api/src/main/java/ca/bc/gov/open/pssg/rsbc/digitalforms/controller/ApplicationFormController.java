@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,12 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPost;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationIdResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoResponse;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoWrapper;
-import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.application.ApplicationResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ApplicationFormService;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
@@ -46,6 +41,9 @@ public class ApplicationFormController {
 	}
 
 	private class ApplicationIdSwaggerResponse extends JSONResponse<ApplicationInfoWrapper<ApplicationIdResponse>> {
+	}
+
+	private class ApplicationExistsSwaggerResponse extends JSONResponse<ApplicationIdResponse> {
 	}
 
 	@Autowired
@@ -75,6 +73,35 @@ public class ApplicationFormController {
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
 			logger.info("Get application form data not found");
+			MDC.clear();
+			return new ResponseEntity<>(
+					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
+					HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping(value = { "**/application/**",
+			"/application/notice/{noticeId}/{correlationId}" }, produces = DigitalFormsConstants.JSON_CONTENT)
+	@Operation(summary = "Get Form data")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	public ResponseEntity<JSONResponse<ApplicationExistsResponse>> applicationFormExists(
+			@PathVariable(value = "noticeId", required = true) String noticeId,
+			@PathVariable(value = "correlationId", required = true) String correlationId) {
+
+		MDC.put(DigitalFormsConstants.REQUEST_CORRELATION_ID, correlationId);
+		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "applicationFormExists");
+		logger.info("Get application exists request received");
+
+		ApplicationResponse data = service.getApplicationExists(noticeId, correlationId);
+		if (data.getRespCode() >= DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			JSONResponse<ApplicationExistsResponse> resp = new JSONResponse<>(
+					new ApplicationExistsResponse(data.getApplicationId(), data.getFormExists()));
+			logger.info("Get application exists request success");
+			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		}
+		else {
+			logger.info("Get application exists request error");
 			MDC.clear();
 			return new ResponseEntity<>(
 					DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.NOT_FOUND_ERROR, 404),
