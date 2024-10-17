@@ -35,7 +35,7 @@
 		<junit.version>4.13.2</junit.version>
 		<spring-security-core.version>6.1.8</spring-security-core.version>
 		<commons-compress.version>1.26.0</commons-compress.version>
-		<spring-web.version>6.0.18</spring-web.version>
+		<spring-web.version>6.0.23</spring-web.version>
 	</properties>
 
 	<repositories>
