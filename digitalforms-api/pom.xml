@@ -29,7 +29,7 @@
 		<tomcat-embed-core.version>10.1.25</tomcat-embed-core.version>
 		<xercesImpl.version>2.12.0</xercesImpl.version>
 		<logback-core.version>1.4.12</logback-core.version>
-		<ant.version>1.10.9</ant.version>
+		<ant.version>1.10.11</ant.version>
 		<commons-io.version>2.14.0</commons-io.version>
 		<okio.version>3.4.0</okio.version>
 		<junit.version>4.13.2</junit.version>
