@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.6</version>
+		<version>3.3.4</version>
 		<relativePath />
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
@@ -25,17 +25,12 @@
 		<maven-shared-utils.version>3.3.3</maven-shared-utils.version>
 		<commons-text.version>1.10.0</commons-text.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
-		<spring-webmvc.version> 6.0.14</spring-webmvc.version>
-		<tomcat-embed-core.version>10.1.25</tomcat-embed-core.version>
 		<xercesImpl.version>2.12.0</xercesImpl.version>
-		<logback-core.version>1.4.12</logback-core.version>
 		<ant.version>1.10.9</ant.version>
 		<commons-io.version>2.14.0</commons-io.version>
 		<okio.version>3.4.0</okio.version>
 		<junit.version>4.13.2</junit.version>
-		<spring-security-core.version>6.1.8</spring-security-core.version>
 		<commons-compress.version>1.26.0</commons-compress.version>
-		<spring-web.version>6.0.18</spring-web.version>
 	</properties>
 
 	<repositories>
@@ -61,11 +56,31 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<!--<scope>provided</scope> -->
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>6.3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>6.3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>6.3.3</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc.openapi.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -124,17 +139,6 @@
 			<groupId>com.splunk.logging</groupId>
 			<artifactId>splunk-library-javalogging</artifactId>
 			<version>1.11.2</version>
-		</dependency>
-
-		<!-- logback -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
 		</dependency>
 
 		<dependency>
@@ -217,29 +221,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring-webmvc.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-core</artifactId>
-			<version>${tomcat-embed-core.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback-core.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<version>${logback-core.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
 			<version>${xercesImpl.version}</version>
@@ -271,21 +252,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${spring-security-core.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
 			<version>${commons-compress.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring-web.version}</version>
 		</dependency>
 
 	</dependencies>
