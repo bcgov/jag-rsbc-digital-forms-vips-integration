@@ -13,6 +13,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -46,6 +47,15 @@ public class DigitalFormsControllerExceptionHandler {
 	public ResponseEntity<JSONResponse<String>> handleMissingPathVariableException(MissingPathVariableException e,
 			WebRequest request) {
 		logger.error("Missing Path Variable Exception occurred", e);
+		MDC.clear();
+		return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.MISSING_PARAMS_ERROR,
+				HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ResponseEntity<JSONResponse<String>> handleMissingServletRequestParameterException(MissingServletRequestParameterException e,
+																				   WebRequest request) {
+		logger.error("Missing Request Parameter Exception occurred", e);
 		MDC.clear();
 		return new ResponseEntity<>(DigitalFormsUtils.buildErrorResponse(DigitalFormsConstants.MISSING_PARAMS_ERROR,
 				HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
