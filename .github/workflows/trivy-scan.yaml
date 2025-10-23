@@ -18,13 +18,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
-        
-      # Runs build steps
-      - name: Maven Package
-        run: mvn -ntp clean package
-        
-      - name: Maven Verify
-        run: mvn -ntp clean verify
 
       #Build image for scanning
       - name: Build image from Dockerfile
