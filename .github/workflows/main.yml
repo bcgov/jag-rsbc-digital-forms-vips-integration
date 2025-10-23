@@ -27,7 +27,9 @@ jobs:
       openshift_external_repository: "${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY_SILVER }}"
 
   trivy:
-    name: Build & Scan Image
+    name: Trivy Scan Image
+    needs:
+      - build-image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -55,18 +57,3 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           severity: HIGH,CRITICAL
-    
-    #needs:
-    #  - commit-version
-    #  - build-image
-    #uses: SierraSystems/reusable-workflows/.github/workflows/trivy-scan-openshift-image.yml@main
-    #with:
-    #  imagestream_name: "digitalforms-api"
-    #  image_tag: "${{ needs.commit-version.outputs.github-release-version }}"
-    #secrets:
-    #  openshift_namespace: "${{ secrets.OPENSHIFT_LICENSE_PLATE_SILVER }}-tools"
-    #  openshift_server_url: "${{ secrets.OPENSHIFT_SERVER_URL_SILVER }}"
-    #  openshift_token: "${{ secrets.OPENSHIFT_SA_PIPELINE_TOKEN_SILVER }}"
-    #  openshift_external_repository: "${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY_SILVER }}"
-    #  openshift_sa_name: "${{ secrets.OPENSHIFT_SA_PIPELINE_NAME_SILVER }}"
-    #  openshift_sa_password: "${{ secrets.OPENSHIFT_SA_PIPELINE_TOKEN_SILVER }}"
