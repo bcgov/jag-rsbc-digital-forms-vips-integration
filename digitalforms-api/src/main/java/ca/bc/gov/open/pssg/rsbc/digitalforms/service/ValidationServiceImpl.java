@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
+import ca.bc.gov.open.jagvipsclient.validation.VipsValidExpiryDateResponse;
 import ca.bc.gov.open.jagvipsclient.validation.VipsValidTimeframeResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,9 @@ import java.math.BigDecimal;
 
 /**
  * 
- * @author shaunmillargov
+ * Collection of services for accessing VIPS validations.
+ * 
+ * @author jdosil
  *
  */
 @Service
@@ -28,6 +31,13 @@ public class ValidationServiceImpl implements ValidationService {
 		logger.info("Processing within timeframe request");
 		return validationService.getWithinTimeframe(startDate, intervalDays);
 		
+	}
+
+	@Override
+	public VipsValidExpiryDateResponse validateExpiryDate(String startDate, BigDecimal intervalDays) {
+		
+		logger.info("Processing Valid Expiry Date request");
+		return validationService.getValidExpiryDate(startDate, intervalDays);
 	}
 	
 }
