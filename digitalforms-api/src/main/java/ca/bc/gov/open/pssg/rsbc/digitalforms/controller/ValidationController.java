@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import ca.bc.gov.open.jagvipsclient.validation.VipsValidExpiryDateResponse;
 import ca.bc.gov.open.jagvipsclient.validation.VipsValidTimeframeResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.*;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.service.ValidationService;
@@ -68,6 +69,32 @@ public class ValidationController {
 			return new ResponseEntity<>(resp, HttpStatus.OK);
 		} else {
 			logger.info("Within timeframe error");
+			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path ="api/validation/validExpiryDate", produces = DigitalFormsConstants.JSON_CONTENT)
+	@Operation(summary = "Returns last valid prohibtion review submission date as string value")
+	@ApiResponses(value =  	{	@ApiResponse(responseCode = "200", description = "Success")
+							,	@ApiResponse(responseCode = "400", description = "Bad Request")
+							})
+	public ResponseEntity<ValidExpiryDateResponse> getValidExpiryDate(
+			@Valid @NotBlank @RequestParam(name = "startDate",required = true)  String startDate,
+			@Valid @NotNull @RequestParam(name = "intervalDays",required = true) BigDecimal intervalDays) {
+
+		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "getValidExpiryDate");
+		logger.info("Get Valid Expiry Date request received");
+
+		VipsValidExpiryDateResponse data = service.validateExpiryDate(startDate, intervalDays);
+		ValidExpiryDateResponse resp = new ValidExpiryDateResponse(data);
+
+		if (data.getRespCode() == DigitalFormsConstants.ORDS_SUCCESS_CD) {
+			logger.info("Valid Expiry Date returned success");
+			MDC.clear();
+			return new ResponseEntity<>(resp, HttpStatus.OK);
+		} else {
+			logger.info("Valid Expiry Date returned error");
 			MDC.clear();
 			return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
