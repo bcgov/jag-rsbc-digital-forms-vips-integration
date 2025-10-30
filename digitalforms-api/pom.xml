@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.4</version>
+		<version>3.3.13</version>
 		<relativePath />
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
@@ -32,6 +32,7 @@
 		<okio.version>3.4.0</okio.version>
 		<junit.version>4.13.2</junit.version>
 		<commons-compress.version>1.26.0</commons-compress.version>
+		<spring.security.version>6.3.8</spring.security.version>
 	</properties>
 
 	<repositories>
@@ -60,20 +61,20 @@
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>6.3.3</version>
+			<artifactId>spring-security-config</artifactId><!--$NO-MVN-MAN-VER$-->
+			<version>${spring.security.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>6.3.3</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>6.3.3</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 
 		<dependency>
