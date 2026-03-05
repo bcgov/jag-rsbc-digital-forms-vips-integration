@@ -42,6 +42,7 @@ public class ApplicationInfoResponse {
 		applicationFormData.setSecondGivenNm(response.getSecondGivenNm());
 		applicationFormData.setSurnameNm(response.getSurnameNm());
 		applicationFormData.setFormData(response.getFormXml());
+		applicationFormData.setApplicationReceivedDt(response.getApplicationReceivedDt());
 		this.setFormData(applicationFormData);
 		this.setNoticeTypeCd(response.getNoticeTypeCd());
 		this.setProhibitionNoticeNo(response.getProhibitionNoticeNo());

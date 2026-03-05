@@ -79,7 +79,12 @@ public class ApplicationFormDataPost {
 	@Size(min=1)
 	@JsonProperty("formData")
 	private String formData;
-
+	
+	@NotNull
+	@Size(min=1)
+	@JsonProperty("applicationReceivedDt")
+	private String applicationReceivedDt;
+	
 	@JsonProperty("noticeSubjectCd")
 	public String getNoticeSubjectCd() {
 		return noticeSubjectCd;
@@ -188,6 +193,16 @@ public class ApplicationFormDataPost {
 	@JsonProperty("formData")
 	public void setFormData(String formData) {
 		this.formData = formData;
+	}
+	
+	@JsonProperty("applicationReceivedDt")
+	public String getApplicationReceivedDt() {
+		return applicationReceivedDt;
+	}
+
+	@JsonProperty("applicationReceivedDt")
+	public void setApplicationReceivedDt(String applicationReceivedDt) {
+		this.applicationReceivedDt = applicationReceivedDt;
 	}
 
 	/**
