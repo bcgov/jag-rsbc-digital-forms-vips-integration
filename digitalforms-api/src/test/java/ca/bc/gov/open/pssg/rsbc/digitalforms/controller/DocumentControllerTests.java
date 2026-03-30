@@ -1,15 +1,13 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
-
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ca.bc.gov.open.jag.ordsvipsclient.api.DocumentApi;
@@ -41,7 +40,6 @@ class DocumentControllerTests {
     private ConfigProperties properties;
 
     private static final byte[] FILE_BYTES = "test-file".getBytes(StandardCharsets.UTF_8);
-    private static final String BASE64_FILE = Base64.getEncoder().encodeToString(FILE_BYTES);
 
     @Test
     @DisplayName("POST /document/{correlationId} returns 201 when ORDS store succeeds")
@@ -65,16 +63,29 @@ class DocumentControllerTests {
                 isNull()
         )).thenReturn(ordsResponse);
 
-        mockMvc.perform(post("/document/{correlationId}", "corr-1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                    {
-                      "type_code": "TEST",
-                      "notice_type_code": "NT",
-                      "notice_subject_code": "SUBJ",
-                      "file_object": "%s"
-                    }
-                    """.formatted(BASE64_FILE)))
+        MockMultipartFile metadata = new MockMultipartFile(
+                "metadata",
+                "",
+                MediaType.APPLICATION_JSON_VALUE,
+                """
+                {
+                  "type_code": "TEST",
+                  "notice_type_code": "NT",
+                  "notice_subject_code": "SUBJ"
+                }
+                """.getBytes(StandardCharsets.UTF_8)
+        );
+
+        MockMultipartFile file = new MockMultipartFile(
+                "file",
+                "test.pdf",
+                MediaType.APPLICATION_PDF_VALUE,
+                FILE_BYTES
+        );
+
+        mockMvc.perform(multipart("/document/{correlationId}", "corr-1")
+                .file(metadata)
+                .file(file))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.resp").value("success"))
                 .andExpect(jsonPath("$.documentId").value(documentId));
@@ -100,16 +111,29 @@ class DocumentControllerTests {
                 isNull()
         )).thenReturn(ordsResponse);
 
-        mockMvc.perform(post("/document/{correlationId}", "corr-2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                    {
-                      "type_code": "TEST",
-                      "notice_type_code": "NT",
-                      "notice_subject_code": "SUBJ",
-                      "file_object": "%s"
-                    }
-                    """.formatted(BASE64_FILE)))
+        MockMultipartFile metadata = new MockMultipartFile(
+                "metadata",
+                "",
+                MediaType.APPLICATION_JSON_VALUE,
+                """
+                {
+                  "type_code": "TEST",
+                  "notice_type_code": "NT",
+                  "notice_subject_code": "SUBJ"
+                }
+                """.getBytes(StandardCharsets.UTF_8)
+        );
+
+        MockMultipartFile file = new MockMultipartFile(
+                "file",
+                "test.pdf",
+                MediaType.APPLICATION_PDF_VALUE,
+                FILE_BYTES
+        );
+
+        mockMvc.perform(multipart("/document/{correlationId}", "corr-2")
+                .file(metadata)
+                .file(file))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.resp").value("fail"))
                 .andExpect(jsonPath("$.error.message").value("Bad Request"))
@@ -133,20 +157,54 @@ class DocumentControllerTests {
                 isNull()
         )).thenThrow(Mockito.mock(ApiException.class));
 
-        mockMvc.perform(post("/document/{correlationId}", "corr-3")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                    {
-                      "type_code": "TEST",
-                      "notice_type_code": "NT",
-                      "notice_subject_code": "SUBJ",
-                      "file_object": "%s"
-                    }
-                    """.formatted(BASE64_FILE)))
+        MockMultipartFile metadata = new MockMultipartFile(
+                "metadata",
+                "",
+                MediaType.APPLICATION_JSON_VALUE,
+                """
+                {
+                  "type_code": "TEST",
+                  "notice_type_code": "NT",
+                  "notice_subject_code": "SUBJ"
+                }
+                """.getBytes(StandardCharsets.UTF_8)
+        );
+
+        MockMultipartFile file = new MockMultipartFile(
+                "file",
+                "test.pdf",
+                MediaType.APPLICATION_PDF_VALUE,
+                FILE_BYTES
+        );
+
+        mockMvc.perform(multipart("/document/{correlationId}", "corr-3")
+                .file(metadata)
+                .file(file))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.resp").value("fail"))
                 .andExpect(jsonPath("$.error.message")
                         .value("Upstream 500 error indicated from the SSG. VIPS ORDS returned 400, Bad Request"))
                 .andExpect(jsonPath("$.error.httpStatus").value(400));
+    }
+
+    @Test
+    @DisplayName("POST /document/{correlationId} returns 400 when file part is missing")
+    void shouldReturnBadRequest_whenFileMissing() throws Exception {
+        MockMultipartFile metadata = new MockMultipartFile(
+                "metadata",
+                "",
+                MediaType.APPLICATION_JSON_VALUE,
+                """
+                {
+                  "type_code": "TEST",
+                  "notice_type_code": "NT",
+                  "notice_subject_code": "SUBJ"
+                }
+                """.getBytes(StandardCharsets.UTF_8)
+        );
+
+        mockMvc.perform(multipart("/document/{correlationId}", "corr-4")
+                .file(metadata))
+                .andExpect(status().isBadRequest());
     }
 }

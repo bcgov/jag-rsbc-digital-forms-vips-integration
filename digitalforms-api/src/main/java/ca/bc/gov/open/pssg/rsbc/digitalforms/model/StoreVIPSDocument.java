@@ -8,30 +8,24 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "type_code", "notice_type_code", "notice_subject_code", "file_object" })
+@JsonPropertyOrder({ "type_code", "notice_type_code", "notice_subject_code" })
 public class StoreVIPSDocument {
 
-    @NotNull (message = "type_code is required")
+    @NotNull(message = "type_code is required")
     @Size(max = 10)
     @JsonProperty("type_code")
     private String typeCode;
 
-    @NotNull (message = "notice_type_code is required")
+    @NotNull(message = "notice_type_code is required")
     @Size(max = 3)
     @JsonProperty("notice_type_code")
     private String noticeTypeCode;
 
-    @NotNull (message = "notice_subject_code is required")
+    @NotNull(message = "notice_subject_code is required")
     @Size(max = 4)
     @JsonProperty("notice_subject_code")
     private String noticeSubjectCode;
-    
-    @NotNull (message = "file_object is required")
-    @JsonProperty("file_object")
-    private byte[] fileObject; // base64 will map to byte[]
 
-    
-    // Getters and Setters
     @JsonProperty("type_code")
     public String getTypeCode() {
         return typeCode;
@@ -40,14 +34,6 @@ public class StoreVIPSDocument {
     @JsonProperty("type_code")
     public void setTypeCode(String typeCode) {
         this.typeCode = typeCode;
-    }
-
-    public byte[] getFileObject() {
-        return fileObject;
-    }
-
-    public void setFileObject(byte[] fileObject) {
-        this.fileObject = fileObject;
     }
 
     public String getNoticeTypeCode() {
@@ -65,5 +51,4 @@ public class StoreVIPSDocument {
     public void setNoticeSubjectCode(String noticeSubjectCode) {
         this.noticeSubjectCode = noticeSubjectCode;
     }
-
 }
