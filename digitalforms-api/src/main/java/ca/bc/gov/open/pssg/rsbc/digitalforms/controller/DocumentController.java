@@ -76,13 +76,13 @@ public class DocumentController {
             }
 
             _resp = documentApi.storeDocumentPost(
-                    storeVIPSDocument.getTypeCode(),           // required
+                    storeVIPSDocument.getDocTypeCd(),          // required
                     "application",                             // mime type is always 'application'
                     "pdf",                                     // subtype is always 'pdf'
-                    properties.getOrdsUserGuid(),             // required
+                    properties.getOrdsUserGuid(),              // required
                     file.getBytes(),                           // required - binary file content
-                    storeVIPSDocument.getNoticeTypeCode(),     // optional
-                    storeVIPSDocument.getNoticeSubjectCode(),
+                    storeVIPSDocument.getNoticeTypeCd(),       // required
+                    storeVIPSDocument.getNoticeSubjectCd(),    // required
                     null                                       // optional page count
             );
 

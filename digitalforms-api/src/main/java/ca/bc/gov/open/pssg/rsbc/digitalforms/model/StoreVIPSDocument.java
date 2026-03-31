@@ -11,44 +11,44 @@ import jakarta.validation.constraints.Size;
 @JsonPropertyOrder({ "type_code", "notice_type_code", "notice_subject_code" })
 public class StoreVIPSDocument {
 
-    @NotNull(message = "type_code is required")
+    @NotNull(message = "doc_type_cd is required")
     @Size(max = 10)
-    @JsonProperty("type_code")
-    private String typeCode;
+    @JsonProperty("doc_type_cd")
+    private String docTypeCd;
 
-    @NotNull(message = "notice_type_code is required")
+    @NotNull(message = "notice_type_cd is required")
     @Size(max = 3)
-    @JsonProperty("notice_type_code")
-    private String noticeTypeCode;
+    @JsonProperty("notice_type_cd")
+    private String noticeTypeCd;
 
-    @NotNull(message = "notice_subject_code is required")
+    @NotNull(message = "notice_subject_cd is required")
     @Size(max = 4)
-    @JsonProperty("notice_subject_code")
-    private String noticeSubjectCode;
+    @JsonProperty("notice_subject_cd")
+    private String noticeSubjectCd;
 
-    @JsonProperty("type_code")
-    public String getTypeCode() {
-        return typeCode;
+    @JsonProperty("dpc_type_cd")
+    public String getDocTypeCd() {
+        return docTypeCd;
     }
 
-    @JsonProperty("type_code")
-    public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
+    @JsonProperty("dpc_type_cd")
+    public void setTypeCode(String docTypeCd) {
+        this.docTypeCd = docTypeCd;
     }
 
-    public String getNoticeTypeCode() {
-        return noticeTypeCode;
+    public String getNoticeTypeCd() {
+        return noticeTypeCd;
     }
 
-    public void setNoticeTypeCode(String noticeTypeCode) {
-        this.noticeTypeCode = noticeTypeCode;
+    public void setNoticeTypeCd(String noticeTypeCd) {
+        this.noticeTypeCd = noticeTypeCd;
     }
 
-    public String getNoticeSubjectCode() {
-        return noticeSubjectCode;
+    public String getNoticeSubjectCd() {
+        return noticeSubjectCd;
     }
 
-    public void setNoticeSubjectCode(String noticeSubjectCode) {
-        this.noticeSubjectCode = noticeSubjectCode;
+    public void setNoticeSubjectCd(String noticeSubjectCd) {
+        this.noticeSubjectCd = noticeSubjectCd;
     }
 }

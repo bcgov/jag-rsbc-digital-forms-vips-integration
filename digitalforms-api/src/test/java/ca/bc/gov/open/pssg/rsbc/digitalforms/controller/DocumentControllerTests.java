@@ -69,10 +69,10 @@ class DocumentControllerTests {
                 MediaType.APPLICATION_JSON_VALUE,
                 """
                 {
-                  "type_code": "TEST",
-                  "notice_type_code": "NT",
-                  "notice_subject_code": "SUBJ"
-                }
+				  "doc_type_cd": "TEST",
+				  "notice_type_cd": "NT",
+				  "notice_subject_cd": "SUBJ"
+				}
                 """.getBytes(StandardCharsets.UTF_8)
         );
 
@@ -116,11 +116,11 @@ class DocumentControllerTests {
                 "",
                 MediaType.APPLICATION_JSON_VALUE,
                 """
-                {
-                  "type_code": "TEST",
-                  "notice_type_code": "NT",
-                  "notice_subject_code": "SUBJ"
-                }
+                 {
+		          "doc_type_cd": "TEST",
+		          "notice_type_cd": "NT",
+		          "notice_subject_cd": "SUBJ"
+		        }
                 """.getBytes(StandardCharsets.UTF_8)
         );
 
@@ -162,11 +162,11 @@ class DocumentControllerTests {
                 "",
                 MediaType.APPLICATION_JSON_VALUE,
                 """
-                {
-                  "type_code": "TEST",
-                  "notice_type_code": "NT",
-                  "notice_subject_code": "SUBJ"
-                }
+                 {
+			          "doc_type_cd": "TEST",
+			          "notice_type_cd": "NT",
+			          "notice_subject_cd": "SUBJ"
+			        }
                 """.getBytes(StandardCharsets.UTF_8)
         );
 
@@ -195,11 +195,11 @@ class DocumentControllerTests {
                 "",
                 MediaType.APPLICATION_JSON_VALUE,
                 """
-                {
-                  "type_code": "TEST",
-                  "notice_type_code": "NT",
-                  "notice_subject_code": "SUBJ"
-                }
+                  {
+			          "doc_type_cd": "TEST",
+			          "notice_type_cd": "NT",
+			          "notice_subject_cd": "SUBJ"
+			        }
                 """.getBytes(StandardCharsets.UTF_8)
         );
 
