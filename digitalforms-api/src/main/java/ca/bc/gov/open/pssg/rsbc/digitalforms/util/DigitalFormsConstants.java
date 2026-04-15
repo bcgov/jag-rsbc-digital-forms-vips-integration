@@ -30,10 +30,6 @@ public final class DigitalFormsConstants {
 	// user id for ORDS request
 	public static final String ORDS_USER_ID = "DigitalFormsApi";
 	
-	// VIPS ORDS Response code values
-	public static final String VIPSORDS_SUCCESS_CD = "0";
-	public static final String VIPSORDS_GENERAL_FAILURE_CD = "1";
-	
 	public enum FORM_TYPE {
 		IRP, ADP, UL
 	}
