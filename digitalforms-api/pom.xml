@@ -32,7 +32,7 @@
 		<okio.version>3.4.0</okio.version>
 		<junit.version>4.13.2</junit.version>
 		<commons-compress.version>1.26.0</commons-compress.version>
-		<spring.security.version>6.5.9</spring.security.version>
+		<spring.security.version>6.5.10</spring.security.version>
 		<spring.core.version>6.2.11</spring.core.version>
 		<tomcat.version>10.1.45</tomcat.version>
 	</properties>
