@@ -26,16 +26,19 @@
 		<commons-text.version>1.10.0</commons-text.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
 		<xercesImpl.version>2.12.2</xercesImpl.version>
-		<ant.version>1.10.9</ant.version>
+		<ant.version>1.10.11</ant.version>
 		<commons-io.version>2.14.0</commons-io.version>
 		<okio.version>3.4.0</okio.version>
 		<junit.version>4.13.2</junit.version>
 		<commons-compress.version>1.26.0</commons-compress.version>
+		<commons-lang3.version>3.18.0</commons-lang3.version>
 		<spring.security.version>6.5.11</spring.security.version>
 		<spring-framework.version>6.2.19</spring-framework.version>
 		<tomcat.version>10.1.55</tomcat.version>
 		<jackson.version>2.21.5</jackson.version>
 		<micrometer.version>1.15.12</micrometer.version>
+		<log4j2.version>2.25.5</log4j2.version>
+		<logback.version>1.5.34</logback.version>
 	</properties>
 
 	<repositories>
@@ -204,6 +207,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
 		</dependency>
 
 		<!-- Base64 encoding that works in both JVM and Android -->
