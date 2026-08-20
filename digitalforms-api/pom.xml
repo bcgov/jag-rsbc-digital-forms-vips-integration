@@ -34,7 +34,7 @@
 		<commons-compress.version>1.26.0</commons-compress.version>
 		<spring.security.version>6.5.11</spring.security.version>
 		<spring.core.version>6.2.19</spring.core.version>
-		<tomcat.version>10.1.45</tomcat.version>
+		<tomcat.version>10.1.55</tomcat.version>
 	</properties>
 
 	<repositories>
