@@ -32,6 +32,7 @@ public class ApplicationInfoResponse {
 	public ApplicationInfoResponse(DigitalFormGetResponse response) {
 		ApplicationFormDataPost applicationFormData = new ApplicationFormDataPost();
 		applicationFormData.setEmail(response.getElectronicAddressTxt());
+		applicationFormData.setAlternateElectronicAddrsTxt(response.getAlternateElectronicAddrsTxt());
 		applicationFormData.setFaxNo(response.getFaxNo());
 		applicationFormData.setFirstGivenNm(response.getFirstGivenNm());
 		applicationFormData.setManualEntryYN(response.getManualEntryYn());

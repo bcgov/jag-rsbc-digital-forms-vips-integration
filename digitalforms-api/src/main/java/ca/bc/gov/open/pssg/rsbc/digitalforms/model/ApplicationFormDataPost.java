@@ -23,7 +23,7 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "noticeSubjectCd", "presentationTypeCd", "reviewRoleTypeCd", "firstGivenNm", "secondGivenNm",
-		"surnameNm", "phoneNo", "faxNo", "email", "manualEntryYN", "formData" })
+		"surnameNm", "phoneNo", "faxNo", "email", "alternateElectronicAddrsTxt", "manualEntryYN", "formData" })
 public class ApplicationFormDataPost {
 
 	@NotNull
@@ -69,6 +69,10 @@ public class ApplicationFormDataPost {
 	@Size(min=1, max=200)
 	@JsonProperty("email")
 	private String email;
+
+	@Size(max=254)
+	@JsonProperty("alternateElectronicAddrsTxt")
+	private String alternateElectronicAddrsTxt;
 
 	@NotNull
 	@Size(min=1, max=1)
@@ -173,6 +177,16 @@ public class ApplicationFormDataPost {
 	@JsonProperty("email")
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@JsonProperty("alternateElectronicAddrsTxt")
+	public String getAlternateElectronicAddrsTxt() {
+		return alternateElectronicAddrsTxt;
+	}
+
+	@JsonProperty("alternateElectronicAddrsTxt")
+	public void setAlternateElectronicAddrsTxt(String alternateElectronicAddrsTxt) {
+		this.alternateElectronicAddrsTxt = alternateElectronicAddrsTxt;
 	}
 
 	@JsonProperty("manualEntryYN")

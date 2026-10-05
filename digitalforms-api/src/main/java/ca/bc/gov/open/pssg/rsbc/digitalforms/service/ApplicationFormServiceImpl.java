@@ -48,6 +48,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 
 		request.setCorrelationGuid(correlationId);
 		request.setElectronicAddressTxt(formData.getEmail());
+		request.setAlternateElectronicAddrsTxt(formData.getAlternateElectronicAddrsTxt());
 		request.setFaxNo(formData.getFaxNo());
 		request.setFirstGivenNm(formData.getFirstGivenNm());
 		request.setFormXml(formData.getFormData());
@@ -73,6 +74,7 @@ public class ApplicationFormServiceImpl implements ApplicationFormService {
 		DigitalFormPatchRequest request = new DigitalFormPatchRequest();
 
 		request.setElectronicAddressTxt(formData.getEmail());
+		request.setAlternateElectronicAddrsTxt(formData.getAlternateElectronicAddrsTxt());
 		request.setFaxNo(formData.getFaxNo());
 		request.setFirstGivenNm(formData.getFirstGivenNm());
 		request.setFormXml(formData.getFormData());

@@ -20,6 +20,7 @@ public class ApplicationFormResponseTests {
 	public void testInfoObj() {
 		DigitalFormGetResponse response = new DigitalFormGetResponse();
 		response.setFirstGivenNm("John");
+		response.setAlternateElectronicAddrsTxt("lawyer@example.com");
 		
 		ApplicationInfoResponse applicationInfoResponse = new ApplicationInfoResponse(response);
 		
@@ -31,6 +32,8 @@ public class ApplicationFormResponseTests {
 		Assertions.assertEquals("prohibitionNoticeNo", applicationInfoResponse.getProhibitionNoticeNo());
 		Assertions.assertEquals("reviewApplnTypeCd", applicationInfoResponse.getReviewApplnTypeCd());
 		Assertions.assertEquals("John", applicationInfoResponse.getFormData().getFirstGivenNm());
+		Assertions.assertEquals("lawyer@example.com",
+				applicationInfoResponse.getFormData().getAlternateElectronicAddrsTxt());
 	}
 	
 	@Test
