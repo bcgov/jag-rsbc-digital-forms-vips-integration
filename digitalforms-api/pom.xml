@@ -34,7 +34,7 @@
 		<commons-lang3.version>3.18.0</commons-lang3.version>
 		<spring.security.version>6.5.11</spring.security.version>
 		<spring-framework.version>6.2.19</spring-framework.version>
-		<tomcat.version>10.1.55</tomcat.version>
+		<tomcat.version>10.1.60</tomcat.version>
 		<jackson.version>2.21.7</jackson.version>
 		<micrometer.version>1.15.12</micrometer.version>
 		<log4j2.version>2.25.5</log4j2.version>
