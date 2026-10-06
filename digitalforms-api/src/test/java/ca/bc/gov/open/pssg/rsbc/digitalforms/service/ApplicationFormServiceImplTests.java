@@ -1,8 +1,11 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.service;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
+import org.mockito.ArgumentCaptor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,8 +59,14 @@ class ApplicationFormServiceImplTests {
 	void postFormSuccess() throws DigitalFormsException {
 		when(service.postApplication(any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePost("guid", "0", null, null));
-		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", new ApplicationFormDataPost());
+		ApplicationFormDataPost formData = new ApplicationFormDataPost();
+		formData.setAlternateElectronicAddrsTxt("lawyer@example.com");
+		ApplicationResponse resp = serviceImpl.postApplicationForm("IRP", "noticeNo", "correlationId", formData);
 		Assertions.assertEquals(0, resp.getRespCode());
+		ArgumentCaptor<ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPostRequest> requestCaptor =
+				ArgumentCaptor.forClass(ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPostRequest.class);
+		verify(service).postApplication(requestCaptor.capture(), eq("correlationId"));
+		Assertions.assertEquals("lawyer@example.com", requestCaptor.getValue().getAlternateElectronicAddrsTxt());
 	}
 
 	@DisplayName("Patch success - ApplicationService")
@@ -65,8 +74,14 @@ class ApplicationFormServiceImplTests {
 	void patchFormSuccess() throws DigitalFormsException {
 		when(service.patchApplication(any(), any(), any()))
 				.thenReturn(ApplicationResponse.successResponsePatch("guid", "0", null, null));
-		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId", new ApplicationFormDataPatch());
+		ApplicationFormDataPatch formData = new ApplicationFormDataPatch();
+		formData.setAlternateElectronicAddrsTxt("lawyer@example.com");
+		ApplicationResponse resp = serviceImpl.patchApplicationForm("IRP", "guid", "correlationId", formData);
 		Assertions.assertEquals(0, resp.getRespCode());
+		ArgumentCaptor<ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPatchRequest> requestCaptor =
+				ArgumentCaptor.forClass(ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.model.DigitalFormPatchRequest.class);
+		verify(service).patchApplication(eq("guid"), requestCaptor.capture(), eq("correlationId"));
+		Assertions.assertEquals("lawyer@example.com", requestCaptor.getValue().getAlternateElectronicAddrsTxt());
 	}
 
 	@DisplayName("Get error - ApplicationService")
