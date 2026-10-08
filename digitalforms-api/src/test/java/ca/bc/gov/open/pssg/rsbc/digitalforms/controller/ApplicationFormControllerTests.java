@@ -2,6 +2,8 @@ package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.MDC;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.exception.DigitalFormsException;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationExistsResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPost;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationIdResponse;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoResponse;
@@ -86,6 +90,40 @@ class ApplicationFormControllerTests {
 		formRequest.setSurnameNm("surnameNm");
 
 		formRequest.setFormData("formData");
+	}
+
+	@Test
+	void applicationExistsReturnsIdAndFlagAndClearsMdc() {
+		ApplicationResponse data = mock(ApplicationResponse.class);
+		when(data.getRespCode()).thenReturn(DigitalFormsConstants.ORDS_SUCCESS_CD);
+		when(data.getApplicationId()).thenReturn("application-id");
+		when(data.getFormExists()).thenReturn("Y");
+		when(service.getApplicationExists("notice-id", "correlation-id")).thenReturn(data);
+
+		ResponseEntity<JSONResponse<ApplicationExistsResponse>> response = controller
+				.applicationFormExists("notice-id", "correlation-id");
+
+		Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+		Assertions.assertEquals("application-id", response.getBody().getData().getApplicationId());
+		Assertions.assertEquals("Y", response.getBody().getData().getFormExists());
+		verify(service).getApplicationExists("notice-id", "correlation-id");
+		Assertions.assertNull(MDC.get(DigitalFormsConstants.REQUEST_ENDPOINT));
+		Assertions.assertNull(MDC.get(DigitalFormsConstants.REQUEST_CORRELATION_ID));
+	}
+
+	@Test
+	void applicationExistsFailureReturnsNotFoundAndClearsMdc() {
+		when(service.getApplicationExists("notice-id", "correlation-id"))
+				.thenReturn(ApplicationResponse.errorResponse(null));
+
+		ResponseEntity<JSONResponse<ApplicationExistsResponse>> response = controller
+				.applicationFormExists("notice-id", "correlation-id");
+
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		Assertions.assertEquals(404, response.getBody().getError().getHttpStatus());
+		Assertions.assertEquals(DigitalFormsConstants.NOT_FOUND_ERROR, response.getBody().getError().getMessage());
+		Assertions.assertNull(MDC.get(DigitalFormsConstants.REQUEST_ENDPOINT));
+		Assertions.assertNull(MDC.get(DigitalFormsConstants.REQUEST_CORRELATION_ID));
 	}
 
 	@DisplayName("Get success - ApplicationFormController")

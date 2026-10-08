@@ -10,6 +10,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import org.slf4j.MDC;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +33,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationFormDataPatch;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.ApplicationInfoWrapper;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.model.JSONResponse;
+import ca.bc.gov.open.pssg.rsbc.digitalforms.controller.ValidationController;
+import java.math.BigDecimal;
 import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 
 /**
@@ -39,6 +51,39 @@ import ca.bc.gov.open.pssg.rsbc.digitalforms.util.DigitalFormsConstants;
 class DigitalFormsExceptionHandlerTests {
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Test
+	void missingPathVariableReturnsStandardPayloadAndClearsMdc() throws Exception {
+		DigitalFormsControllerExceptionHandler handler = new DigitalFormsControllerExceptionHandler();
+		MethodParameter parameter = new MethodParameter(
+				ValidationController.class.getMethod("getWithinTimeframe", String.class, BigDecimal.class), 0);
+		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "test");
+		ResponseEntity<JSONResponse<String>> response = handler.handleMissingPathVariableException(
+				new MissingPathVariableException("applicationId", parameter), null);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		Assertions.assertEquals(400, response.getBody().getError().getHttpStatus());
+		Assertions.assertEquals(DigitalFormsConstants.MISSING_PARAMS_ERROR, response.getBody().getError().getMessage());
+		Assertions.assertNull(MDC.get(DigitalFormsConstants.REQUEST_ENDPOINT));
+	}
+
+	@Test
+	void validationErrorsIncludeAllFieldsAndClearMdc() throws Exception {
+		BeanPropertyBindingResult binding = new BeanPropertyBindingResult(new Object(), "request");
+		binding.addError(new FieldError("request", "surname", "must not be blank"));
+		binding.addError(new FieldError("request", "email", "must be valid"));
+		MethodParameter parameter = new MethodParameter(
+				ValidationController.class.getMethod("getWithinTimeframe", String.class, BigDecimal.class), 0);
+		MDC.put(DigitalFormsConstants.REQUEST_ENDPOINT, "test");
+		ResponseEntity<JSONResponse<String>> response = new DigitalFormsControllerExceptionHandler()
+				.handleValidationExceptions(new MethodArgumentNotValidException(parameter, binding));
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		Assertions.assertEquals(400, response.getBody().getError().getHttpStatus());
+		String message = response.getBody().getError().getMessage();
+		Assertions.assertTrue(message.contains("surname: must not be blank"));
+		Assertions.assertTrue(message.contains("email: must be valid"));
+		Assertions.assertTrue(message.contains(", "));
+		Assertions.assertNull(MDC.get(DigitalFormsConstants.REQUEST_ENDPOINT));
+	}
 
 	@DisplayName("unauthorizedEntryTest")
 	@Test
