@@ -100,6 +100,18 @@ mvn spring-boot:run
 http://localhost:8082/digitalforms/v3/api-docs  
 http://localhost:8082/digitalforms/swagger-ui.html
 
+### Application and Java Versions
+
+`GET /digitalforms/version` requires the same Basic Authentication as other API operations.
+It returns `apiVersion` from the existing Maven-filtered `app.version` property and
+`javaVersion` from the running JVM's `java.version` system property. It does not call ORDS.
+
+Example response (Java version varies by deployed runtime):
+
+```json
+{"apiVersion":"2.2.5","javaVersion":"17.0.12"}
+```
+
 ### Actuator
 
 To monitor and manage the application

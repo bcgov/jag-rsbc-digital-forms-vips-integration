@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
+import java.util.Map;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -8,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +42,18 @@ public class UtilityController {
 	@Autowired
 	private ca.bc.gov.open.pssg.rsbc.digitalforms.ordsclient.api.HealthApi digitalFormsHealthApi;
 	
+	@Value("${app.version}")
+	private String appVersion;
+
+	@Operation(summary = "VIPS Integration API and Java Runtime Versions")
+	@ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Success") })
+	@GetMapping(path = "/version", produces = "application/json")
+	public ResponseEntity<Map<String, String>> getVersion() {
+		return ResponseEntity.ok(Map.of(
+				"apiVersion", appVersion,
+				"javaVersion", System.getProperty("java.version")));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Operation(summary = "Digital Forms Ping Service")
 	@ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Success") })
