@@ -1,6 +1,11 @@
 package ca.bc.gov.open.pssg.rsbc.digitalforms.controller;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +16,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import ca.bc.gov.open.pssg.rsbc.digitalforms.model.PingResponse;
 import ca.bc.gov.open.jag.ordsvipsclient.api.HealthApi;
@@ -47,6 +55,19 @@ class UtilityControllerTests {
 	@BeforeEach
 	public void init() {
 		MockitoAnnotations.initMocks(this);
+	}
+
+	@DisplayName("Version endpoint returns application and runtime versions without ORDS calls")
+	@Test
+	void getVersionSuccess() throws Exception {
+		ReflectionTestUtils.setField(controller, "appVersion", "test-version");
+		MockMvcBuilders.standaloneSetup(controller).build()
+				.perform(get("/version"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.apiVersion").value("test-version"))
+				.andExpect(jsonPath("$.javaVersion").value(System.getProperty("java.version")));
+		verifyNoInteractions(api, dfApi);
 	}
 
 	@DisplayName("Ping success - UtilityController")
