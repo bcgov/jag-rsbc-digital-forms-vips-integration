@@ -8,12 +8,12 @@ WORKDIR /libs
 
 COPY . .
 
-RUN git submodule update --remote --merge
+RUN git submodule update --init --recursive
 
 ##############################################################################################
 #### Stage where the maven dependencies are cached                                         ###
 ##############################################################################################
-FROM maven:3.8.2-eclipse-temurin-17 as dependencies-cache
+FROM maven:3.9.9-eclipse-temurin-21 as dependencies-cache
 
 WORKDIR /build
 
@@ -52,7 +52,11 @@ RUN  mvn clean package \
 ##############################################################################################
 #### Stage where Docker is running a java process to run a service built in previous stage ###
 ##############################################################################################
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:21-jre-jammy
+
+RUN apt-get update \
+    && apt-get install --only-upgrade -y libssl3 openssl \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

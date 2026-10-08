@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.14</version>
+		<version>4.1.1</version>
 		<relativePath />
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
@@ -17,14 +17,13 @@
 
 	<properties>
 		<app.version>2.2.5</app.version>
-		<java.version>17</java.version>
-		<springdoc.openapi.version>2.8.9</springdoc.openapi.version>
+		<java.version>21</java.version>
+		<springdoc.openapi.version>3.1.0</springdoc.openapi.version>
 		<guava.version>32.1.3-jre</guava.version>
 		<plexus-utils.version>3.6.1</plexus-utils.version>
 		<maven-core.version>3.8.1</maven-core.version>
 		<maven-shared-utils.version>3.3.3</maven-shared-utils.version>
 		<commons-text.version>1.10.0</commons-text.version>
-		<snakeyaml.version>2.0</snakeyaml.version>
 		<xercesImpl.version>2.12.2</xercesImpl.version>
 		<ant.version>1.10.11</ant.version>
 		<commons-io.version>2.14.0</commons-io.version>
@@ -32,11 +31,9 @@
 		<junit.version>4.13.2</junit.version>
 		<commons-compress.version>1.26.0</commons-compress.version>
 		<commons-lang3.version>3.18.0</commons-lang3.version>
-		<spring.security.version>6.5.11</spring.security.version>
-		<spring-framework.version>6.2.19</spring-framework.version>
-		<tomcat.version>10.1.60</tomcat.version>
-		<jackson.version>2.21.7</jackson.version>
-		<micrometer.version>1.15.12</micrometer.version>
+		<tomcat.version>11.0.26</tomcat.version>
+		<jackson-2-bom.version>2.21.7</jackson-2-bom.version>
+		<jackson-bom.version>3.1.7</jackson-bom.version>
 		<log4j2.version>2.25.5</log4j2.version>
 		<logback.version>1.5.34</logback.version>
 	</properties>
@@ -52,7 +49,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -94,7 +91,7 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -105,9 +102,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-jackson2</artifactId>
 		</dependency>
 
 		<!-- Mockito extention -->
@@ -300,7 +302,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.10</version>
+				<version>0.8.14</version>
 				<executions>
 					<execution>
 						<goals>
